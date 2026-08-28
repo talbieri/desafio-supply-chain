@@ -481,7 +481,7 @@ embarque — R$ 305.083 de frete de distribuição que a consolidação ataca di
 Reproduza:
 
 ```bash
-python desafio/ferramentas/baseline_guloso.py --janela public
+python desafio/ferramentas/baseline_atual.py --janela public
 python desafio/ferramentas/avaliar.py --resposta desafio/respostas/baseline/public
 ```
 
@@ -517,7 +517,7 @@ O cenário descrito acima está materializado em dados sintéticos determinísti
 | Guia do participante | `desafio/README.md` |
 | Material auxiliar de conceitos | `docs/desafio/conceitos-supply-chain.md` |
 | Protótipo de exemplo comentado | `desafio/ferramentas/exemplo_prototipo.py` |
-| Baseline de referência | `desafio/ferramentas/baseline_guloso.py` |
+| Baseline de referência | `desafio/ferramentas/baseline_atual.py` |
 | Avaliador oficial | `desafio/ferramentas/avaliar.py` |
 | Gerador (auditável) | `desafio/gerador/` |
 | Gabarito | `desafio/privado/` — **não distribuído** |

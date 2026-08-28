@@ -12,8 +12,8 @@ Este é o piso a ser batido. Se a sua solução não supera isto, ela não está
 resolvendo o problema — está reproduzindo o problema.
 
 Uso:
-    python desafio/ferramentas/baseline_guloso.py --janela public
-    python desafio/ferramentas/baseline_guloso.py --janela private --saida minha_pasta/
+    python desafio/ferramentas/baseline_atual.py --janela public
+    python desafio/ferramentas/baseline_atual.py --janela private --saida minha_pasta/
 """
 
 import argparse
@@ -211,7 +211,7 @@ def gerar_rebalanceamento(dados, janela):
 
 
 def main():
-    ap = argparse.ArgumentParser(description="Baseline guloso de referência")
+    ap = argparse.ArgumentParser(description="Baseline de referência — a política atual")
     ap.add_argument("--janela", choices=["public", "private"], default="public")
     ap.add_argument("--dados", default=None)
     ap.add_argument("--saida", default="desafio/respostas/baseline")

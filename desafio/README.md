@@ -34,7 +34,7 @@ de dentro da pasta. Se você clonou o repositório, já está tudo no lugar.
 
 ```bash
 # 1. Rode o baseline na janela pública (30 segundos)
-python desafio/ferramentas/baseline_guloso.py --janela public
+python desafio/ferramentas/baseline_atual.py --janela public
 
 # 2. Avalie o baseline e veja o placar de referência
 python desafio/ferramentas/avaliar.py --resposta desafio/respostas/baseline/public
@@ -271,7 +271,7 @@ desafio/
 ├── dados/v1.0.0/                o pacote — 17 CSVs + dicionário + checksums
 ├── ferramentas/
 │   ├── comum.py                 leitura dos dados, calendário, custos
-│   ├── baseline_guloso.py       o baseline de referência
+│   ├── baseline_atual.py       o baseline de referência
 │   ├── exemplo_prototipo.py     protótipo comentado — leia antes de escrever o seu
 │   └── avaliar.py               o avaliador oficial
 ├── submissoes/baseline/         respostas do baseline, prontas

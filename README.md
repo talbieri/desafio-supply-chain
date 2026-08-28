@@ -41,7 +41,7 @@ desafio/
 ├── ferramentas/
 │   ├── comum.py                 leitura dos dados, calendário, custos
 │   ├── conferir_dados.py        confere os checksums (multiplataforma)
-│   ├── baseline_guloso.py       a política que a operação usa hoje
+│   ├── baseline_atual.py       a política que a operação usa hoje
 │   ├── exemplo_prototipo.py     protótipo comentado — a receita dos 5 passos
 │   └── avaliar.py               o avaliador oficial
 ├── gerador/                     como os dados foram construídos (seed 42)
@@ -85,7 +85,7 @@ Python 3.10+ e biblioteca padrão. Sem pandas, sem solver, sem instalar nada.
 
 ```bash
 # a política atual, para ter a referência
-python desafio/ferramentas/baseline_guloso.py --janela public
+python desafio/ferramentas/baseline_atual.py --janela public
 python desafio/ferramentas/avaliar.py --resposta desafio/respostas/baseline/public
 
 # o protótipo de exemplo, que corta 21,6% do custo

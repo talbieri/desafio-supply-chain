@@ -473,7 +473,7 @@ def pagina_inicial():
 
     <div class="passos">
       <div class="passo"><div><h4>Baixe e descompacte</h4><p>O pacote traz os dados <b>e as ferramentas</b> — baseline, avaliador e protótipo. Descompacte e rode <code>python desafio/ferramentas/conferir_dados.py</code> — funciona em qualquer sistema.</p></div></div>
-      <div class="passo"><div><h4>Rode o baseline</h4><p><code>python desafio/ferramentas/baseline_guloso.py --janela public</code> — é a política que a operação usa hoje.</p></div></div>
+      <div class="passo"><div><h4>Rode o baseline</h4><p><code>python desafio/ferramentas/baseline_atual.py --janela public</code> — é a política que a operação usa hoje.</p></div></div>
       <div class="passo"><div><h4>Avalie</h4><p><code>python desafio/ferramentas/avaliar.py --resposta desafio/respostas/baseline/public</code> e veja o placar de referência.</p></div></div>
       <div class="passo"><div><h4>Leia o protótipo de exemplo</h4><p><code>exemplo_prototipo.py</code> tem a receita dos 5 passos comentada linha a linha. Ele corta 21,6% do custo.</p></div></div>
       <div class="passo"><div><h4>Faça melhor</h4><p>Copie, mexa, avalie de novo. Até 5 respostas por dia.</p></div></div>

@@ -541,7 +541,7 @@ def main():
         print("      --resposta desafio/respostas/baseline/public --janela public")
         print()
         print("  Não tem uma resposta ainda? Gere a do baseline:")
-        print("    python desafio/ferramentas/baseline_guloso.py --janela public")
+        print("    python desafio/ferramentas/baseline_atual.py --janela public")
         sys.exit(2)
 
     res, m, pinball = rodar(dados, args.resposta, args.janela, gabarito)

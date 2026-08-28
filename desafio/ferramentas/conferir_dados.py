@@ -86,7 +86,7 @@ def main():
     print("  Pacote íntegro. Pode começar.")
     print()
     print("  Próximo passo:")
-    print("    python desafio/ferramentas/baseline_guloso.py --janela public")
+    print("    python desafio/ferramentas/baseline_atual.py --janela public")
 
 
 if __name__ == "__main__":
