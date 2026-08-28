@@ -215,7 +215,7 @@ Todo pedido tem três datas, e confundi-las é fatal:
 | Data | Quem define | Coluna |
 |------|-------------|--------|
 | **Solicitada** | O cliente, quando pede | `requested_date` |
-| **Prometida** | Você, ao aceitar o pedido | `promised_date` (sua submissão) |
+| **Prometida** | Você, ao aceitar o pedido | `promised_date` (sua resposta) |
 | **Real** | A operação, quando entrega | conhecida só na avaliação |
 
 E daí saem as duas métricas que o desafio mede — e **elas não são a mesma coisa**:
@@ -318,7 +318,7 @@ escolta acima de R$ 150.000).
 
 **Armadilha.** Otimizar Fill Rate atendendo só os pedidos fáceis. Por isso existe o piso de
 `BR-205`: **nenhum segmento pode ficar abaixo de 85% de fill rate**. Recusar a cauda longa
-para proteger os grandes reprova a submissão inteira.
+para proteger os grandes reprova a resposta inteira.
 
 ---
 
@@ -471,7 +471,7 @@ Em ordem de frequência com que aparecem:
 
 | Documento | Para quê |
 |-----------|----------|
-| `desafio/README.md` | Rodar o baseline e submeter em 30 minutos |
+| `desafio/README.md` | Rodar o baseline e enviar em 30 minutos |
 | `docs/desafio/01-business-scope.md` | As 40 regras de negócio completas |
 | `desafio/dados/v1.0.0/data_dictionary.md` | Toda coluna, tipo e unidade |
 | `desafio/ferramentas/exemplo_prototipo.py` | A receita dos 5 passos, em código comentado |

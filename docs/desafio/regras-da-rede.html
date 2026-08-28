@@ -1,11 +1,11 @@
-<title>Regras da Rede</title>
+<title>Regras de Atendimento</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
 
 <style>
 /* ============================================================
-   Regras da Rede — briefing de desafio de Supply Chain
+   Regras de Atendimento — briefing de desafio de Supply Chain
    Paleta: teal de despacho + âmbar de sinalização sobre
    neutros levemente esverdeados (papel de manifesto de carga)
    ============================================================ */
@@ -396,7 +396,7 @@ footer {
 <header class="masthead">
   <div class="shell">
     <p class="kicker">Desafio interno · Dados + Supply Chain</p>
-    <h1>Regras da <em>Rede</em></h1>
+    <h1>Regras de <em>Atendimento</em></h1>
     <p class="standfirst" style="margin-bottom:18px">
       Chegou um pedido. De qual centro de distribuição você atende, que data promete e o que
       embarca agora — sabendo que atender rápido custa frete, atender barato custa prazo, e que
@@ -989,7 +989,7 @@ footer {
       <div class="rule"><span class="id">BR-403</span><p>Recebimento não confirmado não entra no ATP; entra no CTP, usado apenas a partir do passo 4 de BR-301.</p></div>
       <div class="rule"><span class="id">BR-404</span><p>A data prometida é comunicada no ato e passa a ser o compromisso medido pelo OTIF.</p></div>
       <div class="rule hot"><span class="id">BR-405</span><p>Reprogramação é permitida <b>uma única vez</b> por pedido e conta como falha de confiabilidade, mesmo se a nova data for cumprida.</p></div>
-      <div class="rule"><span class="id">BR-406</span><p>Prometer data anterior ao lead time mínimo viável é proibido — o validador rejeita a submissão.</p></div>
+      <div class="rule"><span class="id">BR-406</span><p>Prometer data anterior ao lead time mínimo viável é proibido — o validador rejeita a resposta.</p></div>
       <div class="rule"><span class="id">BR-407</span><p>O buffer é decisão do participante, mas a folga média é penalizada pela rubrica (Promise Tightness).</p></div>
     </div>
 
@@ -1244,11 +1244,11 @@ sujeito a:
     </div>
 
     <h3>O que a equipe devolve</h3>
-    <pre><b>submission_promise.csv</b>
+    <pre><b>resposta_promessa.csv</b>
 order_line_id,dc_id,promised_date,qty_committed,shipment_group
 OL-000001,CD-SP,2026-09-14,480,SHP-0001
 
-<b>submission_rebalance.csv</b>
+<b>resposta_rebalanceamento.csv</b>
 transfer_id,origin,dest,sku,qty_pallets,ship_date
 TRF-0001,CD-SP,CD-GO,P4,12,2026-09-09</pre>
   </section>
@@ -1268,22 +1268,22 @@ TRF-0001,CD-SP,CD-GO,P4,12,2026-09-09</pre>
     <div class="grid2">
       <div class="cell"><span class="code">dados/v1.0.0/</span><h5>19 arquivos</h5><p>12 meses de histórico (25.079 linhas de pedido), 919 linhas na janela pública e 976 na privada, mais cadastros, rede e calendário.</p></div>
       <div class="cell"><span class="code">data_dictionary.md</span><h5>Toda coluna documentada</h5><p>Tipo, unidade e descrição de cada campo, mais a leakage list e o cutoff de informação.</p></div>
-      <div class="cell"><span class="code">baseline_guloso.py</span><h5>O piso, executável</h5><p>A política vigente implementada. Gera uma submissão válida e mostra o número a bater.</p></div>
+      <div class="cell"><span class="code">baseline_guloso.py</span><h5>O piso, executável</h5><p>A política vigente implementada. Gera uma resposta válida e mostra o número a bater.</p></div>
       <div class="cell"><span class="code">avaliar.py</span><h5>O avaliador oficial</h5><p>Valida os gates, simula o atendimento dia a dia com o trânsito realizado e pontua pela rubrica.</p></div>
       <div class="cell"><span class="code">gerador/</span><h5>Auditável de propósito</h5><p>O código que construiu o mundo está publicado. O que não se publica é o gabarito.</p></div>
       <div class="cell"><span class="code">CHECKSUMS.txt</span><h5>Integridade</h5><p><code>sha256sum -c CHECKSUMS.txt</code> depois de baixar. Errata gera nova versão do pacote.</p></div>
     </div>
 
-    <h3>Os três arquivos de submissão</h3>
-    <pre><b>submission_promise.csv</b>   obrigatório
+    <h3>Os três arquivos de resposta</h3>
+    <pre><b>resposta_promessa.csv</b>   obrigatório
 order_line_id,dc_id,promised_date,qty_committed,shipment_group
 OL-0125001,CD-SP,2026-09-04,1400,SHP-00012
 
-<b>submission_rebalance.csv</b>  opcional — é onde está o jogo
+<b>resposta_rebalanceamento.csv</b>  opcional — é onde está o jogo
 transfer_id,origin,dest,sku,qty_pallets,ship_date
 TRF-00001,CD-PE,CD-SP,P3,12,2026-09-01
 
-<b>submission_forecast.csv</b>   opcional — vale 20 pontos
+<b>resposta_previsao.csv</b>   opcional — vale 20 pontos
 dc_id,region,ship_date,transit_q50,transit_q90
 CD-SP,SE,2026-09-01,2,4</pre>
 
@@ -1314,7 +1314,7 @@ CD-SP,SE,2026-09-01,2,4</pre>
     <h2>Cinco situações para defender com números</h2>
     <div class="col">
       <p>
-        Não basta produzir uma submissão com score alto. A equipe precisa conseguir explicar, em
+        Não basta produzir uma resposta com score alto. A equipe precisa conseguir explicar, em
         cada um destes cenários, qual regra prevaleceu e quanto custou a alternativa descartada.
       </p>
     </div>
@@ -1340,7 +1340,7 @@ CD-SP,SE,2026-09-01,2,4</pre>
   </section>
 
   <footer>
-    Regras da Rede · versão 1.0.0 · 28 de agosto de 2026<br>
+    Regras de Atendimento · versão 1.0.0 · 28 de agosto de 2026<br>
     Produzido pelo squad <code>desafio-supply-chain-squad</code>, task <code>scm-define-business-scope.md</code>.<br>
     Próximo artefato: formulação matemática — cada BR-* vira restrição, penalidade ou premissa relaxada.
   </footer>

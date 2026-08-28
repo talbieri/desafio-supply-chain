@@ -256,7 +256,7 @@ Cada regra tem ID rastreável. A formulação matemática (`02-formulation.md`) 
 | **BR-403** | Recebimento de planta **não confirmado** não entra no ATP; entra no CTP, usado somente a partir do passo 4 de BR-301. |
 | **BR-404** | A data prometida é comunicada ao cliente **no ato** e passa a ser o compromisso medido pelo OTIF. |
 | **BR-405** | Reprogramação da data prometida é permitida **uma única vez** por pedido e conta como falha de confiabilidade, mesmo que a nova data seja cumprida. |
-| **BR-406** | Prometer data anterior ao lead time mínimo viável é proibido — o validador rejeita a submissão (viola viabilidade). |
+| **BR-406** | Prometer data anterior ao lead time mínimo viável é proibido — o validador rejeita a resposta (viola viabilidade). |
 | **BR-407** | O buffer de segurança é decisão do participante, mas a folga média é penalizada pela rubrica (Promise Tightness). |
 
 ### BR-5xx — Composição de carga
@@ -415,15 +415,15 @@ sujeito a:
 | `holidays_calendar.csv` | Dia × região | `date`, `region`, `is_business_day` |
 | `historical_deliveries.csv` | Linha entregue | `order_line_id`, `dc_id`, `promised_date`, `ship_date`, `actual_delivery_date`, `promise_revisions` |
 
-### Submissões esperadas
+### Respostas esperadas
 
-`submission_promise.csv`
+`resposta_promessa.csv`
 ```csv
 order_line_id,dc_id,promised_date,qty_committed,shipment_group
 OL-000001,CD-SP,2026-09-14,480,SHP-0001
 ```
 
-`submission_rebalance.csv`
+`resposta_rebalanceamento.csv`
 ```csv
 transfer_id,origin,dest,sku,qty_pallets,ship_date
 TRF-0001,CD-SP,CD-GO,P4,12,2026-09-09
@@ -482,7 +482,7 @@ Reproduza:
 
 ```bash
 python desafio/ferramentas/baseline_guloso.py --janela public
-python desafio/ferramentas/avaliar.py --submissao desafio/submissoes/baseline/public
+python desafio/ferramentas/avaliar.py --resposta desafio/respostas/baseline/public
 ```
 
 ---

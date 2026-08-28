@@ -822,7 +822,7 @@ def main():
         f"{out}/inventory_opening.csv",
         ["window", "opening_date", "dc_id", "sku", "on_hand"], aberturas)
 
-    print("[8/8] Exemplos de submissão")
+    print("[8/8] Exemplos de resposta")
     exemplo_p, exemplo_r = [], []
     for i, ln in enumerate(lin_pub[:20]):
         cd = P.CD_PRIMARIO[ln["ship_to_region"]]
@@ -838,11 +838,24 @@ def main():
         exemplo_r.append(dict(transfer_id=f"TRF-{i + 1:04d}", origin=o, dest=dst, sku=sku,
                               qty_pallets=8 + i * 4,
                               ship_date=(P.PUB_INICIO + timedelta(days=2 + i)).isoformat()))
-    escrever_csv(f"{out}/submission_example_promise.csv",
+    escrever_csv(f"{out}/resposta_exemplo_promessa.csv",
                  ["order_line_id", "dc_id", "promised_date", "qty_committed", "shipment_group"],
                  exemplo_p)
-    escrever_csv(f"{out}/submission_example_rebalance.csv",
+    escrever_csv(f"{out}/resposta_exemplo_rebalanceamento.csv",
                  ["transfer_id", "origin", "dest", "sku", "qty_pallets", "ship_date"], exemplo_r)
+
+    # exemplo da trilha preditiva: quantis de lead time por rota e dia de embarque
+    exemplo_f = []
+    d = P.PUB_INICIO
+    while d <= P.PUB_INICIO + timedelta(days=2) and len(exemplo_f) < 60:
+        for cd, mapa in P.TRANSITO_DISTRIBUICAO.items():
+            for reg, t in mapa.items():
+                exemplo_f.append(dict(dc_id=cd, region=reg, ship_date=d.isoformat(),
+                                      transit_q50=t, transit_q90=t + 2))
+        d += timedelta(days=1)
+    escrever_csv(f"{out}/resposta_exemplo_previsao.csv",
+                 ["dc_id", "region", "ship_date", "transit_q50", "transit_q90"],
+                 exemplo_f[:60])
 
     print("[9/9] Checksums")
     arquivos = sorted(f for f in os.listdir(out) if f.endswith(".csv"))

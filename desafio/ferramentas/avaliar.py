@@ -2,17 +2,17 @@
 Avaliador oficial do Desafio Supply Chain.
 
 Faz três coisas, nesta ordem:
-  1. VALIDA a submissão contra os gates (formato, cobertura, BR-406, viabilidade
+  1. VALIDA a resposta contra os gates (formato, cobertura, BR-406, viabilidade
      física, capacidade de CD, MOQ de transferência, piso de fill rate).
   2. SIMULA o atendimento dia a dia com o trânsito e os recebimentos realizados
      (que ficam no gabarito e você não tem).
   3. PONTUA conforme a rubrica publicada.
 
-Submissão reprovada em qualquer gate não é pontuada — igual ao leaderboard.
+Resposta reprovada em qualquer gate não é pontuada — igual ao leaderboard.
 
 Uso:
-    python desafio/ferramentas/avaliar.py --submissao desafio/submissoes/baseline/public
-    python desafio/ferramentas/avaliar.py --submissao minha/pasta --janela private --json
+    python desafio/ferramentas/avaliar.py --resposta desafio/respostas/baseline/public
+    python desafio/ferramentas/avaliar.py --resposta minha/pasta --janela private --json
 """
 
 import argparse
@@ -38,7 +38,7 @@ except (AttributeError, OSError):
 
 GABARITO_PADRAO = os.path.join("desafio", "privado")
 
-# alvos usados na normalização enquanto não há leaderboard com outras submissões
+# alvos usados na normalização enquanto não há leaderboard com outras respostas
 ALVOS = dict(promise_reliability=0.99, otif=0.98, fill_rate=0.995, custo_ganho=0.25,
              pinball=0.35)
 
@@ -66,7 +66,7 @@ class Resultado:
 def validar_formato(dados, promessas, transferencias, linhas, res):
     cols_p = {"order_line_id", "dc_id", "promised_date", "qty_committed", "shipment_group"}
     if promessas and not cols_p.issubset(promessas[0].keys()):
-        res.erro("FORMATO", f"submission_promise.csv precisa das colunas {sorted(cols_p)}")
+        res.erro("FORMATO", f"resposta_promessa.csv precisa das colunas {sorted(cols_p)}")
         return
     idx = {ln["order_line_id"]: ln for ln in linhas}
     vistos = set()
@@ -146,7 +146,7 @@ def simular(dados, promessas, transferencias, linhas, gabarito, janela, res):
     # Embarques: as linhas do mesmo shipment_group viajam juntas e dividem um
     # único frete. O grupo só sai quando TODAS as suas linhas têm estoque —
     # consolidar reduz custo e atrasa quem já estava pronto. É a decisão de
-    # composição de carga (BR-505/506) nas mãos de quem submete.
+    # composição de carga (BR-505/506) nas mãos de quem envia.
     grupos = defaultdict(lambda: dict(oids=[], regiao=None, clientes=set(), pronto=None))
     for oid, p in plano.items():
         if int(p["qty_committed"]) <= 0:
@@ -498,10 +498,10 @@ def carregar_gabarito(pasta, dados):
     return gabarito_de_treino(dados)
 
 
-def rodar(dados, pasta_sub, janela, gabarito, silencioso=False):
+def rodar(dados, pasta_resp, janela, gabarito, silencioso=False):
     res = Resultado()
-    promessas = ler_csv(f"{pasta_sub}/submission_promise.csv")
-    arq_reb = f"{pasta_sub}/submission_rebalance.csv"
+    promessas = ler_csv(f"{pasta_resp}/resposta_promessa.csv")
+    arq_reb = f"{pasta_resp}/resposta_rebalanceamento.csv"
     transferencias = ler_csv(arq_reb) if os.path.exists(arq_reb) else []
     linhas = dados.pedidos(janela)
 
@@ -513,40 +513,40 @@ def rodar(dados, pasta_sub, janela, gabarito, silencioso=False):
     if not res.valida:
         return res, None, None
     m = metricas(dados, linhas, promessas, resultados, custo, res, ocupacao)
-    pinball = avaliar_previsao(dados, f"{pasta_sub}/submission_forecast.csv", gabarito, janela)
+    pinball = avaliar_previsao(dados, f"{pasta_resp}/resposta_previsao.csv", gabarito, janela)
     m["pinball_lead_time"] = pinball
     return res, m, pinball
 
 
 def main():
     ap = argparse.ArgumentParser(description="Avaliador oficial do desafio")
-    ap.add_argument("--submissao", required=True, help="pasta com submission_promise.csv")
+    ap.add_argument("--resposta", required=True, help="pasta com resposta_promessa.csv")
     ap.add_argument("--janela", choices=["public", "private"], default="public")
     ap.add_argument("--dados", default=None)
     ap.add_argument("--gabarito", default=GABARITO_PADRAO)
-    ap.add_argument("--baseline", default="desafio/submissoes/baseline")
+    ap.add_argument("--baseline", default="desafio/respostas/baseline")
     ap.add_argument("--json", action="store_true")
     args = ap.parse_args()
 
     dados = Dados(args.dados) if args.dados else Dados()
     gabarito = carregar_gabarito(args.gabarito, dados)
 
-    arq = os.path.join(args.submissao, "submission_promise.csv")
+    arq = os.path.join(args.resposta, "resposta_promessa.csv")
     if not os.path.exists(arq):
         print(f"Não encontrei {arq}")
         print()
-        print("  --submissao aponta para a PASTA que contém submission_promise.csv.")
+        print("  --resposta aponta para a PASTA que contém resposta_promessa.csv.")
         print("  Exemplo:")
         print("    python desafio/ferramentas/avaliar.py \\")
-        print("      --submissao desafio/submissoes/baseline/public --janela public")
+        print("      --resposta desafio/respostas/baseline/public --janela public")
         print()
-        print("  Não tem uma submissão ainda? Gere a do baseline:")
+        print("  Não tem uma resposta ainda? Gere a do baseline:")
         print("    python desafio/ferramentas/baseline_guloso.py --janela public")
         sys.exit(2)
 
-    res, m, pinball = rodar(dados, args.submissao, args.janela, gabarito)
+    res, m, pinball = rodar(dados, args.resposta, args.janela, gabarito)
     if not res.valida:
-        print("SUBMISSÃO REPROVADA\n")
+        print("RESPOSTA REPROVADA\n")
         for e in res.erros[:25]:
             print("  " + e)
         if len(res.erros) > 25:
@@ -555,8 +555,8 @@ def main():
 
     ref = None
     caminho_base = os.path.join(args.baseline, args.janela)
-    if os.path.exists(f"{caminho_base}/submission_promise.csv") and \
-            os.path.abspath(caminho_base) != os.path.abspath(args.submissao):
+    if os.path.exists(f"{caminho_base}/resposta_promessa.csv") and \
+            os.path.abspath(caminho_base) != os.path.abspath(args.resposta):
         _r, ref, _p = rodar(dados, caminho_base, args.janela, gabarito, silencioso=True)
 
     saida = dict(janela=args.janela, valida=True,
@@ -572,7 +572,7 @@ def main():
         return
 
     modo = "OFICIAL" if gabarito.get("oficial") else "TREINO"
-    print(f"SUBMISSÃO VÁLIDA — janela {args.janela} · modo {modo}")
+    print(f"RESPOSTA VÁLIDA — janela {args.janela} · modo {modo}")
     print()
     if modo == "TREINO":
         print("  Gabarito oficial ausente: o trânsito realizado foi sorteado da")

@@ -40,7 +40,7 @@ SITE = os.path.join(RAIZ, "docs")
 FONTES = os.path.join(SITE, "desafio")
 
 FONTES_HTML = [
-    ("regras-da-rede.html", "regras.html", "Regras da Rede"),
+    ("regras-da-rede.html", "regras.html", "Regras de Atendimento"),
     ("supply-chain-do-zero.html", "conceitos.html", "Supply Chain do Zero"),
 ]
 
@@ -282,9 +282,9 @@ def pagina_dados():
         "Cadastros e rede": ["sku_master.csv", "customer_master.csv", "dc_master.csv",
                              "plant_master.csv", "lanes.csv", "transfer_lanes.csv",
                              "vehicles.csv", "holidays_calendar.csv"],
-        "Formato de submissão": ["submission_example_promise.csv",
-                                 "submission_example_rebalance.csv",
-                                 "submission_example_forecast.csv"],
+        "Formato de resposta": ["resposta_exemplo_promessa.csv",
+                                 "resposta_exemplo_rebalanceamento.csv",
+                                 "resposta_exemplo_previsao.csv"],
         "Documentação": ["data_dictionary.md", "CHECKSUMS.txt"],
     }
     zip_nome = f"desafio-supply-chain-v{P.VERSAO}.zip"
@@ -301,11 +301,11 @@ def pagina_dados():
               '<header class="masthead"><div class="shell">',
               '<p class="kicker">Pacote de dados · versão ' + P.VERSAO + '</p>',
               "<h1>Os <em>arquivos</em> do desafio</h1>",
-              '<p class="standfirst">Vinte e um arquivos, 4,6&nbsp;MB descompactados. CSV UTF-8, '
+              f'<p class="standfirst">{len(arquivos)} arquivos, 4,6&nbsp;MB descompactados. CSV UTF-8, '
               'separador vírgula, decimal ponto. Sem cadastro, sem login, sem pedir acesso a ninguém.</p>',
               '<div class="baixar">']
     if os.path.exists(zip_path):
-        linhas.append(f'<a class="btn" href="./dados/{zip_nome}" download>Baixar o pacote completo (.zip)</a>')
+        linhas.append(f'<a class="btn" href="./dados/{zip_nome}" download>Baixar tudo: dados + ferramentas (.zip)</a>')
         linhas.append(f'<span class="meta">{kb(zip_path)} · sha256 {sha256(zip_path)[:16]}…</span>')
     linhas.append('<a class="btn sec" href="./dados/v' + P.VERSAO + '/data_dictionary.md">Dicionário de dados</a>')
     linhas.append("</div></div></header>")
@@ -357,16 +357,16 @@ def pagina_dados():
                           f"<td class='num'><a href='./dados/v{P.VERSAO}/{nome}' download>baixar</a></td></tr>")
         linhas.append("</tbody></table></div></section>")
 
-    linhas.append('<section><p class="tag">O que você devolve</p><h2>Formato de submissão</h2>'
+    linhas.append('<section><p class="tag">O que você devolve</p><h2>Formato de resposta</h2>'
                   '<div class="col"><p>Três arquivos. Só o primeiro é obrigatório — e ele precisa '
                   "cobrir <b>todas</b> as linhas da janela.</p></div>"
-                  "<pre><b>submission_promise.csv</b>   <span class='c'>obrigatório</span>\n"
+                  "<pre><b>resposta_promessa.csv</b>   <span class='c'>obrigatório</span>\n"
                   "order_line_id,dc_id,promised_date,qty_committed,shipment_group\n"
                   "OL-0125001,CD-SP,2026-09-04,1400,SHP-00012\n\n"
-                  "<b>submission_rebalance.csv</b>  <span class='c'>opcional — é onde está o jogo</span>\n"
+                  "<b>resposta_rebalanceamento.csv</b>  <span class='c'>opcional — é onde está o jogo</span>\n"
                   "transfer_id,origin,dest,sku,qty_pallets,ship_date\n"
                   "TRF-00001,CD-PE,CD-SP,P3,12,2026-09-15\n\n"
-                  "<b>submission_forecast.csv</b>   <span class='c'>opcional — vale 20 pontos</span>\n"
+                  "<b>resposta_previsao.csv</b>   <span class='c'>opcional — vale 20 pontos</span>\n"
                   "dc_id,region,ship_date,transit_q50,transit_q90\n"
                   "CD-SP,SE,2026-09-01,2,4</pre>"
                   '<div class="note"><p><b>O <code>shipment_group</code> não é formalidade.</b> '
@@ -416,7 +416,7 @@ def pagina_inicial():
       cada linha, que data prometer e o que embarca junto.
     </p>
     <div class="baixar">
-      <a class="btn" href="./dados/{zip_nome}" download>Baixar os dados ({tamanho})</a>
+      <a class="btn" href="./dados/{zip_nome}" download>Baixar o pacote ({tamanho})</a>
       <a class="btn sec" href="./dados.html">Ver os arquivos um a um</a>
     </div>
     <div class="facts">
@@ -466,11 +466,11 @@ def pagina_inicial():
     </div>
 
     <div class="passos">
-      <div class="passo"><div><h4>Baixe e confira</h4><p>Pegue o pacote, descompacte e rode <code>sha256sum -c CHECKSUMS.txt</code>.</p></div></div>
+      <div class="passo"><div><h4>Baixe e descompacte</h4><p>O pacote traz os dados <b>e as ferramentas</b> — baseline, avaliador e protótipo. Descompacte e rode <code>sha256sum -c CHECKSUMS.txt</code> dentro de <code>desafio/dados/v1.0.0/</code>.</p></div></div>
       <div class="passo"><div><h4>Rode o baseline</h4><p><code>python desafio/ferramentas/baseline_guloso.py --janela public</code> — é a política que a operação usa hoje.</p></div></div>
-      <div class="passo"><div><h4>Avalie</h4><p><code>python desafio/ferramentas/avaliar.py --submissao desafio/submissoes/baseline/public</code> e veja o placar de referência.</p></div></div>
+      <div class="passo"><div><h4>Avalie</h4><p><code>python desafio/ferramentas/avaliar.py --resposta desafio/respostas/baseline/public</code> e veja o placar de referência.</p></div></div>
       <div class="passo"><div><h4>Leia o protótipo de exemplo</h4><p><code>exemplo_prototipo.py</code> tem a receita dos 5 passos comentada linha a linha. Ele corta 21,6% do custo.</p></div></div>
-      <div class="passo"><div><h4>Faça melhor</h4><p>Copie, mexa, avalie de novo. Até 5 submissões por dia.</p></div></div>
+      <div class="passo"><div><h4>Faça melhor</h4><p>Copie, mexa, avalie de novo. Até 5 respostas por dia.</p></div></div>
     </div>
 
     <h3>O que a política atual entrega hoje</h3>
@@ -526,7 +526,7 @@ def pagina_inicial():
       promessas para a frente melhora uma e não salva a outra — o atalho não existe.</p>
     </div>
 
-    <h3>Gates que reprovam a submissão inteira</h3>
+    <h3>Gates que reprovam a resposta inteira</h3>
     <div class="scroll">
       <table>
         <thead><tr><th>Gate</th><th>Regra</th></tr></thead>
@@ -559,7 +559,7 @@ def pagina_inicial():
       </div>
       <div class="cell">
         <span class="code">O contrato do desafio</span>
-        <h4><a href="./regras.html">Regras da Rede</a></h4>
+        <h4><a href="./regras.html">Regras de Atendimento</a></h4>
         <p>As 40 regras de negócio numeradas, a topologia da rede, os custos, os KPIs e os
         cinco cenários que a equipe precisa saber defender.</p>
       </div>
@@ -567,7 +567,7 @@ def pagina_inicial():
         <span class="code">Os arquivos</span>
         <h4><a href="./dados.html">Dados do desafio</a></h4>
         <p>Os 21 arquivos com tamanho, número de linhas e checksum, mais o dicionário de dados
-        coluna a coluna e o formato de submissão.</p>
+        coluna a coluna e o formato de resposta.</p>
       </div>
     </div>
   </section>
@@ -580,7 +580,7 @@ def pagina_inicial():
         <thead><tr><th>Item</th><th>Regra</th></tr></thead>
         <tbody>
           <tr><td>Equipes</td><td>Até 3 pessoas, com pelo menos dois perfis distintos (SCM, IA, otimização)</td></tr>
-          <tr><td>Submissões</td><td>Até 5 por dia; cada equipe escolhe 2 para o ranking final</td></tr>
+          <tr><td>Respostas</td><td>Até 5 por dia; cada equipe escolhe 2 para o ranking final</td></tr>
           <tr><td>Ranking final</td><td>100% na janela privada. A pública serve só para feedback</td></tr>
           <tr><td>Bibliotecas</td><td>Livres, desde que open source e declaradas no README da solução</td></tr>
           <tr><td>Uso de IA</td><td>Permitido e esperado. Declare o que foi gerado e por qual ferramenta</td></tr>

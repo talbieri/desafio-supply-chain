@@ -25,10 +25,10 @@
 <header class="masthead"><div class="shell">
 <p class="kicker">Pacote de dados · versão 1.0.0</p>
 <h1>Os <em>arquivos</em> do desafio</h1>
-<p class="standfirst">Vinte e um arquivos, 4,6&nbsp;MB descompactados. CSV UTF-8, separador vírgula, decimal ponto. Sem cadastro, sem login, sem pedir acesso a ninguém.</p>
+<p class="standfirst">21 arquivos, 4,6&nbsp;MB descompactados. CSV UTF-8, separador vírgula, decimal ponto. Sem cadastro, sem login, sem pedir acesso a ninguém.</p>
 <div class="baixar">
-<a class="btn" href="./dados/desafio-supply-chain-v1.0.0.zip" download>Baixar o pacote completo (.zip)</a>
-<span class="meta">652 KB · sha256 56cf870f958bfe49…</span>
+<a class="btn" href="./dados/desafio-supply-chain-v1.0.0.zip" download>Baixar tudo: dados + ferramentas (.zip)</a>
+<span class="meta">715 KB · sha256 e7c9eb88fdebb1e5…</span>
 <a class="btn sec" href="./dados/v1.0.0/data_dictionary.md">Dicionário de dados</a>
 </div></div></header>
 <main class="shell">
@@ -37,7 +37,7 @@ sha256sum -c CHECKSUMS.txt</pre><div class="callout"><p><b>Split temporal — n�
 <section><p class="tag">Pedidos</p><h2>Pedidos</h2>
 <div class="scroll"><table><thead><tr><th>Arquivo</th><th>O que tem</th><th class='num'>Linhas</th><th class='num'>Tamanho</th><th class='num'>Baixar</th></tr></thead><tbody>
 <tr><td><code>orders_history.csv</code><br><span class='sha'>sha256 1a74cb44732c2c70…</span></td><td>Todo pedido recebido entre o início do histórico e a data de corte. É a base de treino: use para entender sazonalidade, mix e comportamento por segmento.</td><td class='num'>25.079</td><td class='num'>1.96 MB</td><td class='num'><a href='./dados/v1.0.0/orders_history.csv' download>baixar</a></td></tr>
-<tr><td><code>orders_test_public.csv</code><br><span class='sha'>sha256 9f316b3f169d6507…</span></td><td>Pedidos da janela pública. São estes que a sua submissão precisa promissar — todos eles, sem exceção.</td><td class='num'>919</td><td class='num'>74 KB</td><td class='num'><a href='./dados/v1.0.0/orders_test_public.csv' download>baixar</a></td></tr>
+<tr><td><code>orders_test_public.csv</code><br><span class='sha'>sha256 9f316b3f169d6507…</span></td><td>Pedidos da janela pública. São estes que a sua resposta precisa promissar — todos eles, sem exceção.</td><td class='num'>919</td><td class='num'>74 KB</td><td class='num'><a href='./dados/v1.0.0/orders_test_public.csv' download>baixar</a></td></tr>
 <tr><td><code>orders_test_private.csv</code><br><span class='sha'>sha256 e16c928bb6397164…</span></td><td>Pedidos da janela privada, usada no ranking final.</td><td class='num'>976</td><td class='num'>78 KB</td><td class='num'><a href='./dados/v1.0.0/orders_test_private.csv' download>baixar</a></td></tr>
 <tr><td><code>historical_deliveries.csv</code><br><span class='sha'>sha256 9a7c99389a9bcfd5…</span></td><td>O que de fato aconteceu com cada linha histórica: de qual CD saiu, quando prometeu, quando embarcou, quando chegou. É aqui que está o histórico de lead time real para a trilha preditiva.</td><td class='num'>25.077</td><td class='num'>1.96 MB</td><td class='num'><a href='./dados/v1.0.0/historical_deliveries.csv' download>baixar</a></td></tr>
 </tbody></table></div></section>
@@ -59,26 +59,26 @@ sha256sum -c CHECKSUMS.txt</pre><div class="callout"><p><b>Split temporal — n�
 <tr><td><code>vehicles.csv</code><br><span class='sha'>sha256 d21a217108d4a62a…</span></td><td>Capacidade de transferência e de distribuição.</td><td class='num'>2</td><td class='num'>0 KB</td><td class='num'><a href='./dados/v1.0.0/vehicles.csv' download>baixar</a></td></tr>
 <tr><td><code>holidays_calendar.csv</code><br><span class='sha'>sha256 36a95e9d2eed4acd…</span></td><td>Calendário de dias úteis por região (BR-102).</td><td class='num'>2.100</td><td class='num'>37 KB</td><td class='num'><a href='./dados/v1.0.0/holidays_calendar.csv' download>baixar</a></td></tr>
 </tbody></table></div></section>
-<section><p class="tag">Formato de submissão</p><h2>Formato de submissão</h2>
+<section><p class="tag">Formato de resposta</p><h2>Formato de resposta</h2>
 <div class="scroll"><table><thead><tr><th>Arquivo</th><th>O que tem</th><th class='num'>Linhas</th><th class='num'>Tamanho</th><th class='num'>Baixar</th></tr></thead><tbody>
-<tr><td><code>submission_example_promise.csv</code><br><span class='sha'>sha256 b08c97abf3aeb87c…</span></td><td>Formato aceito de submissão de promessa.</td><td class='num'>20</td><td class='num'>1 KB</td><td class='num'><a href='./dados/v1.0.0/submission_example_promise.csv' download>baixar</a></td></tr>
-<tr><td><code>submission_example_rebalance.csv</code><br><span class='sha'>sha256 a5514d7a89081c2a…</span></td><td>Formato aceito de submissão de rebalanceamento.</td><td class='num'>3</td><td class='num'>0 KB</td><td class='num'><a href='./dados/v1.0.0/submission_example_rebalance.csv' download>baixar</a></td></tr>
-<tr><td><code>submission_example_forecast.csv</code><br><span class='sha'>sha256 842e717a65a5baca…</span></td><td>Formato opcional da trilha preditiva: quantis de lead time por rota e dia.</td><td class='num'>60</td><td class='num'>2 KB</td><td class='num'><a href='./dados/v1.0.0/submission_example_forecast.csv' download>baixar</a></td></tr>
+<tr><td><code>resposta_exemplo_promessa.csv</code><br><span class='sha'>sha256 b08c97abf3aeb87c…</span></td><td>Formato aceito de resposta de promessa.</td><td class='num'>20</td><td class='num'>1 KB</td><td class='num'><a href='./dados/v1.0.0/resposta_exemplo_promessa.csv' download>baixar</a></td></tr>
+<tr><td><code>resposta_exemplo_rebalanceamento.csv</code><br><span class='sha'>sha256 a5514d7a89081c2a…</span></td><td>Formato aceito de resposta de rebalanceamento.</td><td class='num'>3</td><td class='num'>0 KB</td><td class='num'><a href='./dados/v1.0.0/resposta_exemplo_rebalanceamento.csv' download>baixar</a></td></tr>
+<tr><td><code>resposta_exemplo_previsao.csv</code><br><span class='sha'>sha256 842e717a65a5baca…</span></td><td>Formato opcional da trilha preditiva: quantis de lead time por rota e dia.</td><td class='num'>60</td><td class='num'>2 KB</td><td class='num'><a href='./dados/v1.0.0/resposta_exemplo_previsao.csv' download>baixar</a></td></tr>
 </tbody></table></div></section>
 <section><p class="tag">Documentação</p><h2>Documentação</h2>
 <div class="scroll"><table><thead><tr><th>Arquivo</th><th>O que tem</th><th class='num'>Linhas</th><th class='num'>Tamanho</th><th class='num'>Baixar</th></tr></thead><tbody>
-<tr><td><code>data_dictionary.md</code><br><span class='sha'>sha256 7acfca8f6f5b18fd…</span></td><td>—</td><td class='num'>—</td><td class='num'>18 KB</td><td class='num'><a href='./dados/v1.0.0/data_dictionary.md' download>baixar</a></td></tr>
-<tr><td><code>CHECKSUMS.txt</code><br><span class='sha'>sha256 28741ca9706edca0…</span></td><td>—</td><td class='num'>—</td><td class='num'>2 KB</td><td class='num'><a href='./dados/v1.0.0/CHECKSUMS.txt' download>baixar</a></td></tr>
+<tr><td><code>data_dictionary.md</code><br><span class='sha'>sha256 9ab629c46227252f…</span></td><td>—</td><td class='num'>—</td><td class='num'>18 KB</td><td class='num'><a href='./dados/v1.0.0/data_dictionary.md' download>baixar</a></td></tr>
+<tr><td><code>CHECKSUMS.txt</code><br><span class='sha'>sha256 5f9f9f0fcd143527…</span></td><td>—</td><td class='num'>—</td><td class='num'>2 KB</td><td class='num'><a href='./dados/v1.0.0/CHECKSUMS.txt' download>baixar</a></td></tr>
 </tbody></table></div></section>
-<section><p class="tag">O que você devolve</p><h2>Formato de submissão</h2><div class="col"><p>Três arquivos. Só o primeiro é obrigatório — e ele precisa cobrir <b>todas</b> as linhas da janela.</p></div><pre><b>submission_promise.csv</b>   <span class='c'>obrigatório</span>
+<section><p class="tag">O que você devolve</p><h2>Formato de resposta</h2><div class="col"><p>Três arquivos. Só o primeiro é obrigatório — e ele precisa cobrir <b>todas</b> as linhas da janela.</p></div><pre><b>resposta_promessa.csv</b>   <span class='c'>obrigatório</span>
 order_line_id,dc_id,promised_date,qty_committed,shipment_group
 OL-0125001,CD-SP,2026-09-04,1400,SHP-00012
 
-<b>submission_rebalance.csv</b>  <span class='c'>opcional — é onde está o jogo</span>
+<b>resposta_rebalanceamento.csv</b>  <span class='c'>opcional — é onde está o jogo</span>
 transfer_id,origin,dest,sku,qty_pallets,ship_date
 TRF-00001,CD-PE,CD-SP,P3,12,2026-09-15
 
-<b>submission_forecast.csv</b>   <span class='c'>opcional — vale 20 pontos</span>
+<b>resposta_previsao.csv</b>   <span class='c'>opcional — vale 20 pontos</span>
 dc_id,region,ship_date,transit_q50,transit_q90
 CD-SP,SE,2026-09-01,2,4</pre><div class="note"><p><b>O <code>shipment_group</code> não é formalidade.</b> Linhas com o mesmo grupo viajam juntas e dividem um frete — e o grupo só parte quando a última delas tem estoque. É a sua alavanca de composição de carga.</p></div></section>
 </main>

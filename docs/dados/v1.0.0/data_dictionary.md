@@ -38,7 +38,7 @@ Todo pedido recebido entre o início do histórico e a data de corte. É a base 
 | Coluna | Tipo | Unidade | Descrição |
 |--------|------|---------|-----------|
 | `order_id` | texto | — | Identificador do pedido |
-| `order_line_id` | texto | — | Identificador da linha — é a chave da submissão |
+| `order_line_id` | texto | — | Identificador da linha — é a chave da resposta |
 | `customer_id` | texto | — | Cliente, liga em customer_master |
 | `sku` | texto | — | Produto, liga em sku_master |
 | `qty` | inteiro | unidades | Quantidade pedida na linha |
@@ -50,7 +50,7 @@ Todo pedido recebido entre o início do histórico e a data de corte. É a base 
 
 ### `orders_test_public.csv`
 
-Pedidos da janela pública. São estes que a sua submissão precisa promissar — todos eles, sem exceção.
+Pedidos da janela pública. São estes que a sua resposta precisa promissar — todos eles, sem exceção.
 
 **Grão:** Linha de pedido a promissar · **Chave:** `order_line_id` · **Linhas:** 919 · **Tamanho:** 73.8 KB
 
@@ -59,7 +59,7 @@ Pedidos da janela pública. São estes que a sua submissão precisa promissar �
 | Coluna | Tipo | Unidade | Descrição |
 |--------|------|---------|-----------|
 | `order_id` | texto | — | Identificador do pedido |
-| `order_line_id` | texto | — | Identificador da linha — é a chave da submissão |
+| `order_line_id` | texto | — | Identificador da linha — é a chave da resposta |
 | `customer_id` | texto | — | Cliente, liga em customer_master |
 | `sku` | texto | — | Produto, liga em sku_master |
 | `qty` | inteiro | unidades | Quantidade pedida na linha |
@@ -80,7 +80,7 @@ Pedidos da janela privada, usada no ranking final.
 | Coluna | Tipo | Unidade | Descrição |
 |--------|------|---------|-----------|
 | `order_id` | texto | — | Identificador do pedido |
-| `order_line_id` | texto | — | Identificador da linha — é a chave da submissão |
+| `order_line_id` | texto | — | Identificador da linha — é a chave da resposta |
 | `customer_id` | texto | — | Cliente, liga em customer_master |
 | `sku` | texto | — | Produto, liga em sku_master |
 | `qty` | inteiro | unidades | Quantidade pedida na linha |
@@ -100,7 +100,7 @@ O que de fato aconteceu com cada linha histórica: de qual CD saiu, quando prome
 
 | Coluna | Tipo | Unidade | Descrição |
 |--------|------|---------|-----------|
-| `order_line_id` | texto | — | Identificador da linha — é a chave da submissão |
+| `order_line_id` | texto | — | Identificador da linha — é a chave da resposta |
 | `order_id` | texto | — | Identificador do pedido |
 | `dc_id` | texto | — | Centro de distribuição |
 | `sku` | texto | — | Produto, liga em sku_master |
@@ -309,9 +309,9 @@ Calendário de dias úteis por região (BR-102).
 | `is_business_day` | 0/1 | — | 1 = dia útil na região |
 | `holiday_name` | texto | — | Nome do feriado, quando houver |
 
-### `submission_example_promise.csv`
+### `resposta_exemplo_promessa.csv`
 
-Formato aceito de submissão de promessa.
+Formato aceito de resposta de promessa.
 
 **Grão:** Exemplo · **Chave:** `—` · **Linhas:** 20 · **Tamanho:** 0.9 KB
 
@@ -319,15 +319,15 @@ Formato aceito de submissão de promessa.
 
 | Coluna | Tipo | Unidade | Descrição |
 |--------|------|---------|-----------|
-| `order_line_id` | texto | — | Identificador da linha — é a chave da submissão |
+| `order_line_id` | texto | — | Identificador da linha — é a chave da resposta |
 | `dc_id` | texto | — | Centro de distribuição |
 | `promised_date` | data | AAAA-MM-DD | Data prometida ao cliente |
 | `qty_committed` | inteiro | unidades | Quantidade que você se compromete a entregar |
 | `shipment_group` | texto | — | Identificador do embarque: linhas do mesmo grupo viajam juntas |
 
-### `submission_example_rebalance.csv`
+### `resposta_exemplo_rebalanceamento.csv`
 
-Formato aceito de submissão de rebalanceamento.
+Formato aceito de resposta de rebalanceamento.
 
 **Grão:** Exemplo · **Chave:** `—` · **Linhas:** 3 · **Tamanho:** 0.2 KB
 
@@ -342,7 +342,7 @@ Formato aceito de submissão de rebalanceamento.
 | `qty_pallets` | inteiro | paletes | Quantidade transferida, em paletes completos |
 | `ship_date` | data | AAAA-MM-DD | Data de embarque |
 
-### `submission_example_forecast.csv`
+### `resposta_exemplo_previsao.csv`
 
 Formato opcional da trilha preditiva: quantis de lead time por rota e dia.
 

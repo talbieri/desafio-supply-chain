@@ -35,7 +35,7 @@ TABELAS = {
     ),
     "orders_test_public.csv": dict(
         grao="Linha de pedido a promissar",
-        desc="Pedidos da janela pública. São estes que a sua submissão precisa "
+        desc="Pedidos da janela pública. São estes que a sua resposta precisa "
              "promissar — todos eles, sem exceção.",
         chave="order_line_id",
     ),
@@ -90,13 +90,13 @@ TABELAS = {
     "holidays_calendar.csv": dict(grao="Dia × região",
                                   desc="Calendário de dias úteis por região (BR-102).",
                                   chave="(date, region)"),
-    "submission_example_promise.csv": dict(grao="Exemplo",
-                                           desc="Formato aceito de submissão de promessa.",
+    "resposta_exemplo_promessa.csv": dict(grao="Exemplo",
+                                           desc="Formato aceito de resposta de promessa.",
                                            chave="—"),
-    "submission_example_rebalance.csv": dict(grao="Exemplo",
-                                             desc="Formato aceito de submissão de rebalanceamento.",
+    "resposta_exemplo_rebalanceamento.csv": dict(grao="Exemplo",
+                                             desc="Formato aceito de resposta de rebalanceamento.",
                                              chave="—"),
-    "submission_example_forecast.csv": dict(
+    "resposta_exemplo_previsao.csv": dict(
         grao="Exemplo",
         desc="Formato opcional da trilha preditiva: quantis de lead time por rota e dia.",
         chave="—"),
@@ -104,7 +104,7 @@ TABELAS = {
 
 COLUNAS = {
     "order_id": ("texto", "—", "Identificador do pedido"),
-    "order_line_id": ("texto", "—", "Identificador da linha — é a chave da submissão"),
+    "order_line_id": ("texto", "—", "Identificador da linha — é a chave da resposta"),
     "customer_id": ("texto", "—", "Cliente, liga em customer_master"),
     "sku": ("texto", "—", "Produto, liga em sku_master"),
     "qty": ("inteiro", "unidades", "Quantidade pedida na linha"),

@@ -29,20 +29,23 @@ As regras completas estão em [`docs/desafio/01-business-scope.md`](../docs/desa
 
 Você precisa de **Python 3.10+** e nada mais. Sem pandas, sem solver, sem instalar nada.
 
+O pacote `.zip` traz os dados **e as ferramentas** — descompacte e os comandos abaixo funcionam
+de dentro da pasta. Se você clonou o repositório, já está tudo no lugar.
+
 ```bash
 # 1. Rode o baseline na janela pública (30 segundos)
 python desafio/ferramentas/baseline_guloso.py --janela public
 
 # 2. Avalie o baseline e veja o placar de referência
-python desafio/ferramentas/avaliar.py --submissao desafio/submissoes/baseline/public
+python desafio/ferramentas/avaliar.py --resposta desafio/respostas/baseline/public
 
 # 3. Rode o protótipo de exemplo e compare
 python desafio/ferramentas/exemplo_prototipo.py --janela public
-python desafio/ferramentas/avaliar.py --submissao desafio/submissoes/exemplo/public
+python desafio/ferramentas/avaliar.py --resposta desafio/respostas/exemplo/public
 
 # 4. Copie um dos dois, mexa, e avalie de novo
-cp -r desafio/submissoes/exemplo/public minha_solucao/
-python desafio/ferramentas/avaliar.py --submissao minha_solucao
+cp -r desafio/respostas/exemplo/public minha_solucao/
+python desafio/ferramentas/avaliar.py --resposta minha_solucao
 ```
 
 O que a política vigente entrega hoje nas duas janelas:
@@ -91,7 +94,7 @@ partir da distribuição observada no histórico, com semente fixa. Consequênci
 O avaliador diz em que modo rodou, na primeira linha:
 
 ```
-SUBMISSÃO VÁLIDA — janela public · modo TREINO
+RESPOSTA VÁLIDA — janela public · modo TREINO
 ```
 
 Otimize a decisão, não o sorteio. Uma solução que só ganha no modo treino é uma solução que
@@ -101,9 +104,9 @@ não ganha.
 
 ## O que você entrega
 
-### `submission_promise.csv` — obrigatório
+### `resposta_promessa.csv` — obrigatório
 
-Uma linha para **cada** `order_line_id` da janela. Faltou uma, a submissão é reprovada.
+Uma linha para **cada** `order_line_id` da janela. Faltou uma, a resposta é reprovada.
 
 ```csv
 order_line_id,dc_id,promised_date,qty_committed,shipment_group
@@ -120,14 +123,14 @@ OL-0125001,CD-SP,2026-09-04,1400,SHP-00012
 O `shipment_group` é a sua alavanca de composição de carga. Um grupo só embarca quando **todas**
 as suas linhas têm estoque: consolidar corta frete e atrasa quem já estava pronto.
 
-### `submission_rebalance.csv` — opcional, mas é onde está o jogo
+### `resposta_rebalanceamento.csv` — opcional, mas é onde está o jogo
 
 ```csv
 transfer_id,origin,dest,sku,qty_pallets,ship_date
 TRF-00001,CD-PE,CD-SP,P3,12,2026-09-01
 ```
 
-### `submission_forecast.csv` — opcional, vale 20 pontos
+### `resposta_previsao.csv` — opcional, vale 20 pontos
 
 A trilha preditiva: seus quantis de lead time por rota e dia de embarque.
 
@@ -166,7 +169,7 @@ Empurrar todas as promessas para a frente melhora a primeira e **não salva a se
 existe atalho: para subir o OTIF você precisa realmente colocar o produto no lugar certo, na
 hora certa.
 
-### Gates — reprovam a submissão inteira
+### Gates — reprovam a resposta inteira
 
 | Gate | Regra |
 |------|-------|
@@ -247,7 +250,7 @@ no lugar errado e transferir leva de 3 a 5 dias — decidir cedo vale mais que d
 | Item | Regra |
 |------|-------|
 | Equipes | Até 3 pessoas, com pelo menos dois perfis distintos (SCM, IA, otimização) |
-| Submissões | Até 5 por dia; cada equipe escolhe 2 para o ranking final |
+| Respostas | Até 5 por dia; cada equipe escolhe 2 para o ranking final |
 | Ranking final | 100% na janela privada. A pública serve só para feedback |
 | Bibliotecas | Livre, desde que open source e declarado no README da sua solução |
 | Uso de IA | Permitido e esperado. Declare o que foi gerado e por qual ferramenta |
@@ -267,7 +270,7 @@ desafio/
 │   ├── baseline_guloso.py       o baseline de referência
 │   ├── exemplo_prototipo.py     protótipo comentado — leia antes de escrever o seu
 │   └── avaliar.py               o avaliador oficial
-├── submissoes/baseline/         submissões do baseline, prontas
+├── submissoes/baseline/         respostas do baseline, prontas
 ├── gerador/                     como os dados foram gerados (seed 42)
 └── privado/                     gabarito — não distribuído
 ```

@@ -214,7 +214,7 @@ def main():
     ap = argparse.ArgumentParser(description="Baseline guloso de referência")
     ap.add_argument("--janela", choices=["public", "private"], default="public")
     ap.add_argument("--dados", default=None)
-    ap.add_argument("--saida", default="desafio/submissoes/baseline")
+    ap.add_argument("--saida", default="desafio/respostas/baseline")
     args = ap.parse_args()
 
     dados = Dados(args.dados) if args.dados else Dados()
@@ -222,10 +222,10 @@ def main():
     transferencias = gerar_rebalanceamento(dados, args.janela)
 
     base = os.path.join(args.saida, args.janela)
-    escrever_csv(f"{base}/submission_promise.csv",
+    escrever_csv(f"{base}/resposta_promessa.csv",
                  ["order_line_id", "dc_id", "promised_date", "qty_committed",
                   "shipment_group"], promessas)
-    escrever_csv(f"{base}/submission_rebalance.csv",
+    escrever_csv(f"{base}/resposta_rebalanceamento.csv",
                  ["transfer_id", "origin", "dest", "sku", "qty_pallets", "ship_date"],
                  transferencias)
 

@@ -8,12 +8,12 @@ desafio e supera o baseline, para você ver o caminho e depois fazer melhor.
   Alavanca 2 — PROMESSA     buffer por rota, calculado do histórico (não é chute fixo)
   Alavanca 3 — CONSOLIDAÇÃO agrupa embarques por cliente e semana para dividir frete
 
-Também gera `submission_forecast.csv`, que vale 20 pontos da rubrica e sai de graça
+Também gera `resposta_previsao.csv`, que vale 20 pontos da rubrica e sai de graça
 do mesmo cálculo do buffer.
 
 Uso:
     python desafio/ferramentas/exemplo_prototipo.py --janela public
-    python desafio/ferramentas/avaliar.py --submissao desafio/submissoes/exemplo/public
+    python desafio/ferramentas/avaliar.py --resposta desafio/respostas/exemplo/public
 """
 
 import argparse
@@ -376,7 +376,7 @@ def previsao(dados, q, janela):
 def main():
     ap = argparse.ArgumentParser(description="Protótipo de exemplo")
     ap.add_argument("--janela", choices=["public", "private"], default="public")
-    ap.add_argument("--saida", default="desafio/submissoes/exemplo")
+    ap.add_argument("--saida", default="desafio/respostas/exemplo")
     args = ap.parse_args()
 
     dados = Dados()
@@ -385,13 +385,13 @@ def main():
     forecast = previsao(dados, q, args.janela)
 
     base = os.path.join(args.saida, args.janela)
-    escrever_csv(f"{base}/submission_promise.csv",
+    escrever_csv(f"{base}/resposta_promessa.csv",
                  ["order_line_id", "dc_id", "promised_date", "qty_committed",
                   "shipment_group"], promessas)
-    escrever_csv(f"{base}/submission_rebalance.csv",
+    escrever_csv(f"{base}/resposta_rebalanceamento.csv",
                  ["transfer_id", "origin", "dest", "sku", "qty_pallets", "ship_date"],
                  transferencias)
-    escrever_csv(f"{base}/submission_forecast.csv",
+    escrever_csv(f"{base}/resposta_previsao.csv",
                  ["dc_id", "region", "ship_date", "transit_q50", "transit_q90"], forecast)
 
     comprometidas = sum(1 for p in promessas if int(p["qty_committed"]) > 0)
@@ -402,7 +402,7 @@ def main():
     print(f"  transferências ........ {len(transferencias)}")
     print(f"  arquivos em ........... {base}/")
     print(f"\n  Avalie com:\n    python desafio/ferramentas/avaliar.py "
-          f"--submissao {base} --janela {args.janela}")
+          f"--resposta {base} --janela {args.janela}")
 
 
 if __name__ == "__main__":

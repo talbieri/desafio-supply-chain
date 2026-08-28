@@ -21,6 +21,7 @@ import hashlib
 import os
 import shutil
 import subprocess
+import zipfile
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -80,7 +81,7 @@ def conferir_vazamento(caminho_zip):
     with zipfile.ZipFile(caminho_zip) as z:
         nomes = z.namelist()
     suspeitos = [n for n in nomes
-                 if "realized" in n or "privado" in n or "gabarito" in n]
+                 if "realized" in n or "/privado/" in n or "gabarito" in n]
     return nomes, suspeitos
 
 
@@ -115,9 +116,24 @@ def main():
         print("\nmodo --verificar: zip não regravado")
         return
 
-    destino = os.path.join("desafio", "dados", f"desafio-supply-chain-v{P.VERSAO}")
-    shutil.make_archive(destino, "zip", PASTA)
-    caminho_zip = destino + ".zip"
+    # O pacote leva os dados E as ferramentas. Só com os CSVs, quem baixa o zip
+    # não consegue rodar o baseline nem o avaliador — o guia de 30 minutos
+    # travaria no segundo passo. O layout espelha o repositório, então os
+    # comandos documentados funcionam sem ajuste de caminho.
+    caminho_zip = os.path.join("desafio", "dados",
+                               f"desafio-supply-chain-v{P.VERSAO}.zip")
+    if os.path.exists(caminho_zip):
+        os.remove(caminho_zip)
+    with zipfile.ZipFile(caminho_zip, "w", zipfile.ZIP_DEFLATED) as z:
+        for arq in sorted(os.listdir(PASTA)):
+            z.write(os.path.join(PASTA, arq), f"desafio/dados/v{P.VERSAO}/{arq}")
+        for pasta in ("ferramentas", "gerador"):
+            base = os.path.join("desafio", pasta)
+            for arq in sorted(os.listdir(base)):
+                if arq.endswith(".py"):
+                    z.write(os.path.join(base, arq), f"desafio/{pasta}/{arq}")
+        z.write(os.path.join("desafio", "README.md"), "desafio/README.md")
+        z.write("README.md", "README.md")
     nomes, suspeitos = conferir_vazamento(caminho_zip)
 
     print(f"\n─── pacote: {caminho_zip}")

@@ -26,7 +26,7 @@ O site inclui os CSVs: o time baixa tudo direto da página, sem pedir acesso a n
 | Página | O que é |
 |--------|---------|
 | `docs/index.html` | O desafio, o baseline a bater e como começar em 30 minutos |
-| `docs/dados.html` | Os 21 arquivos com tamanho, linhas e checksum, e o formato de submissão |
+| `docs/dados.html` | Os 21 arquivos com tamanho, linhas e checksum, e o formato de resposta |
 | `docs/regras.html` | As 40 regras de negócio, a rede, os custos e os KPIs |
 | `docs/conceitos.html` | Material auxiliar: ATP, CTP, abastecimento, lead time e frete |
 
@@ -85,11 +85,11 @@ Python 3.10+ e biblioteca padrão. Sem pandas, sem solver, sem instalar nada.
 ```bash
 # a política atual, para ter a referência
 python desafio/ferramentas/baseline_guloso.py --janela public
-python desafio/ferramentas/avaliar.py --submissao desafio/submissoes/baseline/public
+python desafio/ferramentas/avaliar.py --resposta desafio/respostas/baseline/public
 
 # o protótipo de exemplo, que corta 21,6% do custo
 python desafio/ferramentas/exemplo_prototipo.py --janela public
-python desafio/ferramentas/avaliar.py --submissao desafio/submissoes/exemplo/public
+python desafio/ferramentas/avaliar.py --resposta desafio/respostas/exemplo/public
 ```
 
 ---
