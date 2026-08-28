@@ -1,0 +1,6 @@
+sku,description,abc_class,unit_weight_kg,unit_volume_m3,unit_value,units_per_pallet,shelf_life_days,allow_partial,monthly_demand_units
+P1,"Linha básica, alto giro",A,0.8,0.0025,12.0,700,365,1,240000
+P2,Linha padrão,A,1.2,0.004,28.0,450,365,1,150000
+P3,Linha premium,B,0.5,0.006,180.0,300,540,0,40000
+P4,Linha sazonal,B,1.5,0.006,45.0,300,365,1,60000
+P5,Lançamento / promocional,C,0.9,0.0035,60.0,500,90,1,25000

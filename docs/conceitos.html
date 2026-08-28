@@ -1,0 +1,994 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Supply Chain do Zero</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
+
+<style>
+/* ============================================================
+   Supply Chain do Zero — material auxiliar do desafio
+   Mesma paleta da página de regras (teal de despacho + âmbar de
+   sinalização), layout de manual: entradas numeradas, quatro
+   campos fixos por conceito.
+   ============================================================ */
+
+:root {
+  --ground:      #E9EDEB;
+  --surface:     #FDFEFD;
+  --surface-2:   #DFE5E2;
+  --line:        #C6CFCB;
+  --line-soft:   #D8DFDC;
+  --ink:         #101715;
+  --ink-2:       #3D4B47;
+  --ink-3:       #66756F;
+  --accent:      #0D5B60;
+  --accent-2:    #E3EDED;
+  --signal:      #A8480D;
+  --signal-2:    #F6E6DA;
+  --moss:        #3D6B3E;
+  --shadow:      0 1px 2px rgba(16,23,21,.05), 0 8px 24px -16px rgba(16,23,21,.28);
+
+  --display: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --body: "Source Serif 4", Georgia, "Times New Roman", serif;
+  --mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --measure: 68ch;
+  --wide: 1140px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ground:    #0D1412;
+    --surface:   #151E1B;
+    --surface-2: #1D2825;
+    --line:      #2C3B37;
+    --line-soft: #23302C;
+    --ink:       #E7EDEA;
+    --ink-2:     #B3C1BC;
+    --ink-3:     #82918C;
+    --accent:    #52B7BC;
+    --accent-2:  #18302F;
+    --signal:    #DE8B4A;
+    --signal-2:  #33251A;
+    --moss:      #7FAE7A;
+    --shadow:    0 1px 2px rgba(0,0,0,.4), 0 10px 28px -18px rgba(0,0,0,.8);
+  }
+}
+
+:root[data-theme="dark"] {
+  --ground:    #0D1412;
+  --surface:   #151E1B;
+  --surface-2: #1D2825;
+  --line:      #2C3B37;
+  --line-soft: #23302C;
+  --ink:       #E7EDEA;
+  --ink-2:     #B3C1BC;
+  --ink-3:     #82918C;
+  --accent:    #52B7BC;
+  --accent-2:  #18302F;
+  --signal:    #DE8B4A;
+  --signal-2:  #33251A;
+  --moss:      #7FAE7A;
+  --shadow:    0 1px 2px rgba(0,0,0,.4), 0 10px 28px -18px rgba(0,0,0,.8);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--ground);
+  color: var(--ink);
+  font-family: var(--body);
+  font-size: 17px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+.shell { max-width: var(--wide); margin: 0 auto; padding: 0 28px; }
+.col { max-width: var(--measure); }
+
+/* ---------- Cabeçalho ---------- */
+
+.masthead {
+  border-bottom: 1px solid var(--line);
+  background: var(--surface);
+  padding: 60px 0 40px;
+}
+.kicker {
+  font-family: var(--mono);
+  font-size: 11.5px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin: 0 0 22px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.kicker::after { content: ""; flex: 1; height: 1px; background: var(--line); max-width: 200px; }
+h1 {
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: clamp(38px, 6.4vw, 68px);
+  line-height: .97;
+  letter-spacing: -.035em;
+  margin: 0 0 22px;
+  text-wrap: balance;
+  max-width: 15ch;
+}
+h1 em { font-style: normal; color: var(--accent); }
+.standfirst { font-size: 20px; line-height: 1.5; color: var(--ink-2); max-width: 60ch; margin: 0 0 26px; }
+
+.promessa {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(196px, 1fr));
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+}
+.promessa div { background: var(--surface); padding: 16px 18px; }
+.promessa b {
+  display: block;
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 5px;
+}
+.promessa span { font-size: 15px; color: var(--ink-2); }
+
+/* ---------- Navegação ---------- */
+
+nav.rail {
+  position: sticky; top: 0; z-index: 20;
+  background: var(--ground);
+  border-bottom: 1px solid var(--line);
+  overflow-x: auto;
+}
+nav.rail ul { display: flex; list-style: none; margin: 0 auto; padding: 0 28px; max-width: var(--wide); }
+nav.rail a {
+  display: block; padding: 13px 15px;
+  font-family: var(--mono); font-size: 11.5px;
+  letter-spacing: .09em; text-transform: uppercase;
+  color: var(--ink-3); text-decoration: none; white-space: nowrap;
+  border-bottom: 2px solid transparent;
+}
+nav.rail a:hover, nav.rail a:focus-visible { color: var(--ink); border-bottom-color: var(--accent); }
+
+/* ---------- Seções ---------- */
+
+main { padding-bottom: 80px; }
+section { padding: 54px 0; border-bottom: 1px solid var(--line-soft); }
+section:last-of-type { border-bottom: none; }
+
+.tag {
+  font-family: var(--mono); font-size: 11px;
+  letter-spacing: .16em; text-transform: uppercase;
+  color: var(--signal); margin: 0 0 10px;
+}
+h2 {
+  font-family: var(--display); font-weight: 700;
+  font-size: clamp(26px, 3.3vw, 35px);
+  letter-spacing: -.025em; line-height: 1.1;
+  margin: 0 0 14px; text-wrap: balance;
+}
+h3 { font-family: var(--display); font-weight: 700; font-size: 17px; margin: 36px 0 12px; }
+h4 {
+  font-family: var(--mono); font-weight: 600; font-size: 11.5px;
+  letter-spacing: .14em; text-transform: uppercase;
+  color: var(--ink-3); margin: 28px 0 10px;
+}
+p { margin: 0 0 18px; }
+.lead { font-size: 19px; color: var(--ink-2); }
+a { color: var(--accent); }
+ul.plain { margin: 0 0 18px; padding-left: 1.15em; }
+ul.plain li { margin-bottom: 7px; }
+
+code, .mono { font-family: var(--mono); font-size: .855em; }
+code { background: var(--surface-2); padding: 1.5px 5px; border-radius: 3px; color: var(--ink); }
+
+/* ---------- Conceito ---------- */
+
+.conceito {
+  border: 1px solid var(--line);
+  background: var(--surface);
+  margin-bottom: 22px;
+  box-shadow: var(--shadow);
+}
+.conceito > header {
+  display: flex; align-items: baseline; gap: 16px;
+  padding: 18px 22px 14px;
+  border-bottom: 1px solid var(--line-soft);
+}
+.conceito .n {
+  font-family: var(--mono); font-weight: 600; font-size: 12px;
+  color: var(--signal); letter-spacing: .04em; flex-shrink: 0;
+}
+.conceito h3 { margin: 0; font-size: 20px; letter-spacing: -.015em; }
+.conceito .en {
+  font-family: var(--mono); font-size: 11.5px;
+  color: var(--ink-3); letter-spacing: .04em;
+}
+.campos { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1px; background: var(--line-soft); }
+.campo { background: var(--surface); padding: 16px 22px; }
+.campo b {
+  display: block;
+  font-family: var(--mono); font-size: 10px;
+  letter-spacing: .14em; text-transform: uppercase;
+  color: var(--ink-3); margin-bottom: 6px;
+}
+.campo p { margin: 0; font-size: 15.5px; color: var(--ink-2); }
+.campo.armadilha { background: var(--signal-2); }
+.campo.armadilha b { color: var(--signal); }
+.campo.armadilha p { color: var(--ink); }
+
+/* ---------- Tabelas ---------- */
+
+.scroll { overflow-x: auto; margin: 0 0 22px; border: 1px solid var(--line); background: var(--surface); }
+table { width: 100%; border-collapse: collapse; font-family: var(--display); font-size: 14.5px; min-width: 500px; }
+thead th {
+  text-align: left; font-family: var(--mono); font-weight: 600;
+  font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase;
+  color: var(--ink-3); padding: 12px 16px;
+  border-bottom: 1px solid var(--line); background: var(--surface-2); white-space: nowrap;
+}
+tbody td { padding: 11px 16px; border-bottom: 1px solid var(--line-soft); vertical-align: top; color: var(--ink-2); }
+tbody tr:last-child td { border-bottom: none; }
+tbody td:first-child { color: var(--ink); font-weight: 600; }
+td.num, th.num { text-align: right; font-family: var(--mono); font-variant-numeric: tabular-nums; }
+tbody tr:hover td { background: var(--accent-2); }
+tr.destaque td { background: var(--signal-2); }
+tr.destaque:hover td { background: var(--signal-2); }
+
+/* ---------- Blocos ---------- */
+
+.figure { margin: 28px 0 24px; }
+.figure .frame {
+  border: 1px solid var(--line); background: var(--surface);
+  padding: 26px 22px; overflow-x: auto; box-shadow: var(--shadow);
+}
+.figure svg { display: block; width: 100%; height: auto; min-width: 560px; }
+figcaption {
+  font-family: var(--mono); font-size: 11.5px; line-height: 1.6;
+  color: var(--ink-3); margin-top: 12px; max-width: 76ch;
+}
+figcaption b { color: var(--ink-2); font-weight: 600; }
+
+.note {
+  border-left: 3px solid var(--signal); background: var(--signal-2);
+  padding: 18px 22px; margin: 24px 0; font-size: 16.5px; color: var(--ink-2);
+}
+.note b { color: var(--ink); }
+.note :last-child { margin-bottom: 0; }
+
+.callout {
+  background: var(--accent-2); border: 1px solid var(--line);
+  padding: 18px 22px; font-size: 16px; color: var(--ink-2); margin: 24px 0;
+}
+.callout b { color: var(--ink); }
+.callout :last-child { margin-bottom: 0; }
+
+pre {
+  font-family: var(--mono); font-size: 13px; line-height: 1.65;
+  background: var(--surface); border: 1px solid var(--line);
+  padding: 18px 20px; overflow-x: auto; margin: 0 0 22px; color: var(--ink-2);
+}
+pre b { color: var(--ink); font-weight: 600; }
+
+.passos { counter-reset: passo; display: grid; gap: 1px; background: var(--line); border: 1px solid var(--line); margin-bottom: 24px; }
+.passo { background: var(--surface); padding: 20px 22px; display: grid; grid-template-columns: 40px 1fr; gap: 18px; }
+.passo::before {
+  counter-increment: passo; content: counter(passo);
+  font-family: var(--display); font-weight: 800; font-size: 26px;
+  color: var(--accent); line-height: 1;
+}
+.passo h4 { margin: 0 0 6px; font-family: var(--display); font-size: 16px;
+  text-transform: none; letter-spacing: -.01em; color: var(--ink); font-weight: 700; }
+.passo p { margin: 0; font-size: 15.5px; color: var(--ink-2); }
+
+/* SVG tokens */
+.s-ink { fill: var(--ink); }
+.s-ink2 { fill: var(--ink-2); }
+.s-ink3 { fill: var(--ink-3); }
+.s-accent { fill: var(--accent); }
+.s-signal { fill: var(--signal); }
+.svg-label { font-family: var(--display); font-weight: 600; font-size: 13px; }
+.svg-small { font-family: var(--mono); font-size: 10.5px; letter-spacing: .04em; }
+.svg-num { font-family: var(--mono); font-size: 11px; font-weight: 500; }
+
+footer {
+  padding: 34px 0 0; font-family: var(--mono); font-size: 11.5px;
+  line-height: 1.8; color: var(--ink-3); border-top: 1px solid var(--line);
+}
+
+@media (max-width: 720px) {
+  body { font-size: 16px; }
+  .shell { padding: 0 20px; }
+  nav.rail ul { padding: 0 20px; }
+  .masthead { padding: 42px 0 30px; }
+  .conceito > header { flex-wrap: wrap; gap: 8px; }
+}
+
+@media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+
+/* barra de navegação do site — injetada pelo gerador */
+.sitenav { background: var(--ink); border-bottom: 1px solid var(--ink); }
+.sitenav-in {
+  max-width: 1140px; margin: 0 auto; padding: 0 28px;
+  display: flex; align-items: center; gap: 4px; flex-wrap: wrap;
+}
+.sitenav a {
+  display: block; padding: 12px 12px; text-decoration: none;
+  font-family: var(--mono); font-size: 11.5px; letter-spacing: .1em;
+  text-transform: uppercase; color: #9fb3ae;
+}
+.sitenav a:hover, .sitenav a:focus-visible { color: #fff; }
+.sitenav a.ativo { color: #fff; box-shadow: inset 0 -2px 0 var(--accent); }
+.sitenav .marca {
+  font-family: var(--display); font-weight: 700; font-size: 14px;
+  letter-spacing: -.01em; text-transform: none; color: #fff; padding-left: 0;
+}
+.sitenav .sep { flex: 1; }
+@media (max-width: 720px) { .sitenav-in { padding: 0 20px; } .sitenav .sep { flex: 0; } }
+</style>
+
+</head>
+<body>
+<nav class="sitenav">
+  <div class="sitenav-in">
+    <a class="marca" href="./index.html">Desafio&nbsp;Supply&nbsp;Chain</a>
+    <span class="sep"></span>
+    <a href="./index.html">Início</a>
+    <a href="./dados.html">Dados</a>
+    <a href="./regras.html">Regras</a>
+    <a href="./conceitos.html" class="ativo">Conceitos</a>
+  </div>
+</nav>
+<header class="masthead">
+  <div class="shell">
+    <p class="kicker">Material auxiliar · Desafio de Supply Chain</p>
+    <h1>Supply Chain do <em>Zero</em></h1>
+    <p class="standfirst">
+      Escrito para quem vem de dados, IA ou otimização e precisa entender o problema o
+      suficiente para construir um protótipo — não para virar especialista em logística.
+    </p>
+    <div class="promessa">
+      <div><b>Ao final você sabe</b><span>O que é ATP, e por que ele é uma linha do tempo</span></div>
+      <div><b>Ao final você sabe</b><span>Como uma data prometida é calculada, etapa por etapa</span></div>
+      <div><b>Ao final você sabe</b><span>Onde cada conceito mora nos CSVs do pacote</span></div>
+      <div><b>Ao final você sabe</b><span>As 8 armadilhas que reprovam a primeira submissão</span></div>
+    </div>
+  </div>
+</header>
+
+<nav class="rail">
+  <ul>
+    <li><a href="#mapa">O mapa mental</a></li>
+    <li><a href="#estoque">Estoque e ATP</a></li>
+    <li><a href="#exemplo">Exemplo real</a></li>
+    <li><a href="#prazo">Prazo e promessa</a></li>
+    <li><a href="#rede">Rede e frete</a></li>
+    <li><a href="#servico">Métricas</a></li>
+    <li><a href="#codigo">Do conceito ao código</a></li>
+    <li><a href="#armadilhas">Armadilhas</a></li>
+    <li><a href="#glossario">Glossário</a></li>
+  </ul>
+</nav>
+
+<main class="shell">
+
+  <!-- ============================ MAPA ============================ -->
+  <section id="mapa">
+    <p class="tag">Cinco minutos</p>
+    <h2>Dois fluxos que não se falam</h2>
+    <div class="col">
+      <p class="lead">
+        A cadeia tem três nós e dois fluxos. Entender por que eles não se falam é entender
+        todo o desafio.
+      </p>
+    </div>
+
+    <figure class="figure">
+      <div class="frame">
+        <svg viewBox="0 0 920 340" role="img" aria-label="Diagrama dos dois fluxos: abastecimento planejado da fábrica ao CD, e atendimento reativo do CD ao cliente">
+          <defs>
+            <marker id="a1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+              <path d="M0,0 L10,5 L0,10 z" fill="currentColor"/>
+            </marker>
+          </defs>
+
+          <!-- fluxo 1 -->
+          <text x="30" y="26" class="svg-small s-accent">FLUXO 1 · ABASTECIMENTO — empurra, planejado semanas antes, lote grande</text>
+          <g fill="none" stroke="var(--accent)" stroke-width="2" color="var(--accent)">
+            <path d="M215,88 L360,88" marker-end="url(#a1)"/>
+          </g>
+          <rect x="30" y="58" width="185" height="60" rx="2" fill="var(--accent-2)" stroke="var(--accent)" stroke-width="1.6"/>
+          <text x="48" y="84" class="svg-label s-ink">FÁBRICA</text>
+          <text x="48" y="103" class="svg-small s-ink3">PL-01 · PL-02</text>
+          <text x="230" y="80" class="svg-small s-ink3">decidido com PREVISÃO</text>
+          <text x="230" y="106" class="svg-small s-ink3">lead time de 1 a 6 dias</text>
+
+          <!-- CD central -->
+          <rect x="360" y="40" width="200" height="200" rx="2" fill="var(--surface-2)" stroke="var(--ink)" stroke-width="2"/>
+          <text x="380" y="70" class="svg-label s-ink">CENTRO DE</text>
+          <text x="380" y="88" class="svg-label s-ink">DISTRIBUIÇÃO</text>
+          <text x="380" y="112" class="svg-small s-ink3">CD-SP · CD-PR</text>
+          <text x="380" y="128" class="svg-small s-ink3">CD-GO · CD-PE</text>
+          <line x1="380" y1="146" x2="540" y2="146" stroke="var(--line)"/>
+          <text x="380" y="170" class="svg-small s-signal">o amortecedor entre</text>
+          <text x="380" y="186" class="svg-small s-signal">dois ritmos diferentes</text>
+          <text x="380" y="214" class="svg-small s-ink3">é aqui que o</text>
+          <text x="380" y="229" class="svg-small s-ink3">desafio acontece</text>
+
+          <!-- fluxo 2 -->
+          <text x="600" y="26" class="svg-small s-signal">FLUXO 2 · ATENDIMENTO — puxa, reativo, fracionado</text>
+          <g fill="none" stroke="var(--signal)" stroke-width="2" color="var(--signal)">
+            <path d="M560,88 L700,88" marker-end="url(#a1)"/>
+          </g>
+          <rect x="700" y="58" width="190" height="60" rx="2" fill="var(--signal-2)" stroke="var(--signal)" stroke-width="1.6"/>
+          <text x="718" y="84" class="svg-label s-ink">CLIENTE</text>
+          <text x="718" y="103" class="svg-small s-ink3">KA · DIS · VAR · ECM</text>
+          <text x="576" y="112" class="svg-small s-ink3">decidido com REALIDADE</text>
+
+          <!-- transferencia -->
+          <g fill="none" stroke="var(--signal)" stroke-width="1.6" stroke-dasharray="4 4" color="var(--signal)">
+            <path d="M400,240 C400,290 520,290 520,242" marker-end="url(#a1)"/>
+          </g>
+          <text x="460" y="308" class="svg-small s-signal" text-anchor="middle">transferência entre CDs — a alavanca que VOCÊ controla</text>
+
+          <!-- descompasso -->
+          <text x="30" y="270" class="svg-small s-ink3">O plano posicionou o estoque semanas atrás.</text>
+          <text x="30" y="288" class="svg-small s-ink3">O pedido real chegou agora e não obedeceu ao plano.</text>
+          <text x="30" y="312" class="svg-small s-ink">Sua tarefa: a melhor decisão possível com o estoque que já está onde está.</text>
+        </svg>
+      </div>
+      <figcaption>
+        <b>Fig. 1 — Os dois ritmos.</b> A fábrica produz em campanha, lote grande, poucas vezes.
+        O cliente compra em pingado, todo dia. O CD existe para absorver a diferença — e a
+        decisão do desafio nasce exatamente quando essa absorção não é suficiente.
+      </figcaption>
+    </figure>
+
+    <div class="callout">
+      <p><b>Se você vem de machine learning:</b> pense no plano de demanda como o
+      <em>treino</em> e no pedido real como o dado de produção que veio de uma distribuição
+      diferente. Só que aqui você não pode retreinar — você tem que atender.</p>
+    </div>
+  </section>
+
+  <!-- ============================ ESTOQUE ============================ -->
+  <section id="estoque">
+    <p class="tag">Conceitos 01 a 05</p>
+    <h2>Estoque não é um número</h2>
+
+    <div class="conceito">
+      <header><span class="n">01</span><h3>Abastecimento</h3><span class="en">replenishment</span></header>
+      <div class="campos">
+        <div class="campo"><b>O que é</b><p>Repor estoque no CD antes que acabe. Aqui roda toda segunda: olha quanto tem, quanto vai vender, pede a diferença.</p></div>
+        <div class="campo"><b>Por que existe</b><p>Fábrica produz em lote grande; cliente compra em pingado. O CD amortece.</p></div>
+        <div class="campo"><b>Onde está</b><p><code>inbound_plan.csv</code> — cada linha é um lote a caminho.</p></div>
+        <div class="campo armadilha"><b>Armadilha</b><p>O abastecimento já aconteceu. A produção está congelada (BR-706): você decide o que fazer com o que existe, não o que a fábrica produz.</p></div>
+      </div>
+    </div>
+
+    <div class="conceito">
+      <header><span class="n">02</span><h3>Recebimento confirmado e não confirmado</h3><span class="en">confirmed inbound</span></header>
+      <div class="campos">
+        <div class="campo"><b>O que é</b><p>Lote a caminho tem data prevista (ETA). Se já saiu da fábrica com nota, é confirmado. Se é só linha no plano, não é.</p></div>
+        <div class="campo"><b>Por que existe</b><p>O confirmado tem placa de caminhão. O não confirmado tem intenção.</p></div>
+        <div class="campo"><b>Onde está</b><p><code>inbound_plan.csv</code>, coluna <code>confirmed</code>.</p></div>
+        <div class="campo armadilha"><b>Armadilha</b><p>Contar com o não confirmado infla o disponível e melhora suas datas — mas no gabarito eles atrasam de 2 a 6 dias. São só 12 no pacote inteiro: poucos, e por isso fáceis de ignorar até doer (BR-403).</p></div>
+      </div>
+    </div>
+
+    <h3>As quatro palavras para “estoque”</h3>
+    <div class="scroll">
+      <table>
+        <thead><tr><th>Termo</th><th>Significa</th><th>Coluna</th></tr></thead>
+        <tbody>
+          <tr><td>On hand</td><td>O que está fisicamente no CD, agora</td><td><code>on_hand</code></td></tr>
+          <tr><td>Alocado</td><td>Já tem dono: foi prometido a um pedido</td><td>você controla</td></tr>
+          <tr><td>Reservado</td><td>Separado para um cliente antes de ele pedir</td><td><code>reserved_ka</code></td></tr>
+          <tr><td>Em trânsito</td><td>Saiu da fábrica, ainda não chegou</td><td><code>in_transit</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="col"><b>Disponível não é on hand.</b> Se o CD tem 1.000 unidades e 800 já foram
+    prometidas, você tem 200 para prometer. Essa distinção tem nome.</p>
+
+    <div class="conceito">
+      <header><span class="n">03</span><h3>ATP — Disponível para promessa</h3><span class="en">Available To Promise</span></header>
+      <div class="campos">
+        <div class="campo"><b>O que é</b><p>Quanto você ainda pode prometer: o que tem, mais o que vai chegar confirmado, menos tudo que já prometeu.</p></div>
+        <div class="campo"><b>Por que existe</b><p>Sem ATP, dois vendedores prometem a mesma caixa para dois clientes diferentes.</p></div>
+        <div class="campo"><b>Onde está</b><p><code>inventory_opening.csv</code> (posição de abertura da janela que você resolve) + <code>inbound_plan.csv</code> com <code>confirmed=1</code>. Para a janela privada, <b>não</b> use o snapshot da data de corte.</p></div>
+        <div class="campo armadilha"><b>Armadilha</b><p>Aceitar o pedido porque o saldo <em>corrente</em> cobre. Ele precisa continuar cobrindo em <b>todas as datas seguintes</b> — senão você promete duas vezes o mesmo estoque. A conta certa é o mínimo do saldo acumulado à frente.</p></div>
+      </div>
+    </div>
+
+    <div class="conceito">
+      <header><span class="n">04</span><h3>CTP — Capaz de prometer</h3><span class="en">Capable To Promise</span></header>
+      <div class="campos">
+        <div class="campo"><b>O que é</b><p>O passo seguinte: se não tenho disponível, consigo ter — produzindo, transferindo de outro CD, ou usando um recebimento ainda não confirmado?</p></div>
+        <div class="campo"><b>Por que existe</b><p>ATP responde “tenho?”. CTP responde “consigo ter a tempo?”. A segunda é mais cara de responder e de errar.</p></div>
+        <div class="campo"><b>Onde está</b><p>ATP são os passos 1 e 2 da cascata BR-301; CTP é o passo 4. No meio está a transferência entre CDs.</p></div>
+        <div class="campo armadilha"><b>Armadilha</b><p>Usar CTP como se fosse ATP. Transferência leva de 2 a 6 dias e produção está congelada — o CTP aqui é bem mais estreito do que parece.</p></div>
+      </div>
+    </div>
+
+    <div class="conceito">
+      <header><span class="n">05</span><h3>Cobertura</h3><span class="en">days of supply</span></header>
+      <div class="campos">
+        <div class="campo"><b>O que é</b><p>Estoque dividido pela demanda diária. “12 dias de cobertura” = dá para 12 dias sem repor.</p></div>
+        <div class="campo"><b>Por que existe</b><p>Comparar 2.000 unidades de P1 com 2.000 de P3 não diz nada. Cobertura normaliza pelo giro.</p></div>
+        <div class="campo"><b>Onde está</b><p>Você calcula: <code>on_hand</code> ÷ demanda diária prevista em <code>demand_plan.csv</code>.</p></div>
+        <div class="campo armadilha"><b>Armadilha</b><p>“Onde tem mais estoque” não é “de onde atender”. O CD-PE tem o maior estoque de P3 da rede e é a pior opção para atender o Sudeste.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ EXEMPLO ============================ -->
+  <section id="exemplo">
+    <p class="tag">Um caso, do começo ao fim</p>
+    <h2>581 unidades e um Key Account impaciente</h2>
+    <div class="col">
+      <p>
+        Este é um caso real do pacote de dados. Acompanhe até o fim: ele contém quase tudo
+        que o desafio cobra.
+      </p>
+    </div>
+
+    <figure class="figure">
+      <div class="frame">
+        <svg viewBox="0 0 920 330" role="img" aria-label="Linha do tempo do ATP de P3 no CD-SP: 581 unidades no corte, cinco pedidos consumindo o saldo, e um recebimento de 11.100 unidades em 3 de setembro">
+          <text x="0" y="16" class="svg-small s-ink3">ATP DE P3 NO CD-SP — LINHA DO TEMPO, NÃO NÚMERO</text>
+
+          <!-- eixo -->
+          <line x1="60" y1="250" x2="880" y2="250" stroke="var(--line)" stroke-width="1.5"/>
+          <g class="svg-small s-ink3" text-anchor="middle">
+            <text x="120" y="272">28/08</text>
+            <text x="260" y="272">31/08</text>
+            <text x="420" y="272">01/09</text>
+            <text x="620" y="272">03/09</text>
+            <text x="820" y="272">17/09</text>
+          </g>
+          <g stroke="var(--line)" stroke-dasharray="3 4">
+            <line x1="120" y1="46" x2="120" y2="250"/>
+            <line x1="260" y1="46" x2="260" y2="250"/>
+            <line x1="420" y1="46" x2="420" y2="250"/>
+            <line x1="620" y1="46" x2="620" y2="250"/>
+            <line x1="820" y1="46" x2="820" y2="250"/>
+          </g>
+
+          <!-- saldo -->
+          <path d="M120,214 L260,214 L260,238 L420,238 L420,238 L620,238 L620,60 L880,60"
+                fill="none" stroke="var(--accent)" stroke-width="2.5"/>
+          <circle cx="120" cy="214" r="4" fill="var(--accent)"/>
+          <circle cx="260" cy="238" r="4" fill="var(--accent)"/>
+          <circle cx="620" cy="60" r="4" fill="var(--accent)"/>
+
+          <text x="128" y="206" class="svg-num s-accent">581</text>
+          <text x="268" y="232" class="svg-num s-accent">35</text>
+          <text x="628" y="52" class="svg-num s-accent">11.681</text>
+
+          <!-- eventos -->
+          <text x="120" y="100" class="svg-small s-ink2" text-anchor="middle">estoque</text>
+          <text x="120" y="114" class="svg-small s-ink2" text-anchor="middle">no corte</text>
+
+          <g>
+            <rect x="176" y="120" width="168" height="80" fill="var(--surface-2)" stroke="var(--line)"/>
+            <text x="188" y="138" class="svg-small s-ink">4 pedidos cabem:</text>
+            <text x="188" y="154" class="svg-small s-ink3">KA 300 · VAR 150</text>
+            <text x="188" y="169" class="svg-small s-ink3">ECM 30 · ECM 66</text>
+            <text x="188" y="190" class="svg-num s-accent">581 − 546 = 35</text>
+          </g>
+
+          <g>
+            <rect x="352" y="112" width="200" height="96" fill="var(--signal-2)" stroke="var(--signal)" stroke-width="1.6"/>
+            <text x="366" y="132" class="svg-small s-signal">5º PEDIDO: KA, 300 un</text>
+            <text x="366" y="150" class="svg-small s-ink2">cliente pediu para 03/09</text>
+            <text x="366" y="172" class="svg-num s-signal">faltam 265 unidades</text>
+            <text x="366" y="194" class="svg-small s-ink3">o que fazer?</text>
+          </g>
+
+          <g>
+            <rect x="600" y="100" width="164" height="62" fill="var(--accent-2)" stroke="var(--accent)" stroke-width="1.6"/>
+            <text x="612" y="120" class="svg-small s-ink">RCP-001585</text>
+            <text x="612" y="136" class="svg-small s-accent">+11.100 confirmado</text>
+            <text x="612" y="152" class="svg-small s-ink3">entra no ATP</text>
+          </g>
+
+          <g>
+            <rect x="782" y="112" width="134" height="70" fill="none" stroke="var(--line)" stroke-dasharray="4 4"/>
+            <text x="792" y="132" class="svg-small s-ink3">o que NÃO entra:</text>
+            <text x="792" y="148" class="svg-small s-ink3">RCP-001645, 28/09</text>
+            <text x="792" y="164" class="svg-small s-ink3">ordem só em 21/09</text>
+            <text x="792" y="178" class="svg-small s-signal">confirmed = 0</text>
+          </g>
+
+          <text x="0" y="304" class="svg-small s-ink3">O saldo cai a 35 e só se recupera em 03/09. Quem tratou o ATP como “tenho 581” rejeitou o quinto pedido. Quem tratou como linha do tempo viu a saída.</text>
+        </svg>
+      </div>
+      <figcaption>
+        <b>Fig. 2 — ATP escalonado no tempo.</b> Números reais de <code>P3</code> no
+        <code>CD-SP</code> na janela pública. O recebimento não confirmado de 17/09 está
+        desenhado fora da linha de propósito: ele existe, mas não pode sustentar promessa.
+      </figcaption>
+    </figure>
+
+    <h3>As quatro saídas para o quinto pedido</h3>
+    <div class="scroll">
+      <table>
+        <thead><tr><th>Opção</th><th>Embarque</th><th>Entrega</th><th class="num">Atraso</th><th class="num">Tarifa</th></tr></thead>
+        <tbody>
+          <tr><td>Esperar o recebimento no CD-SP</td><td>03/09</td><td>08/09</td><td class="num">5 dias</td><td class="num">R$ 0,68/kg</td></tr>
+          <tr class="destaque"><td>Atender do CD-GO (2.360 un)</td><td>01/09</td><td>04/09</td><td class="num">1 dia</td><td class="num">R$ 0,80/kg</td></tr>
+          <tr><td>Atender do CD-PR (2.195 un)</td><td>01/09</td><td>04/09</td><td class="num">1 dia</td><td class="num">R$ 0,80/kg</td></tr>
+          <tr><td>Atender do CD-PE (4.135 un)</td><td>01/09</td><td>10/09</td><td class="num">7 dias</td><td class="num">R$ 1,17/kg</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="note">
+      <p><b>Três coisas para levar deste caso.</b></p>
+      <p>1. A entrega cai em <b>08/09 e não 07/09</b> porque 7 de setembro é feriado nacional.
+      Calendário não é detalhe.</p>
+      <p>2. Pagar <b>18% a mais de frete evita 4 dias de atraso</b> em um cliente com multa de
+      3% sobre o faturamento do mês. A conta fecha com folga.</p>
+      <p>3. O <b>CD-PE tem o maior estoque e é a pior opção.</b> “Onde tem mais” não é “de onde
+      atender”.</p>
+    </div>
+
+    <p class="col">Isso em <b>uma</b> linha de pedido. Você tem 919 delas na janela pública.</p>
+  </section>
+
+  <!-- ============================ PRAZO ============================ -->
+  <section id="prazo">
+    <p class="tag">Conceitos 06 a 08</p>
+    <h2>Como uma data é construída</h2>
+
+    <figure class="figure">
+      <div class="frame">
+        <svg viewBox="0 0 920 250" role="img" aria-label="Anatomia do prazo: pedido, cutoff das 18h, liberação no dia útil seguinte, trânsito e entrega">
+          <defs>
+            <marker id="a2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+              <path d="M0,0 L10,5 L0,10 z" fill="currentColor"/>
+            </marker>
+          </defs>
+
+          <line x1="40" y1="120" x2="880" y2="120" stroke="var(--line)" stroke-width="2"/>
+
+          <g fill="none" stroke="var(--ink-3)" stroke-width="1.4" color="var(--ink-3)">
+            <line x1="150" y1="120" x2="255" y2="120" marker-end="url(#a2)"/>
+            <line x1="330" y1="120" x2="435" y2="120" marker-end="url(#a2)"/>
+            <line x1="530" y1="120" x2="700" y2="120" marker-end="url(#a2)"/>
+          </g>
+
+          <!-- marcos -->
+          <g>
+            <circle cx="110" cy="120" r="7" fill="var(--accent)"/>
+            <text x="110" y="96" class="svg-label s-ink" text-anchor="middle">pedido</text>
+            <text x="110" y="150" class="svg-small s-ink3" text-anchor="middle">14h32</text>
+
+            <circle cx="295" cy="120" r="7" fill="var(--signal)"/>
+            <text x="295" y="96" class="svg-label s-ink" text-anchor="middle">cutoff</text>
+            <text x="295" y="150" class="svg-small s-signal" text-anchor="middle">18h00</text>
+
+            <circle cx="480" cy="120" r="7" fill="var(--accent)"/>
+            <text x="480" y="96" class="svg-label s-ink" text-anchor="middle">liberação</text>
+            <text x="480" y="150" class="svg-small s-ink3" text-anchor="middle">dia útil do CD</text>
+
+            <circle cx="740" cy="120" r="7" fill="var(--accent)"/>
+            <text x="740" y="96" class="svg-label s-ink" text-anchor="middle">entrega</text>
+            <text x="740" y="150" class="svg-small s-ink3" text-anchor="middle">dia útil da região</text>
+          </g>
+
+          <!-- rotulos dos trechos -->
+          <text x="202" y="112" class="svg-small s-ink3" text-anchor="middle">fila</text>
+          <text x="382" y="112" class="svg-small s-ink3" text-anchor="middle">separação</text>
+          <text x="615" y="112" class="svg-small s-ink3" text-anchor="middle">trânsito · 2 a 10 dias úteis</text>
+
+          <!-- regras -->
+          <rect x="230" y="176" width="240" height="52" fill="var(--signal-2)" stroke="var(--signal)" stroke-width="1.5"/>
+          <text x="244" y="196" class="svg-small s-signal">BR-101 · depois das 18h,</text>
+          <text x="244" y="212" class="svg-small s-signal">conta como pedido de amanhã</text>
+
+          <rect x="530" y="176" width="270" height="52" fill="var(--surface-2)" stroke="var(--line)"/>
+          <text x="544" y="196" class="svg-small s-ink2">BR-102 · só dia útil da região;</text>
+          <text x="544" y="212" class="svg-small s-ink2">sábado apenas em CD-SP e CD-PR</text>
+
+          <text x="40" y="42" class="svg-small s-ink3">PRAZO NÃO É UM NÚMERO — É UMA SOMA DE ETAPAS, CADA UMA COM SUA REGRA</text>
+        </svg>
+      </div>
+      <figcaption>
+        <b>Fig. 3 — Anatomia do prazo.</b> Use as funções prontas de
+        <code>desafio/ferramentas/comum.py</code>: <code>liberacao</code>,
+        <code>somar_dias_uteis</code> e <code>data_minima_viavel</code> já implementam
+        cutoff e calendário.
+      </figcaption>
+    </figure>
+
+    <div class="conceito">
+      <header><span class="n">06</span><h3>Lead time</h3><span class="en">prazo de entrega</span></header>
+      <div class="campos">
+        <div class="campo"><b>O que é</b><p>O tempo entre o pedido entrar e o produto chegar. Soma de fila, separação e trânsito.</p></div>
+        <div class="campo"><b>Por que existe</b><p>Cada etapa tem dono e restrição diferentes. Somar tudo num número esconde onde dá para ganhar.</p></div>
+        <div class="campo"><b>Onde está</b><p><code>lanes.csv</code> (<code>transit_days</code>), <code>dc_master.csv</code> (cutoff), <code>holidays_calendar.csv</code>.</p></div>
+        <div class="campo armadilha"><b>Armadilha</b><p>A armadilha nº 1 do desafio: somar dias corridos. Trânsito de 5 dias úteis saindo numa quinta chega na quinta seguinte — e mais um dia se pegar feriado.</p></div>
+      </div>
+    </div>
+
+    <div class="conceito">
+      <header><span class="n">07</span><h3>As três datas de um pedido</h3><span class="en">order promising</span></header>
+      <div class="campos">
+        <div class="campo"><b>Solicitada</b><p>O que o cliente pediu, quando fez o pedido. Coluna <code>requested_date</code>.</p></div>
+        <div class="campo"><b>Prometida</b><p>O que <em>você</em> se compromete a cumprir ao aceitar. É a sua submissão.</p></div>
+        <div class="campo"><b>Real</b><p>Quando a operação de fato entregou. Você só descobre na avaliação.</p></div>
+        <div class="campo armadilha"><b>Armadilha</b><p>Confundir as três. Elas geram duas métricas diferentes, e a diferença entre elas é o coração da avaliação.</p></div>
+      </div>
+    </div>
+
+    <div class="note">
+      <p><b>Promise Reliability compara com a data que você prometeu. OTIF compara com a data
+      que o cliente pediu.</b></p>
+      <p>Se o OTIF fosse medido contra a data prometida, a estratégia vencedora seria prometer
+      tudo para daqui a três meses e cumprir 100%. Medindo contra o que o cliente pediu, o
+      atalho morre: prometer tarde melhora a Promise Reliability e não salva o OTIF.</p>
+    </div>
+  </section>
+
+  <!-- ============================ REDE ============================ -->
+  <section id="rede">
+    <p class="tag">Conceitos 09 a 12</p>
+    <h2>De onde atender, e quanto isso custa</h2>
+
+    <div class="conceito">
+      <header><span class="n">08</span><h3>Sourcing e CD primário</h3><span class="en">sourcing</span></header>
+      <div class="campos">
+        <div class="campo"><b>O que é</b><p>Decidir de qual CD sai cada linha. O CD primário é o “natural” da região: mais perto, mais barato, mais rápido.</p></div>
+        <div class="campo"><b>Por que existe</b><p>Toda região tem um CD desenhado para atendê-la. Fugir dele é exceção, não regra.</p></div>
+        <div class="campo"><b>Onde está</b><p><code>lanes.csv</code>: uma linha por rota CD→região, com <code>transit_days</code>, <code>rate_per_kg</code> e <code>is_primary</code>.</p></div>
+        <div class="campo armadilha"><b>Armadilha</b><p>Achar que atender de outro CD é de graça. A tarifa sobe 18% por dia útil de trânsito a mais: CD-SP→SE custa R$ 0,68/kg, CD-PE→SE custa R$ 1,17/kg pelo mesmo destino.</p></div>
+      </div>
+    </div>
+
+    <div class="conceito">
+      <header><span class="n">09</span><h3>Transferência entre CDs</h3><span class="en">stock transfer</span></header>
+      <div class="campos">
+        <div class="campo"><b>O que é</b><p>Mover estoque de um CD que tem sobrando para um que está faltando. Não cria produto novo: só muda de lugar.</p></div>
+        <div class="campo"><b>Por que importa aqui</b><p>No corte, o CD-SP está em ruptura nos 5 produtos enquanto CD-GO e CD-PE têm 12 a 18 dias. O Sudeste é 45% da demanda.</p></div>
+        <div class="campo"><b>Onde está</b><p><code>transfer_lanes.csv</code> — distância, trânsito, custo fixo e por km.</p></div>
+        <div class="campo armadilha"><b>Armadilha</b><p>Leva de 2 a 6 dias (BR-307), tem lote mínimo de 1 palete (BR-703) e não pode deixar a origem abaixo de 10 dias de cobertura (BR-704).</p></div>
+      </div>
+    </div>
+
+    <div class="conceito">
+      <header><span class="n">10</span><h3>Palete, camada e ocupação</h3><span class="en">unit load</span></header>
+      <div class="campos">
+        <div class="campo"><b>O que é</b><p>Palete é a unidade física de movimentação. Aqui todos fecham em ~1,8 m³ — muda quantas unidades cabem. Camada é 1/4 de palete.</p></div>
+        <div class="campo"><b>Ocupação</b><p>Quanto do caminhão foi usado, em peso <em>ou</em> volume — o que estourar primeiro. Veículo de distribuição: 12 paletes, 8.000 kg, 24 m³.</p></div>
+        <div class="campo"><b>Onde está</b><p><code>sku_master.csv</code> (<code>units_per_pallet</code>), <code>vehicles.csv</code>.</p></div>
+        <div class="campo armadilha"><b>Armadilha</b><p>Ignorar. O baseline opera com <b>4,7% de ocupação</b> — um veículo por cliente por dia, R$ 305.083 de frete. Só consolidar o que já está disponível no mesmo dia corta 17% disso sem atrasar ninguém.</p></div>
+      </div>
+    </div>
+
+    <h3>Os componentes do frete</h3>
+    <div class="scroll">
+      <table>
+        <thead><tr><th>Componente</th><th>O que é</th><th>Fórmula</th></tr></thead>
+        <tbody>
+          <tr><td>Frete-peso</td><td>O transporte em si</td><td><code>peso × tarifa da rota</code></td></tr>
+          <tr class="destaque"><td>Frete mínimo</td><td>O piso cobrado por embarque</td><td>R$ 180</td></tr>
+          <tr><td>Ad valorem</td><td>Seguro sobre o valor transportado</td><td>0,35% do valor</td></tr>
+          <tr><td>GRIS</td><td>Gerenciamento de risco</td><td>0,12% do valor</td></tr>
+          <tr><td>FTL</td><td>Carga fechada, para transferência</td><td>R$ 380 + R$ 4,20/km</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout">
+      <p><b>O frete mínimo é onde está o dinheiro.</b> R$ 180 por embarque, não por caixa.
+      Mandar oito clientes num veículo paga um mínimo em vez de oito — e se todos já estão
+      disponíveis no mesmo dia, ninguém espera. Economia sem atraso.</p>
+      <p><b>E o ad valorem não olha o peso, olha o valor.</b> Um palete de P3 vale R$ 54.000 e
+      pesa 150 kg: paga R$ 254 só de seguro. Para produto premium, o seguro pesa mais que o
+      frete.</p>
+    </div>
+  </section>
+
+  <!-- ============================ SERVIÇO ============================ -->
+  <section id="servico">
+    <p class="tag">Conceitos 13 a 15</p>
+    <h2>Como se mede se foi bom</h2>
+
+    <div class="scroll">
+      <table>
+        <thead><tr><th>Métrica</th><th>Pergunta que responde</th><th>Fórmula</th></tr></thead>
+        <tbody>
+          <tr><td>On Time</td><td>Chegou na data?</td><td>entregas no prazo / total</td></tr>
+          <tr><td>In Full</td><td>Chegou completo?</td><td>linhas completas / total</td></tr>
+          <tr class="destaque"><td>OTIF</td><td>Chegou na data <b>e</b> completo?</td><td>as duas coisas juntas</td></tr>
+          <tr><td>Fill Rate</td><td>Que fração do pedido foi atendida?</td><td>valor atendido / valor pedido</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p class="col">
+      <b>OTIF é o mais duro</b> porque é uma conjunção: 95% de On Time e 95% de In Full dão no
+      máximo 95% de OTIF, e na prática menos.
+    </p>
+
+    <div class="conceito">
+      <header><span class="n">11</span><h3>Segmentação de cliente</h3><span class="en">service tiering</span></header>
+      <div class="campos">
+        <div class="campo"><b>KA — Key Account</b><p>Grandes redes. SLA de 48h no SE/S, multa de 3% se o OTIF mensal cair de 95%, e entrega em janela agendada.</p></div>
+        <div class="campo"><b>DIS e VAR</b><p>Distribuidor: 96h, palete fechado. Varejo regional: 72h, aceita parcial acima de 80% do valor.</p></div>
+        <div class="campo"><b>ECM</b><p>E-commerce: 120h, aceita qualquer fração. Muitos pedidos, pouco valor cada.</p></div>
+        <div class="campo armadilha"><b>Armadilha</b><p>Proteger só o KA. O piso de 85% de fill rate por segmento (BR-205) reprova a submissão inteira se a cauda longa for sacrificada.</p></div>
+      </div>
+    </div>
+
+    <div class="conceito">
+      <header><span class="n">12</span><h3>Consumo de forecast</h3><span class="en">forecast consumption</span></header>
+      <div class="campos">
+        <div class="campo"><b>O que é</b><p>O pedido real abate a previsão da semana. <code>saldo = max(0, forecast − real acumulado)</code>.</p></div>
+        <div class="campo"><b>Como se lê</b><p>Abaixo de 80%: vendeu menos, estoque vai sobrar. Acima de 110%: vendeu mais, hora de replanejar (BR-701).</p></div>
+        <div class="campo"><b>Onde está</b><p><code>demand_plan.csv</code>, colunas <code>forecast_qty</code> e <code>consumed_qty</code>.</p></div>
+        <div class="campo armadilha"><b>Armadilha</b><p>Não olhar. A diferença entre as duas colunas é o erro de previsão histórico já calculado — de graça, e a maioria das equipes ignora.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ CÓDIGO ============================ -->
+  <section id="codigo">
+    <p class="tag">Mão na massa</p>
+    <h2>Do conceito ao código, em cinco passos</h2>
+    <div class="col">
+      <p>
+        Esta é a receita mínima completa. Ela está implementada e comentada linha a linha em
+        <code>desafio/ferramentas/exemplo_prototipo.py</code> — leia antes de escrever o seu.
+      </p>
+    </div>
+
+    <div class="passos">
+      <div class="passo">
+        <div>
+          <h4>Aprenda o trânsito real do histórico</h4>
+          <p>O <code>transit_days</code> do cadastro é a <b>mediana</b>: metade das viagens demora mais. Calcule os quantis por rota a partir de <code>historical_deliveries.csv</code>.</p>
+        </div>
+      </div>
+      <div class="passo">
+        <div>
+          <h4>Monte o ATP escalonado no tempo</h4>
+          <p>Uma linha do tempo por CD × SKU: estoque no corte, mais recebimentos confirmados, menos o que você já prometeu.</p>
+        </div>
+      </div>
+      <div class="passo">
+        <div>
+          <h4>Gere as opções e escolha</h4>
+          <p>Para cada CD com rota até a região: quando fica disponível, quando chegaria, quanto custa. Entre as que chegam na data pedida, a mais barata.</p>
+        </div>
+      </div>
+      <div class="passo">
+        <div>
+          <h4>Agrupe os embarques do mesmo dia</h4>
+          <p>Mesmo CD, mesma região, mesmo dia viajam juntos e dividem um frete. Até 8 pontos de entrega (BR-506). Como todos já estão disponíveis, ninguém espera.</p>
+        </div>
+      </div>
+      <div class="passo">
+        <div>
+          <h4>Prometa a partir da data do embarque, não da linha</h4>
+          <p><b>Este é o erro que derruba quase todo primeiro protótipo.</b> Se você consolida, o grupo só parte quando a última linha fica pronta. Quem prometeu com base na própria linha já quebrou a promessa antes de embarcar.</p>
+        </div>
+      </div>
+    </div>
+
+    <h3>O que esse protótipo entrega</h3>
+    <div class="scroll">
+      <table>
+        <thead><tr><th>Métrica</th><th class="num">Baseline</th><th class="num">Protótipo de exemplo</th></tr></thead>
+        <tbody>
+          <tr><td>Custo total</td><td class="num">R$ 491.736</td><td class="num"><b>R$ 385.435</b> (−21,6%)</td></tr>
+          <tr><td>Frete de distribuição</td><td class="num">R$ 305.083</td><td class="num"><b>R$ 252.767</b></td></tr>
+          <tr><td>Ocupação do veículo</td><td class="num">4,7%</td><td class="num"><b>16,9%</b></td></tr>
+          <tr><td>Aderência ao CD primário</td><td class="num">90,2%</td><td class="num"><b>97,5%</b></td></tr>
+          <tr><td>Promise Reliability</td><td class="num">94,8%</td><td class="num">94,6%</td></tr>
+          <tr><td>OTIF</td><td class="num">93,5%</td><td class="num">92,3%</td></tr>
+          <tr class="destaque"><td>Score automático</td><td class="num">0</td><td class="num"><b>41,62 / 90</b></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="note">
+      <p><b>Repare no que ele não faz — de propósito.</b> Ele ganha 21,6% de custo e os 20
+      pontos da trilha preditiva, empatando em serviço com o baseline. Mas não rebalanceia a
+      rede de verdade e <b>não recupera o OTIF de Key Account</b>, que segue em 80,7% e continua
+      pagando a multa de R$ 95.562.</p>
+      <p>Recuperar o serviço sem devolver o custo é exatamente onde começa o seu trabalho.</p>
+    </div>
+  </section>
+
+  <!-- ============================ ARMADILHAS ============================ -->
+  <section id="armadilhas">
+    <p class="tag">Antes de submeter</p>
+    <h2>As oito armadilhas, por frequência</h2>
+
+    <div class="scroll">
+      <table>
+        <thead><tr><th class="num">#</th><th>Armadilha</th><th>Consequência</th></tr></thead>
+        <tbody>
+          <tr><td class="num">1</td><td>Somar dias corridos em vez de dias úteis</td><td>Datas erradas; reprovação por BR-102</td></tr>
+          <tr><td class="num">2</td><td>Esquecer o cutoff das 18h</td><td>Um dia a menos que você não tem</td></tr>
+          <tr><td class="num">3</td><td>Contar recebimento não confirmado no ATP</td><td>Promessa quebrada quando ele atrasa</td></tr>
+          <tr class="destaque"><td class="num">4</td><td>Aceitar pedido pelo saldo corrente, sem checar o mínimo à frente</td><td>Super-compromete o estoque; reprova por fill rate</td></tr>
+          <tr class="destaque"><td class="num">5</td><td>Prometer a partir da linha e consolidar depois</td><td>Promessa quebrada antes de embarcar</td></tr>
+          <tr><td class="num">6</td><td>Fracionar linha de KA ou DIS</td><td>Reprovação por BR-501</td></tr>
+          <tr><td class="num">7</td><td>Recusar pedidos difíceis para inflar métricas</td><td>Reprovação por BR-205</td></tr>
+          <tr><td class="num">8</td><td>Usar coluna de resultado como feature</td><td>Modelo que não sobrevive à avaliação</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ============================ GLOSSÁRIO ============================ -->
+  <section id="glossario">
+    <p class="tag">Referência</p>
+    <h2>Glossário português–inglês</h2>
+
+    <div class="scroll">
+      <table>
+        <thead><tr><th>Português</th><th>Inglês</th><th>Uma linha</th></tr></thead>
+        <tbody>
+          <tr><td>Abastecimento</td><td>Replenishment</td><td>Repor estoque no CD</td></tr>
+          <tr><td>Disponível para promessa</td><td>ATP · Available to Promise</td><td>O que ainda posso prometer</td></tr>
+          <tr><td>Capaz de prometer</td><td>CTP · Capable to Promise</td><td>O que consigo ter a tempo</td></tr>
+          <tr><td>Centro de distribuição</td><td>DC · Distribution Center</td><td>Armazém que atende clientes</td></tr>
+          <tr><td>Cobertura</td><td>Days of Supply</td><td>Estoque dividido pela demanda diária</td></tr>
+          <tr><td>Data prometida</td><td>Promised / Commit date</td><td>O compromisso que você assume</td></tr>
+          <tr><td>Data solicitada</td><td>Requested date</td><td>O que o cliente pediu</td></tr>
+          <tr><td>Estoque de segurança</td><td>Safety stock</td><td>Colchão contra variação</td></tr>
+          <tr><td>Falta / Ruptura</td><td>Stockout</td><td>Acabou o produto</td></tr>
+          <tr><td>Frete fracionado</td><td>LTL · Less than Truckload</td><td>Carga compartilhada</td></tr>
+          <tr><td>Carga fechada</td><td>FTL · Full Truckload</td><td>Caminhão inteiro para um destino</td></tr>
+          <tr><td>Janela de entrega</td><td>Delivery window</td><td>Horário agendado de descarga</td></tr>
+          <tr><td>Lote mínimo</td><td>MOQ · Minimum Order Quantity</td><td>Menor quantidade comprável</td></tr>
+          <tr><td>Nível de serviço</td><td>Service level</td><td>Quanto se atende do que se pede</td></tr>
+          <tr><td>Pedido pendente</td><td>Backorder</td><td>Pedido esperando produto</td></tr>
+          <tr><td>Prazo de entrega</td><td>Lead time</td><td>Tempo do pedido à entrega</td></tr>
+          <tr><td>Previsão de demanda</td><td>Forecast</td><td>Quanto se espera vender</td></tr>
+          <tr><td>Rota</td><td>Lane</td><td>Par origem-destino</td></tr>
+          <tr><td>Transferência</td><td>Stock transfer</td><td>Mover estoque entre CDs</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Onde continuar</h3>
+    <div class="scroll">
+      <table>
+        <thead><tr><th>Documento</th><th>Para quê</th></tr></thead>
+        <tbody>
+          <tr><td><code>desafio/README.md</code></td><td>Rodar o baseline e submeter em 30 minutos</td></tr>
+          <tr><td><code>docs/desafio/01-business-scope.md</code></td><td>As 40 regras de negócio completas</td></tr>
+          <tr><td><code>dados/v1.0.0/data_dictionary.md</code></td><td>Toda coluna, tipo e unidade</td></tr>
+          <tr><td><code>ferramentas/exemplo_prototipo.py</code></td><td>A receita dos 5 passos, em código comentado</td></tr>
+          <tr><td><code>ferramentas/comum.py</code></td><td>Calendário, custos e ATP prontos para usar</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <footer>
+    Supply Chain do Zero · material auxiliar do Desafio de Supply Chain · versão 1.0.0<br>
+    Produzido pelo squad <code>desafio-supply-chain-squad</code> · @scm-expert (Marta).<br>
+    Todos os números e exemplos vêm do pacote de dados v1.0.0 — nenhum é ilustrativo.
+  </footer>
+
+</main>
+
+</body>
+</html>

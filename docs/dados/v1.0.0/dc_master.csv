@@ -1,0 +1,5 @@
+dc_id,name,region,pallet_capacity,daily_pallet_throughput,cutoff_local_time,saturday_operating,target_coverage_days
+CD-SP,Cajamar / SP,SE,12000,900,18:00,1,21
+CD-PR,Curitiba / PR,S,5000,380,18:00,1,28
+CD-GO,Goiânia / GO,CO,4000,300,18:00,0,28
+CD-PE,Recife / PE,NE,6000,440,18:00,0,35

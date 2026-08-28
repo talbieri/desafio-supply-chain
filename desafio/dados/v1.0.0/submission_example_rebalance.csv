@@ -1,0 +1,4 @@
+transfer_id,origin,dest,sku,qty_pallets,ship_date
+TRF-0001,CD-SP,CD-GO,P4,8,2026-09-02
+TRF-0002,CD-SP,CD-PR,P1,12,2026-09-03
+TRF-0003,CD-PE,CD-GO,P5,16,2026-09-04

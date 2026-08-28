@@ -1,0 +1,16 @@
+# GABARITO — nunca versionar.
+# Contém o trânsito realizado e o atraso real dos recebimentos não confirmados
+# das janelas de teste. Fica com os organizadores, fora deste repositório.
+desafio/privado/
+
+# Submissões: regeneráveis em 30 segundos
+desafio/submissoes/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Sistema
+.DS_Store
+Thumbs.db
