@@ -316,7 +316,13 @@ def pagina_dados():
                   '<div class="col"><p>Todo arquivo publicado tem checksum. Se algum não bater, '
                   "o download veio corrompido — baixe de novo antes de perder tempo depurando "
                   "o que não é problema seu.</p></div>"
-                  "<pre>cd dados/v" + P.VERSAO + "\nsha256sum -c CHECKSUMS.txt</pre>"
+                  "<pre><b>python desafio/ferramentas/conferir_dados.py</b>\n"
+                  "<span class='c'># funciona em Windows, macOS e Linux</span>\n\n"
+                  "<span class='c'># em macOS, Linux ou Git Bash, o equivalente nativo:</span>\n"
+                  "cd desafio/dados/v" + P.VERSAO + " &amp;&amp; sha256sum -c CHECKSUMS.txt</pre>"
+                  '<div class="note"><p><b>No Windows, use a primeira linha.</b> '
+                  "<code>sha256sum</code> não existe no PowerShell nem no cmd — o verificador "
+                  "é em Python justamente para não depender de qual terminal você abriu.</p></div>"
                   '<div class="callout"><p><b>Split temporal — não embaralhe.</b> O histórico vai '
                   "de " + P.HIST_INICIO.strftime("%d/%m/%Y") + " a " + P.HIST_FIM.strftime("%d/%m/%Y") +
                   ". A janela pública (leaderboard) vai de " + P.PUB_INICIO.strftime("%d/%m") + " a " +
@@ -466,7 +472,7 @@ def pagina_inicial():
     </div>
 
     <div class="passos">
-      <div class="passo"><div><h4>Baixe e descompacte</h4><p>O pacote traz os dados <b>e as ferramentas</b> — baseline, avaliador e protótipo. Descompacte e rode <code>sha256sum -c CHECKSUMS.txt</code> dentro de <code>desafio/dados/v1.0.0/</code>.</p></div></div>
+      <div class="passo"><div><h4>Baixe e descompacte</h4><p>O pacote traz os dados <b>e as ferramentas</b> — baseline, avaliador e protótipo. Descompacte e rode <code>python desafio/ferramentas/conferir_dados.py</code> — funciona em qualquer sistema.</p></div></div>
       <div class="passo"><div><h4>Rode o baseline</h4><p><code>python desafio/ferramentas/baseline_guloso.py --janela public</code> — é a política que a operação usa hoje.</p></div></div>
       <div class="passo"><div><h4>Avalie</h4><p><code>python desafio/ferramentas/avaliar.py --resposta desafio/respostas/baseline/public</code> e veja o placar de referência.</p></div></div>
       <div class="passo"><div><h4>Leia o protótipo de exemplo</h4><p><code>exemplo_prototipo.py</code> tem a receita dos 5 passos comentada linha a linha. Ele corta 21,6% do custo.</p></div></div>

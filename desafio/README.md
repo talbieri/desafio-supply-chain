@@ -207,8 +207,12 @@ Tudo em `desafio/dados/v1.0.0/`. Dicionário completo, coluna por coluna, em
 Confira a integridade depois de baixar:
 
 ```bash
-cd desafio/dados/v1.0.0 && sha256sum -c CHECKSUMS.txt
+python desafio/ferramentas/conferir_dados.py
 ```
+
+`sha256sum` não existe no PowerShell nem no cmd do Windows — por isso o verificador é em
+Python, que você já precisa ter. Em macOS, Linux ou Git Bash, `sha256sum -c CHECKSUMS.txt`
+dentro de `desafio/dados/v1.0.0/` faz o mesmo.
 
 ### Split temporal — não embaralhe
 

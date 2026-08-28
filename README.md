@@ -40,6 +40,7 @@ desafio/
 ├── dados/v1.0.0/                o pacote: 21 arquivos, 4,6 MB
 ├── ferramentas/
 │   ├── comum.py                 leitura dos dados, calendário, custos
+│   ├── conferir_dados.py        confere os checksums (multiplataforma)
 │   ├── baseline_guloso.py       a política que a operação usa hoje
 │   ├── exemplo_prototipo.py     protótipo comentado — a receita dos 5 passos
 │   └── avaliar.py               o avaliador oficial

@@ -68,7 +68,8 @@ def escrever_checksums():
     arquivos = sorted(a for a in os.listdir(PASTA) if a.endswith(PUBLICAVEIS))
     linhas = [f"# Desafio Supply Chain - pacote de dados v{P.VERSAO}",
               f"# seed={P.SEED}",
-              "# verificacao: sha256sum -c CHECKSUMS.txt", ""]
+              "# verificacao (qualquer sistema): python desafio/ferramentas/conferir_dados.py",
+              "# verificacao (macOS/Linux/Git Bash): sha256sum -c CHECKSUMS.txt", ""]
     for a in arquivos:
         linhas.append(f"{sha256(os.path.join(PASTA, a))}  {a}")
     with open(os.path.join(PASTA, "CHECKSUMS.txt"), "w", encoding="utf-8") as f:

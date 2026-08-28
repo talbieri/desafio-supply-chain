@@ -1,6 +1,7 @@
 # Desafio Supply Chain - pacote de dados v1.0.0
 # seed=42
-# verificacao: sha256sum -c CHECKSUMS.txt
+# verificacao (qualquer sistema): python desafio/ferramentas/conferir_dados.py
+# verificacao (macOS/Linux/Git Bash): sha256sum -c CHECKSUMS.txt
 
 c7ee5e18700b5b50ae319badd5bd0615511783c3dbfe52b90c6790b110e100e7  customer_master.csv
 9ab629c46227252f6cbd7a8062fdf6bd97cd82adee39394a114718357319f8af  data_dictionary.md

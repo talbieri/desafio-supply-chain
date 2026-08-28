@@ -860,7 +860,8 @@ def main():
     print("[9/9] Checksums")
     arquivos = sorted(f for f in os.listdir(out) if f.endswith(".csv"))
     linhas_ck = [f"# Desafio Supply Chain — pacote de dados v{P.VERSAO}",
-                 f"# seed={args.seed}", "# verificação: sha256sum -c CHECKSUMS.txt", ""]
+                 f"# seed={args.seed}", "# verificacao (qualquer sistema): python desafio/ferramentas/conferir_dados.py",
+                 "# verificacao (macOS/Linux/Git Bash): sha256sum -c CHECKSUMS.txt", ""]
     for nome in arquivos:
         linhas_ck.append(f"{sha256(os.path.join(out, nome))}  {nome}")
     with open(f"{out}/CHECKSUMS.txt", "w", encoding="utf-8") as f:
