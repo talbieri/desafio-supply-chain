@@ -74,6 +74,130 @@
     </div>
   </section>
 
+
+  <section>
+    <p class="tag">Como funciona</p>
+    <h2>Três partes, e só uma delas é treino</h2>
+    <div class="col">
+      <p class="lead">
+        O desafio não se divide em “treinar” e “testar”. São três blocos de tempo, e confundir o
+        papel de cada um é o erro estratégico mais caro que uma equipe pode cometer aqui.
+      </p>
+    </div>
+
+    <figure class="figure">
+      <div class="frame">
+        <svg viewBox="0 0 920 320" role="img" aria-label="Linha do tempo do desafio: doze meses de histórico para treino, janela pública para feedback e janela privada para o ranking final">
+          <text x="0" y="18" class="svg-small s-ink3">A LINHA DO TEMPO DO DESAFIO</text>
+
+          <rect x="0" y="64" width="470" height="66" fill="var(--surface-2)" stroke="var(--line)" stroke-width="1.5"/>
+          <text x="20" y="92" class="svg-label s-ink">HISTÓRICO</text>
+          <text x="20" y="112" class="svg-small s-ink3">01/09/2025 a 28/08/2026 · 25.079 linhas</text>
+
+          <rect x="490" y="64" width="185" height="66" fill="var(--accent-2)" stroke="var(--accent)" stroke-width="1.8"/>
+          <text x="508" y="92" class="svg-label s-ink">JANELA PÚBLICA</text>
+          <text x="508" y="112" class="svg-small s-accent">31/08 a 11/09 · 919 linhas</text>
+
+          <rect x="695" y="64" width="225" height="66" fill="var(--signal-2)" stroke="var(--signal)" stroke-width="1.8"/>
+          <text x="713" y="92" class="svg-label s-ink">JANELA PRIVADA</text>
+          <text x="713" y="112" class="svg-small s-signal">14/09 a 25/09 · 976 linhas</text>
+
+          <line x1="478" y1="52" x2="478" y2="150" stroke="var(--ink)" stroke-width="1.5" stroke-dasharray="4 3"/>
+          <text x="478" y="46" class="svg-small s-ink" text-anchor="middle">data de corte</text>
+
+          <text x="0" y="176" class="svg-small s-ink3">O QUE VOCÊ FAZ EM CADA UMA</text>
+          <g>
+            <rect x="0" y="190" width="470" height="56" fill="none" stroke="var(--line)"/>
+            <text x="20" y="214" class="svg-label s-accent">TREINA</text>
+            <text x="20" y="233" class="svg-small s-ink2">aprende padrões: atraso por rota, sazonalidade, erro do plano</text>
+
+            <rect x="490" y="190" width="185" height="56" fill="none" stroke="var(--accent)" stroke-width="1.5"/>
+            <text x="508" y="214" class="svg-label s-accent">DECIDE</text>
+            <text x="508" y="233" class="svg-small s-ink2">e vê o score</text>
+            <text x="508" y="247" class="svg-small s-ink2">até 5× por dia</text>
+
+            <rect x="695" y="190" width="225" height="56" fill="none" stroke="var(--signal)" stroke-width="1.5"/>
+            <text x="713" y="214" class="svg-label s-signal">DECIDE</text>
+            <text x="713" y="233" class="svg-small s-ink2">e a nota sai uma vez só,</text>
+            <text x="713" y="247" class="svg-small s-ink2">no encerramento</text>
+          </g>
+
+          <text x="0" y="286" class="svg-small s-ink3">As duas janelas são conjuntos de TESTE. A pública dá feedback; a privada dá a nota.</text>
+          <text x="0" y="304" class="svg-small s-signal">Só o histórico é material de treino.</text>
+        </svg>
+      </div>
+      <figcaption>
+        <b>As duas janelas não se sobrepõem</b> e nenhuma delas é material de treino. A pública
+        existe para você calibrar o instinto com feedback rápido; a privada, para medir se o que
+        você aprendeu vale fora do conjunto que já viu.
+      </figcaption>
+    </figure>
+
+    <div class="scroll">
+      <table>
+        <thead><tr><th>Parte</th><th>Período</th><th class="num">Linhas</th><th>Papel</th></tr></thead>
+        <tbody>
+          <tr><td>Histórico</td><td>01/09/2025 a 28/08/2026</td><td class="num">25.079</td><td><b>Treino.</b> Aqui estão os padrões: atraso real por rota, sazonalidade, erro do plano de demanda</td></tr>
+          <tr><td>Janela pública</td><td>31/08 a 11/09/2026</td><td class="num">919</td><td><b>Teste com feedback.</b> Você promete, envia e vê o score — até 5 vezes por dia</td></tr>
+          <tr class="destaque"><td>Janela privada</td><td>14/09 a 25/09/2026</td><td class="num">976</td><td><b>Teste final.</b> Você promete, e a nota sai uma única vez, no encerramento</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Por que duas janelas, e não uma</h3>
+    <div class="col">
+      <p>
+        Com uma janela só e cinco tentativas por dia durante duas semanas, daria para achar a
+        resposta por tentativa e erro: envia, olha o placar, ajusta, repete. Setenta tentativas
+        encontram os parâmetros que funcionam <em>naquele</em> conjunto — sem entender nada do
+        problema. Isso tem nome: <b>overfitting no leaderboard</b>.
+      </p>
+      <p>
+        A janela privada fecha esse atalho. Quem ajustou parâmetro no olho perde ali; quem
+        entendeu o problema, não.
+      </p>
+    </div>
+
+    <div class="note">
+      <p><b>Não confunda: a janela pública não é treino.</b> Ela é um conjunto de teste igual à
+      privada — mesmos pedidos a promissar, mesmas regras, mesmos gates. A única diferença é
+      quantas vezes você vê o resultado.</p>
+      <p><b>E a privada não é uma carteira nova.</b> São os mesmos clientes, a mesma rede, os
+      mesmos produtos — <b>zero clientes novos</b>, todos já aparecem no histórico. O que muda é
+      o momento: o estoque já foi consumido pela janela pública e entra um choque de demanda de
+      P5 no Sudeste. É um <em>hold-out temporal</em>, não um teste de generalização para clientes
+      desconhecidos.</p>
+      <p>A pergunta não é “seu modelo funciona com quem nunca viu?”. É <b>“sua decisão continua
+      boa quando a rede aperta?”</b> — e a resposta do baseline é não: o OTIF cai de 93,5% para
+      91,2% e a multa de Key Account sobe de R$ 95.562 para R$ 105.966.</p>
+    </div>
+
+    <h3>Isto não é um problema de machine learning</h3>
+    <div class="col">
+      <p>
+        A trilha preditiva vale <b>20 dos 90 pontos automáticos</b>. Os outros 70 vêm de decisões:
+        de qual CD atender, que data prometer, o que consolidar num embarque, o que transferir
+        entre CDs.
+      </p>
+      <p>
+        Dá para somar 70 pontos sem treinar modelo nenhum — e dá para treinar um forecast
+        excelente e ainda assim ir mal. Foi exatamente o que aconteceu com o protótipo de exemplo:
+        <b>tirou os 20 pontos preditivos completos e zerou os 45 de serviço</b>.
+      </p>
+      <p>
+        É um problema de <b>decisão sob incerteza</b>, com um componente preditivo dentro. Quem
+        tratar como ML puro otimiza justamente a parte que vale menos.
+      </p>
+    </div>
+
+    <div class="callout">
+      <p><b>Consequência prática: rode sempre as duas janelas.</b> Uma solução que vai bem só na
+      pública é sinal de alerta, não de vitória.</p>
+      <pre style="margin:12px 0 0">python desafio/ferramentas/baseline_atual.py --janela public
+python desafio/ferramentas/baseline_atual.py --janela private</pre>
+    </div>
+  </section>
+
   <section>
     <p class="tag">Comece aqui</p>
     <h2>Primeiro score em 30 minutos</h2>
@@ -208,6 +332,6 @@
   </section>
 
 </main>
-<footer class="shell">Desafio Supply Chain · pacote de dados v1.0.0 · gerado em 28/08/2026<br>Dados sintéticos determinísticos (seed 42). Nenhum dado real de cliente foi usado.<br>Páginas geradas por <code>desafio/gerador/gerar_site.py</code>.</footer>
+<footer class="shell">Desafio Supply Chain · pacote de dados v1.0.0 · gerado em 30/08/2026<br>Dados sintéticos determinísticos (seed 42). Nenhum dado real de cliente foi usado.<br>Páginas geradas por <code>desafio/gerador/gerar_site.py</code>.</footer>
 </body>
 </html>
