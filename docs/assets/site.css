@@ -120,6 +120,23 @@ pre .c { color:var(--ink-3); }
 .passo h4 { margin:0 0 6px; font-family:var(--display); font-size:16px; color:var(--ink); font-weight:700; }
 .passo p { margin:0; font-size:15.5px; color:var(--ink-2); }
 
+
+/* tokens usados pelos diagramas SVG — sem eles o texto cai no serif do corpo
+   e estoura as caixas, porque SVG não quebra linha sozinho */
+.svg-label { font-family:var(--display); font-weight:600; font-size:13px; }
+.svg-small { font-family:var(--mono); font-size:10.5px; letter-spacing:.04em; }
+.svg-num   { font-family:var(--mono); font-size:11px; font-weight:500; }
+.s-ink   { fill:var(--ink); }
+.s-ink2  { fill:var(--ink-2); }
+.s-ink3  { fill:var(--ink-3); }
+.s-accent{ fill:var(--accent); }
+.s-signal{ fill:var(--signal); }
+.figure { margin:28px 0 24px; }
+.figure .frame { border:1px solid var(--line); background:var(--surface); padding:26px 22px; overflow-x:auto; box-shadow:var(--shadow); }
+.figure svg { display:block; width:100%; height:auto; min-width:560px; }
+figcaption { font-family:var(--mono); font-size:11.5px; line-height:1.6; color:var(--ink-3); margin-top:12px; max-width:76ch; }
+figcaption b { color:var(--ink-2); font-weight:600; }
+
 .sha { font-family:var(--mono); font-size:11px; color:var(--ink-3); }
 
 footer { padding:34px 0 60px; font-family:var(--mono); font-size:11.5px; line-height:1.8; color:var(--ink-3); border-top:1px solid var(--line); }

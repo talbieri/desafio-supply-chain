@@ -254,6 +254,23 @@ pre .c { color:var(--ink-3); }
 .passo h4 { margin:0 0 6px; font-family:var(--display); font-size:16px; color:var(--ink); font-weight:700; }
 .passo p { margin:0; font-size:15.5px; color:var(--ink-2); }
 
+
+/* tokens usados pelos diagramas SVG — sem eles o texto cai no serif do corpo
+   e estoura as caixas, porque SVG não quebra linha sozinho */
+.svg-label { font-family:var(--display); font-weight:600; font-size:13px; }
+.svg-small { font-family:var(--mono); font-size:10.5px; letter-spacing:.04em; }
+.svg-num   { font-family:var(--mono); font-size:11px; font-weight:500; }
+.s-ink   { fill:var(--ink); }
+.s-ink2  { fill:var(--ink-2); }
+.s-ink3  { fill:var(--ink-3); }
+.s-accent{ fill:var(--accent); }
+.s-signal{ fill:var(--signal); }
+.figure { margin:28px 0 24px; }
+.figure .frame { border:1px solid var(--line); background:var(--surface); padding:26px 22px; overflow-x:auto; box-shadow:var(--shadow); }
+.figure svg { display:block; width:100%; height:auto; min-width:560px; }
+figcaption { font-family:var(--mono); font-size:11.5px; line-height:1.6; color:var(--ink-3); margin-top:12px; max-width:76ch; }
+figcaption b { color:var(--ink-2); font-weight:600; }
+
 .sha { font-family:var(--mono); font-size:11px; color:var(--ink-3); }
 
 footer { padding:34px 0 60px; font-family:var(--mono); font-size:11.5px; line-height:1.8; color:var(--ink-3); border-top:1px solid var(--line); }
@@ -477,43 +494,45 @@ def pagina_inicial():
 
     <figure class="figure">
       <div class="frame">
-        <svg viewBox="0 0 920 320" role="img" aria-label="Linha do tempo do desafio: doze meses de histórico para treino, janela pública para feedback e janela privada para o ranking final">
+        <svg viewBox="0 0 920 332" role="img" aria-label="Linha do tempo do desafio: doze meses de histórico para treino, janela pública para feedback e janela privada para o ranking final">
           <text x="0" y="18" class="svg-small s-ink3">A LINHA DO TEMPO DO DESAFIO</text>
 
-          <rect x="0" y="64" width="470" height="66" fill="var(--surface-2)" stroke="var(--line)" stroke-width="1.5"/>
+          <rect x="0" y="64" width="470" height="76" fill="var(--surface-2)" stroke="var(--line)" stroke-width="1.5"/>
           <text x="20" y="92" class="svg-label s-ink">HISTÓRICO</text>
           <text x="20" y="112" class="svg-small s-ink3">01/09/2025 a 28/08/2026 · 25.079 linhas</text>
 
-          <rect x="490" y="64" width="185" height="66" fill="var(--accent-2)" stroke="var(--accent)" stroke-width="1.8"/>
+          <rect x="490" y="64" width="185" height="76" fill="var(--accent-2)" stroke="var(--accent)" stroke-width="1.8"/>
           <text x="508" y="92" class="svg-label s-ink">JANELA PÚBLICA</text>
-          <text x="508" y="112" class="svg-small s-accent">31/08 a 11/09 · 919 linhas</text>
+          <text x="508" y="112" class="svg-small s-accent">31/08 a 11/09</text>
+          <text x="508" y="126" class="svg-small s-accent">919 linhas</text>
 
-          <rect x="695" y="64" width="225" height="66" fill="var(--signal-2)" stroke="var(--signal)" stroke-width="1.8"/>
+          <rect x="695" y="64" width="225" height="76" fill="var(--signal-2)" stroke="var(--signal)" stroke-width="1.8"/>
           <text x="713" y="92" class="svg-label s-ink">JANELA PRIVADA</text>
           <text x="713" y="112" class="svg-small s-signal">14/09 a 25/09 · 976 linhas</text>
 
-          <line x1="478" y1="52" x2="478" y2="150" stroke="var(--ink)" stroke-width="1.5" stroke-dasharray="4 3"/>
+          <line x1="478" y1="52" x2="478" y2="160" stroke="var(--ink)" stroke-width="1.5" stroke-dasharray="4 3"/>
           <text x="478" y="46" class="svg-small s-ink" text-anchor="middle">data de corte</text>
 
           <text x="0" y="176" class="svg-small s-ink3">O QUE VOCÊ FAZ EM CADA UMA</text>
           <g>
-            <rect x="0" y="190" width="470" height="56" fill="none" stroke="var(--line)"/>
+            <rect x="0" y="190" width="470" height="72" fill="none" stroke="var(--line)"/>
             <text x="20" y="214" class="svg-label s-accent">TREINA</text>
-            <text x="20" y="233" class="svg-small s-ink2">aprende padrões: atraso por rota, sazonalidade, erro do plano</text>
+            <text x="20" y="233" class="svg-small s-ink2">aprende os padrões: atraso por rota, sazonalidade,</text>
+            <text x="20" y="250" class="svg-small s-ink2">erro do plano de demanda</text>
 
-            <rect x="490" y="190" width="185" height="56" fill="none" stroke="var(--accent)" stroke-width="1.5"/>
+            <rect x="490" y="190" width="185" height="72" fill="none" stroke="var(--accent)" stroke-width="1.5"/>
             <text x="508" y="214" class="svg-label s-accent">DECIDE</text>
             <text x="508" y="233" class="svg-small s-ink2">e vê o score</text>
             <text x="508" y="247" class="svg-small s-ink2">até 5× por dia</text>
 
-            <rect x="695" y="190" width="225" height="56" fill="none" stroke="var(--signal)" stroke-width="1.5"/>
+            <rect x="695" y="190" width="225" height="72" fill="none" stroke="var(--signal)" stroke-width="1.5"/>
             <text x="713" y="214" class="svg-label s-signal">DECIDE</text>
             <text x="713" y="233" class="svg-small s-ink2">e a nota sai uma vez só,</text>
             <text x="713" y="247" class="svg-small s-ink2">no encerramento</text>
           </g>
 
-          <text x="0" y="286" class="svg-small s-ink3">As duas janelas são conjuntos de TESTE. A pública dá feedback; a privada dá a nota.</text>
-          <text x="0" y="304" class="svg-small s-signal">Só o histórico é material de treino.</text>
+          <text x="0" y="298" class="svg-small s-ink3">As duas janelas são conjuntos de TESTE. A pública dá feedback; a privada dá a nota.</text>
+          <text x="0" y="316" class="svg-small s-signal">Só o histórico é material de treino.</text>
         </svg>
       </div>
       <figcaption>
