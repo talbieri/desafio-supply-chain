@@ -27,7 +27,9 @@ def ler_csv(caminho):
 def escrever_csv(caminho, colunas, linhas):
     os.makedirs(os.path.dirname(os.path.abspath(caminho)), exist_ok=True)
     with open(caminho, "w", newline="", encoding="utf-8") as f:
-        w = csv.DictWriter(f, fieldnames=colunas, extrasaction="ignore")
+        # LF sempre: a resposta precisa ser byte a byte igual em qualquer sistema
+        w = csv.DictWriter(f, fieldnames=colunas, extrasaction="ignore",
+                           lineterminator="\n")
         w.writeheader()
         w.writerows(linhas)
 

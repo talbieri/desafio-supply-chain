@@ -31,9 +31,9 @@ O split é **temporal**. Não embaralhe. O estado inicial da simulação é a li
 
 Todo pedido recebido entre o início do histórico e a data de corte. É a base de treino: use para entender sazonalidade, mix e comportamento por segmento.
 
-**Grão:** Linha de pedido histórica · **Chave:** `order_line_id` · **Linhas:** 25.079 · **Tamanho:** 2008.3 KB
+**Grão:** Linha de pedido histórica · **Chave:** `order_line_id` · **Linhas:** 25.079 · **Tamanho:** 1983.9 KB
 
-`sha256 1a74cb44732c2c7015b379cb…`
+`sha256 1e0b251afd35816452b2a2c4…`
 
 | Coluna | Tipo | Unidade | Descrição |
 |--------|------|---------|-----------|
@@ -52,9 +52,9 @@ Todo pedido recebido entre o início do histórico e a data de corte. É a base 
 
 Pedidos da janela pública. São estes que a sua resposta precisa promissar — todos eles, sem exceção.
 
-**Grão:** Linha de pedido a promissar · **Chave:** `order_line_id` · **Linhas:** 919 · **Tamanho:** 73.8 KB
+**Grão:** Linha de pedido a promissar · **Chave:** `order_line_id` · **Linhas:** 919 · **Tamanho:** 72.9 KB
 
-`sha256 9f316b3f169d65070fe75ad6…`
+`sha256 68e9d0c657e485fbd7a46fdd…`
 
 | Coluna | Tipo | Unidade | Descrição |
 |--------|------|---------|-----------|
@@ -73,9 +73,9 @@ Pedidos da janela pública. São estes que a sua resposta precisa promissar — 
 
 Pedidos da janela privada, usada no ranking final.
 
-**Grão:** Linha de pedido a promissar · **Chave:** `order_line_id` · **Linhas:** 976 · **Tamanho:** 78.2 KB
+**Grão:** Linha de pedido a promissar · **Chave:** `order_line_id` · **Linhas:** 976 · **Tamanho:** 77.3 KB
 
-`sha256 e16c928bb63971649abdbdf7…`
+`sha256 9a80f96a8348d0c9b65848c6…`
 
 | Coluna | Tipo | Unidade | Descrição |
 |--------|------|---------|-----------|
@@ -94,9 +94,9 @@ Pedidos da janela privada, usada no ranking final.
 
 O que de fato aconteceu com cada linha histórica: de qual CD saiu, quando prometeu, quando embarcou, quando chegou. É aqui que está o histórico de lead time real para a trilha preditiva.
 
-**Grão:** Linha entregue · **Chave:** `order_line_id` · **Linhas:** 25.077 · **Tamanho:** 2009.9 KB
+**Grão:** Linha entregue · **Chave:** `order_line_id` · **Linhas:** 25.077 · **Tamanho:** 1985.4 KB
 
-`sha256 9a7c99389a9bcfd5e1c8d3cf…`
+`sha256 2bd0efb477ef7662d6b40ce7…`
 
 | Coluna | Tipo | Unidade | Descrição |
 |--------|------|---------|-----------|
@@ -119,9 +119,9 @@ O que de fato aconteceu com cada linha histórica: de qual CD saiu, quando prome
 
 Posição de estoque no fim de cada dia do histórico. A linha da data de corte é o seu estado inicial.
 
-**Grão:** Dia × CD × SKU · **Chave:** `(date. dc_id. sku)` · **Linhas:** 7.240 · **Tamanho:** 317.3 KB
+**Grão:** Dia × CD × SKU · **Chave:** `(date. dc_id. sku)` · **Linhas:** 7.240 · **Tamanho:** 310.2 KB
 
-`sha256 898bbf8833718b631cf53c66…`
+`sha256 979806d777fd7667383bf7f2…`
 
 | Coluna | Tipo | Unidade | Descrição |
 |--------|------|---------|-----------|
@@ -137,9 +137,9 @@ Posição de estoque no fim de cada dia do histórico. A linha da data de corte 
 
 Recebimentos programados. Só os confirmados entram no ATP (BR-402); os não confirmados são CTP e podem atrasar.
 
-**Grão:** Recebimento de planta · **Chave:** `receipt_id` · **Linhas:** 652 · **Tamanho:** 35.9 KB
+**Grão:** Recebimento de planta · **Chave:** `receipt_id` · **Linhas:** 652 · **Tamanho:** 35.3 KB
 
-`sha256 58e7352f8c7c9b98e4fa0ab0…`
+`sha256 23a8bd3ff3c64e6683c1ba84…`
 
 | Coluna | Tipo | Unidade | Descrição |
 |--------|------|---------|-----------|
@@ -156,9 +156,9 @@ Recebimentos programados. Só os confirmados entram no ATP (BR-402); os não con
 
 O plano de demanda vigente e o consumo real acumulado. Consumo acima de 110% do plano dispara replanejamento (BR-701).
 
-**Grão:** Semana × SKU × região · **Chave:** `(week_start. sku. region)` · **Linhas:** 1.400 · **Tamanho:** 37.2 KB
+**Grão:** Semana × SKU × região · **Chave:** `(week_start. sku. region)` · **Linhas:** 1.400 · **Tamanho:** 35.8 KB
 
-`sha256 f781d2f3657dfa91943b4eb6…`
+`sha256 2389d0423d08e6c3ab73db50…`
 
 | Coluna | Tipo | Unidade | Descrição |
 |--------|------|---------|-----------|
@@ -174,7 +174,7 @@ Cadastro de produto.
 
 **Grão:** SKU · **Chave:** `sku` · **Linhas:** 5 · **Tamanho:** 0.4 KB
 
-`sha256 e940d0d8b4f23c5a4e62c014…`
+`sha256 9eac53eb95249b2eac377196…`
 
 | Coluna | Tipo | Unidade | Descrição |
 |--------|------|---------|-----------|
@@ -193,9 +193,9 @@ Cadastro de produto.
 
 Cadastro de cliente com segmento, SLA e regra de pedido completo.
 
-**Grão:** Cliente · **Chave:** `customer_id` · **Linhas:** 816 · **Tamanho:** 27.9 KB
+**Grão:** Cliente · **Chave:** `customer_id` · **Linhas:** 816 · **Tamanho:** 27.1 KB
 
-`sha256 c7ee5e18700b5b50ae319bad…`
+`sha256 aec959ba20eec7953c94e811…`
 
 | Coluna | Tipo | Unidade | Descrição |
 |--------|------|---------|-----------|
@@ -215,7 +215,7 @@ Capacidade, cutoff e calendário de cada CD.
 
 **Grão:** Centro de distribuição · **Chave:** `dc_id` · **Linhas:** 4 · **Tamanho:** 0.3 KB
 
-`sha256 5ebd7c8aa40165e5542455e7…`
+`sha256 afbe98533405173930a88c86…`
 
 | Coluna | Tipo | Unidade | Descrição |
 |--------|------|---------|-----------|
@@ -234,7 +234,7 @@ O que cada planta produz e sua capacidade.
 
 **Grão:** Planta · **Chave:** `plant_id` · **Linhas:** 2 · **Tamanho:** 0.1 KB
 
-`sha256 e3bbeec8a815adfc108743ed…`
+`sha256 29d9337e175f470180dd96de…`
 
 | Coluna | Tipo | Unidade | Descrição |
 |--------|------|---------|-----------|
@@ -250,7 +250,7 @@ Lead time de distribuição e tarifa por quilo.
 
 **Grão:** CD → região · **Chave:** `(dc_id. region)` · **Linhas:** 20 · **Tamanho:** 0.4 KB
 
-`sha256 eb54c97f592f2129c7da2e97…`
+`sha256 ce69fd6f183a9c3896a4170b…`
 
 | Coluna | Tipo | Unidade | Descrição |
 |--------|------|---------|-----------|
@@ -266,7 +266,7 @@ Distâncias e lead times de suprimento e transferência.
 
 **Grão:** Nó → nó · **Chave:** `(origin. dest)` · **Linhas:** 20 · **Tamanho:** 0.7 KB
 
-`sha256 fba5324828ce7e4305b6e764…`
+`sha256 23b426518d4cb96fdcf2d420…`
 
 | Coluna | Tipo | Unidade | Descrição |
 |--------|------|---------|-----------|
@@ -284,7 +284,7 @@ Capacidade de transferência e de distribuição.
 
 **Grão:** Tipo de veículo · **Chave:** `vehicle_type` · **Linhas:** 2 · **Tamanho:** 0.1 KB
 
-`sha256 d21a217108d4a62ae2472e5a…`
+`sha256 590e1d409cfb06a735962943…`
 
 | Coluna | Tipo | Unidade | Descrição |
 |--------|------|---------|-----------|
@@ -298,9 +298,9 @@ Capacidade de transferência e de distribuição.
 
 Calendário de dias úteis por região (BR-102).
 
-**Grão:** Dia × região · **Chave:** `(date. region)` · **Linhas:** 2.100 · **Tamanho:** 37.2 KB
+**Grão:** Dia × região · **Chave:** `(date. region)` · **Linhas:** 2.100 · **Tamanho:** 35.1 KB
 
-`sha256 36a95e9d2eed4acd5ff62019…`
+`sha256 99edfbd521e04bcbac7d01c2…`
 
 | Coluna | Tipo | Unidade | Descrição |
 |--------|------|---------|-----------|
@@ -315,7 +315,7 @@ Formato aceito de resposta de promessa.
 
 **Grão:** Exemplo · **Chave:** `—` · **Linhas:** 20 · **Tamanho:** 0.9 KB
 
-`sha256 b08c97abf3aeb87c5122388a…`
+`sha256 483eaebd92f206aec59494b9…`
 
 | Coluna | Tipo | Unidade | Descrição |
 |--------|------|---------|-----------|
@@ -331,7 +331,7 @@ Formato aceito de resposta de rebalanceamento.
 
 **Grão:** Exemplo · **Chave:** `—` · **Linhas:** 3 · **Tamanho:** 0.2 KB
 
-`sha256 a5514d7a89081c2ac57f0b42…`
+`sha256 4846ddb350447f1004116212…`
 
 | Coluna | Tipo | Unidade | Descrição |
 |--------|------|---------|-----------|
@@ -346,9 +346,9 @@ Formato aceito de resposta de rebalanceamento.
 
 Formato opcional da trilha preditiva: quantis de lead time por rota e dia.
 
-**Grão:** Exemplo · **Chave:** `—` · **Linhas:** 60 · **Tamanho:** 1.5 KB
+**Grão:** Exemplo · **Chave:** `—` · **Linhas:** 60 · **Tamanho:** 1.4 KB
 
-`sha256 842e717a65a5bacaba40a713…`
+`sha256 3f383241d29ed5f6a08d9154…`
 
 | Coluna | Tipo | Unidade | Descrição |
 |--------|------|---------|-----------|

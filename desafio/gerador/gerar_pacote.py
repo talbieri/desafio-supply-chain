@@ -73,7 +73,11 @@ def escrever_checksums():
               "# verificacao (macOS/Linux/Git Bash): sha256sum -c CHECKSUMS.txt", ""]
     for a in arquivos:
         linhas.append(f"{sha256(os.path.join(PASTA, a))}  {a}")
-    with open(os.path.join(PASTA, "CHECKSUMS.txt"), "w", encoding="utf-8") as f:
+    # newline="\n" em todo escritor: no Windows o padrão grava CRLF, o git
+    # normaliza para LF ao versionar, e o checksum deixa de bater para quem
+    # baixa em macOS ou Linux. O CI pegou exatamente isso.
+    with open(os.path.join(PASTA, "CHECKSUMS.txt"), "w", encoding="utf-8",
+              newline="\n") as f:
         f.write("\n".join(linhas) + "\n")
     return len(arquivos)
 

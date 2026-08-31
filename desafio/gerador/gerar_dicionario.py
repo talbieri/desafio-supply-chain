@@ -283,7 +283,7 @@ def main():
     A("*Gerado por `desafio/gerador/gerar_dicionario.py`.*")
 
     destino = os.path.join(PASTA, "data_dictionary.md")
-    with open(destino, "w", encoding="utf-8") as f:
+    with open(destino, "w", encoding="utf-8", newline="\n") as f:
         f.write("\n".join(linhas) + "\n")
     print(f"dicionário escrito em {destino} ({len(linhas)} linhas)")
 

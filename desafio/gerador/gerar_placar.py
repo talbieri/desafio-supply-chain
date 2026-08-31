@@ -132,7 +132,7 @@ def main():
                  janelas={j: coleta(dados, gab, j) for j in ("public", "private")})
 
     os.makedirs(os.path.dirname(DESTINO), exist_ok=True)
-    with open(DESTINO, "w", encoding="utf-8") as f:
+    with open(DESTINO, "w", encoding="utf-8", newline="\n") as f:
         json.dump(saida, f, ensure_ascii=False, indent=1)
 
     for j, d in saida["janelas"].items():
