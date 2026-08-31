@@ -526,6 +526,62 @@
     </div>
   </section>
 
+
+  <section id="testar">
+    <p class="tag">Teste a sua resposta</p>
+    <h2>Solte o seu arquivo e veja a nota</h2>
+    <div class="col">
+      <p class="lead">
+        O avaliador roda <b>dentro do seu navegador</b> — o mesmo <code>avaliar.py</code> que o
+        robô do pull request usa, não uma reimplementação. Nada é enviado a lugar nenhum.
+      </p>
+    </div>
+
+    <div class="testador">
+      <div class="testador-controles">
+        <label class="campo-arquivo">
+          <input type="file" id="arq-promessa" accept=".csv">
+          <span class="rotulo">resposta_promessa.csv</span>
+          <span class="nome" id="nome-promessa">nenhum arquivo</span>
+        </label>
+        <label class="campo-arquivo">
+          <input type="file" id="arq-rebal" accept=".csv">
+          <span class="rotulo">resposta_rebalanceamento.csv <em>opcional</em></span>
+          <span class="nome" id="nome-rebal">nenhum arquivo</span>
+        </label>
+        <label class="campo-arquivo">
+          <input type="file" id="arq-prev" accept=".csv">
+          <span class="rotulo">resposta_previsao.csv <em>opcional · 20 pontos</em></span>
+          <span class="nome" id="nome-prev">nenhum arquivo</span>
+        </label>
+        <div class="campo-janela">
+          <span class="rotulo">Janela</span>
+          <label><input type="radio" name="janela" value="public" checked> pública</label>
+          <label><input type="radio" name="janela" value="private"> privada</label>
+        </div>
+        <button class="btn" id="btn-avaliar" type="button" disabled>Avaliar</button>
+      </div>
+      <p class="testador-estado" id="estado" role="status">
+        Escolha o <code>resposta_promessa.csv</code> para começar.
+      </p>
+      <div id="resultado"></div>
+    </div>
+
+    <div class="note">
+      <p><b>A nota daqui é do modo TREINO</b>, igual à do pull request. O trânsito realizado
+      fica lacrado com os organizadores — se estivesse no navegador, bastaria abrir o DevTools
+      para lê-lo e prometer datas perfeitas.</p>
+      <p>Use esta página para calibrar rápido. Quando gostar do número,
+      <b>abra o pull request</b> — é ele que registra o envio com data e autoria, e é o que
+      vale para o ranking.</p>
+    </div>
+
+    <p class="col" style="font-family:var(--mono);font-size:12px;color:var(--ink-3)">
+      Na primeira avaliação o navegador baixa o Python (~10 MB) e os dados do desafio
+      (~4,5 MB). Leva de 15 a 40 segundos. Depois disso fica em cache e responde em segundos.
+    </p>
+  </section>
+
   <section>
     <p class="tag">Como reproduzir</p>
     <h2>Rode você mesmo</h2>
@@ -545,5 +601,6 @@ python desafio/ferramentas/avaliar.py --resposta desafio/respostas/baseline/priv
 
 </main>
 <footer class="shell">Desafio Supply Chain · pacote de dados v1.0.0 · gerado em 31/08/2026<br>Dados sintéticos determinísticos (seed 42). Nenhum dado real de cliente foi usado.<br>Páginas geradas por <code>desafio/gerador/gerar_site.py</code>.</footer>
+<script src="./assets/testador.js"></script>
 </body>
 </html>

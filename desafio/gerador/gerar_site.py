@@ -274,6 +274,24 @@ pre .c { color:var(--ink-3); }
 figcaption { font-family:var(--mono); font-size:11.5px; line-height:1.6; color:var(--ink-3); margin-top:12px; max-width:76ch; }
 figcaption b { color:var(--ink-2); font-weight:600; }
 
+
+/* ---------- testador de resposta no navegador ---------- */
+.testador { border:1px solid var(--line); background:var(--surface); padding:22px; margin:0 0 24px; }
+.testador-controles { display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:14px; align-items:end; }
+.campo-arquivo { display:flex; flex-direction:column; gap:5px; cursor:pointer; }
+.campo-arquivo input[type=file] { position:absolute; width:1px; height:1px; opacity:0; }
+.campo-arquivo .rotulo, .campo-janela .rotulo { font-family:var(--mono); font-size:10.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-3); }
+.campo-arquivo .rotulo em { font-style:normal; color:var(--accent); }
+.campo-arquivo .nome { font-family:var(--mono); font-size:12.5px; color:var(--ink); border:1px dashed var(--line); padding:9px 11px; background:var(--surface-2); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.campo-arquivo:hover .nome, .campo-arquivo input:focus-visible + .rotulo + .nome { border-color:var(--accent); color:var(--accent); }
+.campo-janela { display:flex; flex-direction:column; gap:5px; font-family:var(--mono); font-size:12.5px; color:var(--ink-2); }
+.campo-janela label { display:inline-flex; align-items:center; gap:6px; cursor:pointer; }
+.testador .btn { align-self:end; }
+.testador .btn:disabled { background:var(--surface-2); color:var(--ink-3); cursor:not-allowed; }
+.testador-estado { font-family:var(--mono); font-size:12.5px; color:var(--ink-3); margin:18px 0 0; }
+.testador-estado.erro { color:var(--alerta); }
+.testador-estado code { font-size:12px; }
+
 .sha { font-family:var(--mono); font-size:11px; color:var(--ink-3); }
 
 /* ---------- gráficos do placar ----------
@@ -963,6 +981,15 @@ def main():
     zip_origem = os.path.join(RAIZ, "desafio", "dados", zip_nome)
     if os.path.exists(zip_origem):
         shutil.copy2(zip_origem, os.path.join(SITE, "dados", zip_nome))
+
+    # o testador roda o MESMO avaliador dentro do navegador, via Pyodide:
+    # estas fontes precisam estar publicadas para ele buscar
+    destino_py = os.path.join(SITE, "assets", "py")
+    os.makedirs(destino_py, exist_ok=True)
+    for origem in (("ferramentas", "comum.py"), ("ferramentas", "avaliar.py"),
+                   ("ferramentas", "baseline_atual.py"), ("gerador", "parametros.py")):
+        shutil.copy2(os.path.join(RAIZ, "desafio", origem[0], origem[1]),
+                     os.path.join(destino_py, origem[1]))
 
     with open(os.path.join(SITE, "assets", "site.css"), "w", encoding="utf-8") as f:
         f.write(CSS)
