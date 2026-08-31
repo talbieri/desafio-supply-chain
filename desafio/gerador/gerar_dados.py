@@ -563,7 +563,11 @@ def planejar_recebimentos_futuros(estoque, em_transito, chegadas, seq_inicial):
 def escrever_csv(caminho, colunas, linhas):
     os.makedirs(os.path.dirname(caminho), exist_ok=True)
     with open(caminho, "w", newline="", encoding="utf-8") as f:
-        w = csv.DictWriter(f, fieldnames=colunas, extrasaction="ignore")
+        # LF em qualquer sistema. Sem isto o Windows grava CRLF, o git
+        # normaliza para LF ao versionar, e a conferência de checksum falha
+        # para quem baixa em macOS ou Linux — foi o que o CI acusou.
+        w = csv.DictWriter(f, fieldnames=colunas, extrasaction="ignore",
+                           lineterminator="\n")
         w.writeheader()
         for ln in linhas:
             w.writerow(ln)
@@ -864,7 +868,7 @@ def main():
                  "# verificacao (macOS/Linux/Git Bash): sha256sum -c CHECKSUMS.txt", ""]
     for nome in arquivos:
         linhas_ck.append(f"{sha256(os.path.join(out, nome))}  {nome}")
-    with open(f"{out}/CHECKSUMS.txt", "w", encoding="utf-8") as f:
+    with open(f"{out}/CHECKSUMS.txt", "w", encoding="utf-8", newline="\n") as f:
         f.write("\n".join(linhas_ck) + "\n")
 
     print("\nArquivos gerados:")

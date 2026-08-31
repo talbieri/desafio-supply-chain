@@ -1,0 +1,10 @@
+# Os artefatos publicados precisam chegar byte a byte iguais ao que foi
+# medido pelo checksum. Sem isto, o git converte LF em CRLF no Windows e a
+# conferência de integridade falha para metade das pessoas.
+* text=auto eol=lf
+
+desafio/dados/**   -text
+docs/dados/**      -text
+respostas/**       -text
+*.zip              binary
+*.csv              -text
