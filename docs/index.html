@@ -32,7 +32,7 @@
       cada linha, que data prometer e o que embarca junto.
     </p>
     <div class="baixar">
-      <a class="btn" href="./dados/desafio-supply-chain-v1.0.0.zip" download>Baixar o pacote (717 KB)</a>
+      <a class="btn" href="./dados/desafio-supply-chain-v1.0.0.zip" download>Baixar o pacote (721 KB)</a>
       <a class="btn sec" href="./dados.html">Ver os arquivos um a um</a>
     </div>
     <div class="facts">
@@ -244,6 +244,134 @@ python desafio/ferramentas/baseline_atual.py --janela private</pre>
       <p><b>Duas linhas valem dinheiro imediato.</b> O OTIF de Key Account em 86,7% aciona
       R$ 95.562 de multa por janela, e a ocupação de 4,7% significa frete mínimo pago em quase
       todo embarque — sobre R$ 305.083 de frete de distribuição.</p>
+    </div>
+  </section>
+
+
+  <section>
+    <p class="tag">O ponto de partida</p>
+    <h2>Comece copiando o protótipo, não do zero</h2>
+    <div class="col">
+      <p class="lead">
+        <code>exemplo_prototipo.py</code> tem 409 linhas comentadas e faz o percurso inteiro:
+        lê os dados, decide, grava a resposta no formato certo e passa nos gates. Copie e mexa —
+        assim você começa otimizando, em vez de montando encanamento.
+      </p>
+    </div>
+
+    <pre><span class="c"># 1. copie</span>
+cp desafio/ferramentas/exemplo_prototipo.py minha_solucao.py
+
+<span class="c"># 2. rode como está, para ver o ponto de partida</span>
+python desafio/ferramentas/exemplo_prototipo.py --janela public
+python desafio/ferramentas/avaliar.py --resposta desafio/respostas/exemplo/public
+
+<span class="c"># 3. mexa no seu arquivo e avalie de novo</span>
+python minha_solucao.py --janela public --saida minhas_respostas
+python desafio/ferramentas/avaliar.py --resposta minhas_respostas/public</pre>
+
+    <h3>Os cinco passos, e onde mexer em cada um</h3>
+    <div class="scroll">
+      <table>
+        <thead><tr><th>Passo</th><th>Função</th><th>O que faz</th><th>Onde está a alavanca</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>1 · Aprender</td><td><code>quantis_de_transito</code></td>
+            <td>Extrai do histórico a distribuição real de atraso por rota</td>
+            <td>Trocar o quantil fixo por um modelo que use dia da semana, volume ou congestionamento do CD</td>
+          </tr>
+          <tr>
+            <td>2 · ATP</td><td><code>class ATP</code></td>
+            <td>Monta a linha do tempo de disponibilidade por CD × SKU</td>
+            <td>Já está correto — <code>primeira_data</code> usa o mínimo do saldo à frente. Não simplifique isso</td>
+          </tr>
+          <tr class="destaque">
+            <td>3 · Decidir</td><td><code>resolver</code></td>
+            <td>Escolhe CD, data e embarque para cada linha</td>
+            <td><b>É aqui que se ganha o desafio.</b> Decide linha a linha, na ordem de prioridade — um otimizador resolve o conjunto</td>
+          </tr>
+          <tr>
+            <td>4 · Rebalancear</td><td><code>rebalancear</code></td>
+            <td>Compara estoque com demanda prevista e transfere</td>
+            <td>Não compara o custo da transferência contra a falta evitada. Faz por gatilho, não por conta</td>
+          </tr>
+          <tr>
+            <td>5 · Prever</td><td><code>previsao</code></td>
+            <td>Publica os quantis q50 e q90 por rota</td>
+            <td>Vale 20 pontos e sai de graça do passo 1. Um modelo de verdade rende mais</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Três linhas que valem experimento imediato</h3>
+    <div class="grid">
+      <div class="cell">
+        <span class="code">linha 289</span>
+        <h4>O quantil da promessa</h4>
+        <p><code>p = 0.97 if seg in ("KA","DIS") else 0.90</code><br>
+        Quantil alto entrega confiabilidade e alonga o prazo. Baixo faz o contrário. Cada segmento
+        tem SLA e multa diferentes — por que o corte seria o mesmo?</p>
+      </div>
+      <div class="cell">
+        <span class="code">linha 208</span>
+        <h4>O critério de escolha do CD</h4>
+        <p>Entre os CDs que chegam na data pedida, ele pega <b>o mais barato</b>. Poderia pesar a
+        confiabilidade da rota, o risco de multa do cliente ou o custo de esvaziar aquele CD para
+        os pedidos seguintes.</p>
+      </div>
+      <div class="cell">
+        <span class="code">linha 244</span>
+        <h4>O tamanho do grupo de embarque</h4>
+        <p><code>limite = 3 if seg in ("KA","DIS") else 8</code><br>
+        Grupo maior divide mais o frete e acopla mais gente: uma linha sem estoque segura o veículo
+        inteiro. O ponto de equilíbrio é empírico.</p>
+      </div>
+    </div>
+
+    <h3>Onde ele chega — e onde para</h3>
+    <div class="scroll">
+      <table>
+        <thead><tr><th>Dimensão</th><th class="num">Protótipo</th><th class="num">Teto</th><th>Leitura</th></tr></thead>
+        <tbody>
+          <tr><td>Qualidade preditiva</td><td class="num">20,00</td><td class="num">20</td><td>Completo — sai do histórico</td></tr>
+          <tr><td>Eficiência de custo</td><td class="num">21,62</td><td class="num">25</td><td>Quase tudo, via consolidação de embarques</td></tr>
+          <tr class="destaque"><td>Promise Reliability</td><td class="num">0,00</td><td class="num">25</td><td>Não supera o baseline</td></tr>
+          <tr class="destaque"><td>OTIF</td><td class="num">0,00</td><td class="num">12</td><td>Não supera o baseline</td></tr>
+          <tr class="destaque"><td>Fill Rate</td><td class="num">0,00</td><td class="num">8</td><td>Não supera o baseline</td></tr>
+          <tr><td><b>Total automático</b></td><td class="num"><b>41,62</b></td><td class="num"><b>90</b></td><td><b>48,4 pontos na mesa</b></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="note">
+      <p><b>Repare no que ele não faz — é deliberado.</b> Ele ganha onde a solução é mecânica
+      (previsão sai do histórico, consolidação é aritmética) e <b>zera nos 45 pontos de serviço</b>,
+      porque não bate o baseline em nenhum deles.</p>
+      <p>Na prática: corta R$ 106 mil de custo e <b>paga a multa de Key Account inteira</b>,
+      R$ 95.562 — a mesma que o baseline paga. A alavanca mais óbvia do desafio segue intocada.</p>
+      <p>E metade da economia dele vem de <b>não ter feito transferência nenhuma</b> na janela
+      pública. Não é otimização, é omissão que aparece como ganho. Quando ele efetivamente
+      rebalanceia, na janela privada, o score cai de 41,6 para 31,3 — sinal de que rebalanceia
+      mal, não de que rebalancear seja ruim.</p>
+    </div>
+
+    <h3>O que você não precisa reescrever</h3>
+    <div class="col">
+      <p>
+        <code>comum.py</code> entrega pronto o que dá mais trabalho e menos vantagem competitiva:
+        calendário com cutoff e feriados por região, cálculo de frete com ad valorem e GRIS,
+        conversão para paletes, e a data mínima viável de cada linha.
+      </p>
+      <pre>dados.liberacao(linha, cd)            <span class="c"># aplica cutoff das 18h e calendário do CD</span>
+dados.somar_dias_uteis(d, n, regiao)  <span class="c"># dias úteis da região, com feriados</span>
+dados.data_minima_viavel(linha, cd)   <span class="c"># o piso do BR-406</span>
+dados.estoque_abertura(janela)        <span class="c"># o ponto de partida certo do ATP</span>
+frete_distribuicao(dados, cd, itens, regiao)</pre>
+      <p>
+        Somar dias corridos em vez de dias úteis é a armadilha número um do desafio. Use as
+        funções e ela desaparece.
+      </p>
     </div>
   </section>
 

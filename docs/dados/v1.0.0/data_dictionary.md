@@ -1,6 +1,6 @@
 # Dicionário de Dados — Desafio Supply Chain v1.0.0
 
-> Gerado em 2026-08-28 · seed `42` · origem: dados sintéticos
+> Gerado em 2026-08-31 · seed `42` · origem: dados sintéticos
 
 Toda coluna publicada está aqui. Coluna sem linha neste documento é bug de empacotamento — reporte no canal do desafio.
 

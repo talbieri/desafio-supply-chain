@@ -22,9 +22,20 @@ import sys
 from collections import defaultdict
 from datetime import date, timedelta
 
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from comum import Dados, ler_csv, escrever_csv, janela_datas  # noqa: E402
-import parametros as P  # noqa: E402
+# Este arquivo existe para ser copiado. Procura o comum.py na pasta do próprio
+# arquivo e, se não achar, em desafio/ferramentas a partir de onde você rodou —
+# assim a sua cópia funciona em qualquer lugar do projeto.
+for _pasta in (os.path.dirname(os.path.abspath(__file__)),
+               os.path.join(os.getcwd(), "desafio", "ferramentas")):
+    if os.path.exists(os.path.join(_pasta, "comum.py")) and _pasta not in sys.path:
+        sys.path.insert(0, _pasta)
+try:
+    from comum import Dados, ler_csv, escrever_csv, janela_datas  # noqa: E402
+    import parametros as P  # noqa: E402
+except ModuleNotFoundError:
+    sys.exit("Não encontrei comum.py.\n\n"
+             "  Rode a partir da raiz do projeto, onde existe a pasta desafio/:\n"
+             "    python minha_solucao.py --janela public\n")
 
 try:
     sys.stdout.reconfigure(encoding="utf-8")
