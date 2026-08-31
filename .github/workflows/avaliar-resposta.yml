@@ -1,0 +1,81 @@
+name: Avaliar resposta
+
+# Roda quando alguém abre ou atualiza um pull request que mexe em respostas/.
+# O avaliador não encontra o gabarito neste repositório, então trabalha em modo
+# TREINO: sorteia o trânsito da distribuição histórica com semente fixa. Os
+# gates são os mesmos do modo oficial — reprovar aqui é reprovar lá.
+on:
+  pull_request:
+    paths:
+      - 'respostas/**'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  avaliar:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Baixar o repositório
+        uses: actions/checkout@v4
+
+      - name: Preparar o Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Conferir a integridade dos dados
+        run: python desafio/ferramentas/conferir_dados.py
+
+      - name: Avaliar as respostas
+        id: nota
+        continue-on-error: true
+        run: |
+          python desafio/ferramentas/avaliar_pr.py --saida nota.md
+          echo "arquivo=nota.md" >> "$GITHUB_OUTPUT"
+
+      - name: Publicar no resumo da execução
+        if: always()
+        run: cat nota.md >> "$GITHUB_STEP_SUMMARY" || echo "sem nota" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Comentar no pull request
+        if: always() && github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            let corpo;
+            try {
+              corpo = fs.readFileSync('nota.md', 'utf8');
+            } catch (e) {
+              corpo = '## Nota da sua resposta\n\nO avaliador não conseguiu rodar. ' +
+                      'Veja o log da execução para o motivo.';
+            }
+            const marca = '<!-- nota-do-desafio -->';
+            const { owner, repo } = context.repo;
+            const numero = context.issue.number;
+
+            // atualiza o comentário anterior em vez de empilhar um novo a cada envio
+            const anteriores = await github.rest.issues.listComments({
+              owner, repo, issue_number: numero, per_page: 100
+            });
+            const meu = anteriores.data.find(c =>
+              c.user.type === 'Bot' && c.body.includes(marca));
+
+            const texto = `${marca}\n${corpo}`;
+            if (meu) {
+              await github.rest.issues.updateComment({
+                owner, repo, comment_id: meu.id, body: texto });
+            } else {
+              await github.rest.issues.createComment({
+                owner, repo, issue_number: numero, body: texto });
+            }
+
+      - name: Falhar se alguma resposta foi reprovada
+        if: steps.nota.outcome == 'failure'
+        run: |
+          echo "Uma ou mais respostas foram reprovadas nos gates."
+          echo "A nota comentada no pull request explica o motivo."
+          exit 1
