@@ -28,6 +28,7 @@ from datetime import date
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import parametros as P  # noqa: E402
 from gerar_dicionario import TABELAS  # noqa: E402
+import placar_html  # noqa: E402
 
 try:
     sys.stdout.reconfigure(encoding="utf-8")
@@ -57,6 +58,7 @@ NAV = """<nav class="sitenav">
     <span class="sep"></span>
     <a href="./index.html"{a0}>Início</a>
     <a href="./dados.html"{a1}>Dados</a>
+    <a href="./placar.html"{a4}>Placar</a>
     <a href="./regras.html"{a2}>Regras</a>
     <a href="./conceitos.html"{a3}>Conceitos</a>
   </div>
@@ -87,10 +89,11 @@ ESTILO_NAV = """
 
 
 def nav(ativo):
-    marcas = ["", "", "", ""]
+    marcas = ["", "", "", "", ""]
     if ativo is not None:
         marcas[ativo] = ' class="ativo"'
-    return NAV.format(a0=marcas[0], a1=marcas[1], a2=marcas[2], a3=marcas[3])
+    return NAV.format(a0=marcas[0], a1=marcas[1], a2=marcas[2], a3=marcas[3],
+                      a4=marcas[4])
 
 
 def sha256(caminho):
@@ -272,6 +275,69 @@ figcaption { font-family:var(--mono); font-size:11.5px; line-height:1.6; color:v
 figcaption b { color:var(--ink-2); font-weight:600; }
 
 .sha { font-family:var(--mono); font-size:11px; color:var(--ink-3); }
+
+/* ---------- gráficos do placar ----------
+   Paleta validada com o validador da skill dataviz nos dois modos:
+   claro  #00889E / #B85C00  ΔE 17.9 (protan) · 24.3 (visão normal)
+   escuro #1E9DB4 / #D07E3A  dentro da banda L 0.48–0.67
+   Toda barra traz o valor escrito ao lado e todo status vem com rótulo:
+   a cor nunca é a única portadora de informação. */
+:root {
+  --serie-1:#00889E; --serie-2:#B85C00;
+  --bom:#1F7A3D; --alerta:#B3480C;
+  --trilho:#DFE5E2;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --serie-1:#1E9DB4; --serie-2:#D07E3A;
+    --bom:#5CA36F; --alerta:#DE8B4A;
+    --trilho:#22302C;
+  }
+}
+:root[data-theme="dark"] {
+  --serie-1:#1E9DB4; --serie-2:#D07E3A;
+  --bom:#5CA36F; --alerta:#DE8B4A;
+  --trilho:#22302C;
+}
+
+.sr { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; }
+
+.trilho { position:relative; height:16px; background:var(--trilho); margin:0 0 4px; }
+.trilho.baixo { height:11px; margin-bottom:3px; }
+.barra { height:100%; border-radius:0 3px 3px 0; transition:filter .12s; }
+.barra.serie-1 { background:var(--serie-1); }
+.barra.serie-2 { background:var(--serie-2); }
+.trilho:hover .barra { filter:brightness(1.12); }
+.marca-meta { position:absolute; top:-3px; bottom:-3px; left:var(--meta,95%); width:2px; background:var(--ink); opacity:.75; }
+
+.legenda { display:flex; flex-wrap:wrap; gap:20px; font-family:var(--mono); font-size:12px; color:var(--ink-2); margin:0 0 22px; }
+.legenda span { display:flex; align-items:center; gap:7px; }
+.chip { display:inline-block; width:11px; height:11px; border-radius:2px; flex-shrink:0; }
+.chip.serie-1 { background:var(--serie-1); }
+.chip.serie-2 { background:var(--serie-2); }
+.chip-meta { display:inline-block; width:2px; height:13px; background:var(--ink); opacity:.75; flex-shrink:0; }
+
+.kpis { display:grid; grid-template-columns:repeat(auto-fit,minmax(310px,1fr)); gap:1px; background:var(--line); border:1px solid var(--line); margin-bottom:24px; }
+.kpi { background:var(--surface); padding:20px; }
+.kpi-topo { display:flex; align-items:baseline; justify-content:space-between; gap:12px; margin-bottom:4px; }
+.kpi h3 { font-family:var(--display); font-size:15.5px; margin:0; }
+.kpi-nota { font-size:14px; color:var(--ink-3); margin:0 0 14px; }
+.valores { font-family:var(--mono); font-size:12px; color:var(--ink-3); display:flex; align-items:center; gap:7px; margin:0 0 12px; }
+.valores b { color:var(--ink); font-variant-numeric:tabular-nums; }
+.valores .meta-txt { margin-left:auto; }
+
+.pill { font-family:var(--mono); font-size:10.5px; letter-spacing:.08em; text-transform:uppercase; padding:3px 8px; border:1px solid currentColor; white-space:nowrap; }
+.pill.bom { color:var(--bom); }
+.pill.alerta { color:var(--alerta); }
+.bom-txt { color:var(--bom); }
+.alerta-txt { color:var(--alerta); }
+
+.tabela-corte td.cel-barra { width:42%; min-width:180px; padding-top:14px; }
+.tabela-corte tbody tr:hover td { background:transparent; }
+.tabela-corte th[scope="row"] { color:var(--ink); font-weight:600; white-space:nowrap; }
+
+@media (max-width:720px) { .tabela-corte td.cel-barra { min-width:120px; } }
+
 
 footer { padding:34px 0 60px; font-family:var(--mono); font-size:11.5px; line-height:1.8; color:var(--ink-3); border-top:1px solid var(--line); }
 footer a { color:var(--accent); }
@@ -841,6 +907,12 @@ frete_distribuicao(dados, cd, itens, regiao)</pre>
         cinco cenários que a equipe precisa saber defender.</p>
       </div>
       <div class="cell">
+        <span class="code">O número a bater</span>
+        <h4><a href="./placar.html">Placar do baseline</a></h4>
+        <p>O resultado que a política atual entrega, KPI por KPI contra a meta, com a
+        decomposição do custo e o diagnóstico de onde o OTIF se perde.</p>
+      </div>
+      <div class="cell">
         <span class="code">Os arquivos</span>
         <h4><a href="./dados.html">Dados do desafio</a></h4>
         <p>Os 21 arquivos com tamanho, número de linhas e checksum, mais o dicionário de dados
@@ -901,6 +973,12 @@ def main():
         f.write(pagina_inicial())
     with open(os.path.join(SITE, "dados.html"), "w", encoding="utf-8") as f:
         f.write(pagina_dados())
+
+    caminho = placar_html.gerar(RAIZ, CABECA, nav(4), rodape())
+    if caminho:
+        print(f"  placar.html        gerado a partir de dados/placar.json")
+    else:
+        print("  placar.html        pulado — docs/dados/placar.json ausente")
 
     for i, (origem, destino, titulo) in enumerate(FONTES_HTML):
         converter(os.path.join(FONTES, origem), os.path.join(SITE, destino), i + 2)

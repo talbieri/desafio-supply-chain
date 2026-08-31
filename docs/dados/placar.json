@@ -1,0 +1,424 @@
+{
+ "versao": "1.0.0",
+ "modo": "oficial",
+ "janelas": {
+  "public": {
+   "kpis": [
+    {
+     "rotulo": "OTIF",
+     "chave": "otif",
+     "valor": 0.9347,
+     "meta": 0.95,
+     "direcao": 1,
+     "nota": "contra a data que o cliente pediu",
+     "atinge": false
+    },
+    {
+     "rotulo": "OTIF Key Account",
+     "chave": "otif_ka",
+     "valor": 0.8667,
+     "meta": 0.98,
+     "direcao": 1,
+     "nota": "abaixo de 95% dispara multa de 3%",
+     "atinge": false
+    },
+    {
+     "rotulo": "Promise Reliability",
+     "chave": "promise_reliability",
+     "valor": 0.9478,
+     "meta": 0.96,
+     "direcao": 1,
+     "nota": "contra a data que você prometeu",
+     "atinge": false
+    },
+    {
+     "rotulo": "In Full",
+     "chave": "in_full",
+     "valor": 1.0,
+     "meta": 0.97,
+     "direcao": 1,
+     "nota": "linhas entregues completas",
+     "atinge": true
+    },
+    {
+     "rotulo": "Fill Rate (valor)",
+     "chave": "fill_rate_valor",
+     "valor": 1.0,
+     "meta": 0.96,
+     "direcao": 1,
+     "nota": "piso de 85% por segmento",
+     "atinge": true
+    },
+    {
+     "rotulo": "Aderência ao CD primário",
+     "chave": "aderencia_cd_primario",
+     "valor": 0.9021,
+     "meta": 0.85,
+     "direcao": 1,
+     "nota": "quanto sai do CD natural",
+     "atinge": true
+    },
+    {
+     "rotulo": "Ocupação do veículo",
+     "chave": "ocupacao_media_veiculo",
+     "valor": 0.047,
+     "meta": 0.8,
+     "direcao": 1,
+     "nota": "peso ou volume, o que estourar antes",
+     "atinge": false
+    },
+    {
+     "rotulo": "Custo logístico / receita",
+     "chave": "custo_logistico_pct",
+     "valor": 0.0628,
+     "meta": 0.085,
+     "direcao": -1,
+     "nota": "quanto da receita vira custo",
+     "atinge": true
+    }
+   ],
+   "custo_total": 491736.29,
+   "custo": [
+    {
+     "nome": "Frete de distribuição",
+     "chave": "frete_distribuicao",
+     "valor": 305083.3
+    },
+    {
+     "nome": "Multa de Key Account",
+     "chave": "multa_ka",
+     "valor": 95562.0
+    },
+    {
+     "nome": "Frete de transferência",
+     "chave": "frete_transferencia",
+     "valor": 52216.0
+    },
+    {
+     "nome": "Armazenagem",
+     "chave": "armazenagem",
+     "valor": 33256.33
+    },
+    {
+     "nome": "Reentrega",
+     "chave": "reentrega",
+     "valor": 3384.26
+    },
+    {
+     "nome": "Movimentação",
+     "chave": "movimentacao",
+     "valor": 2234.4
+    }
+   ],
+   "linhas": 919,
+   "valor_pedido": 7824044.0,
+   "por_regiao": [
+    {
+     "nome": "NE",
+     "linhas": 182,
+     "otif": 0.8516,
+     "atrasadas": 27,
+     "valor_atrasado": 270441.0
+    },
+    {
+     "nome": "CO",
+     "linhas": 121,
+     "otif": 0.8595,
+     "atrasadas": 17,
+     "valor_atrasado": 201947.0
+    },
+    {
+     "nome": "N",
+     "linhas": 63,
+     "otif": 0.873,
+     "atrasadas": 8,
+     "valor_atrasado": 19476.0
+    },
+    {
+     "nome": "SE",
+     "linhas": 386,
+     "otif": 0.9819,
+     "atrasadas": 7,
+     "valor_atrasado": 166200.0
+    },
+    {
+     "nome": "S",
+     "linhas": 167,
+     "otif": 0.994,
+     "atrasadas": 1,
+     "valor_atrasado": 13500.0
+    }
+   ],
+   "por_cd": [
+    {
+     "nome": "CD-PE",
+     "linhas": 192,
+     "otif": 0.8333,
+     "atrasadas": 32,
+     "valor_atrasado": 276801.0
+    },
+    {
+     "nome": "CD-GO",
+     "linhas": 209,
+     "otif": 0.8995,
+     "atrasadas": 21,
+     "valor_atrasado": 323063.0
+    },
+    {
+     "nome": "CD-SP",
+     "linhas": 334,
+     "otif": 0.982,
+     "atrasadas": 6,
+     "valor_atrasado": 69600.0
+    },
+    {
+     "nome": "CD-PR",
+     "linhas": 184,
+     "otif": 0.9946,
+     "atrasadas": 1,
+     "valor_atrasado": 2100.0
+    }
+   ],
+   "por_segmento": [
+    {
+     "nome": "KA",
+     "linhas": 150,
+     "otif": 0.8667,
+     "atrasadas": 20,
+     "valor_atrasado": 486900.0
+    },
+    {
+     "nome": "VAR",
+     "linhas": 288,
+     "otif": 0.8993,
+     "atrasadas": 29,
+     "valor_atrasado": 133088.0
+    },
+    {
+     "nome": "DIS",
+     "linhas": 129,
+     "otif": 0.969,
+     "atrasadas": 4,
+     "valor_atrasado": 47100.0
+    },
+    {
+     "nome": "ECM",
+     "linhas": 352,
+     "otif": 0.9801,
+     "atrasadas": 7,
+     "valor_atrasado": 4476.0
+    }
+   ],
+   "transferencias": 5
+  },
+  "private": {
+   "kpis": [
+    {
+     "rotulo": "OTIF",
+     "chave": "otif",
+     "valor": 0.9119,
+     "meta": 0.95,
+     "direcao": 1,
+     "nota": "contra a data que o cliente pediu",
+     "atinge": false
+    },
+    {
+     "rotulo": "OTIF Key Account",
+     "chave": "otif_ka",
+     "valor": 0.8659,
+     "meta": 0.98,
+     "direcao": 1,
+     "nota": "abaixo de 95% dispara multa de 3%",
+     "atinge": false
+    },
+    {
+     "rotulo": "Promise Reliability",
+     "chave": "promise_reliability",
+     "valor": 0.9467,
+     "meta": 0.96,
+     "direcao": 1,
+     "nota": "contra a data que você prometeu",
+     "atinge": false
+    },
+    {
+     "rotulo": "In Full",
+     "chave": "in_full",
+     "valor": 1.0,
+     "meta": 0.97,
+     "direcao": 1,
+     "nota": "linhas entregues completas",
+     "atinge": true
+    },
+    {
+     "rotulo": "Fill Rate (valor)",
+     "chave": "fill_rate_valor",
+     "valor": 1.0,
+     "meta": 0.96,
+     "direcao": 1,
+     "nota": "piso de 85% por segmento",
+     "atinge": true
+    },
+    {
+     "rotulo": "Aderência ao CD primário",
+     "chave": "aderencia_cd_primario",
+     "valor": 0.8596,
+     "meta": 0.85,
+     "direcao": 1,
+     "nota": "quanto sai do CD natural",
+     "atinge": true
+    },
+    {
+     "rotulo": "Ocupação do veículo",
+     "chave": "ocupacao_media_veiculo",
+     "valor": 0.0461,
+     "meta": 0.8,
+     "direcao": 1,
+     "nota": "peso ou volume, o que estourar antes",
+     "atinge": false
+    },
+    {
+     "rotulo": "Custo logístico / receita",
+     "chave": "custo_logistico_pct",
+     "valor": 0.0537,
+     "meta": 0.085,
+     "direcao": -1,
+     "nota": "quanto da receita vira custo",
+     "atinge": true
+    }
+   ],
+   "custo_total": 463201.24,
+   "custo": [
+    {
+     "nome": "Frete de distribuição",
+     "chave": "frete_distribuicao",
+     "valor": 319145.8
+    },
+    {
+     "nome": "Multa de Key Account",
+     "chave": "multa_ka",
+     "valor": 105966.0
+    },
+    {
+     "nome": "Armazenagem",
+     "chave": "armazenagem",
+     "valor": 20582.07
+    },
+    {
+     "nome": "Frete de transferência",
+     "chave": "frete_transferencia",
+     "valor": 11552.0
+    },
+    {
+     "nome": "Reentrega",
+     "chave": "reentrega",
+     "valor": 3733.58
+    },
+    {
+     "nome": "Movimentação",
+     "chave": "movimentacao",
+     "valor": 2221.8
+    }
+   ],
+   "linhas": 976,
+   "valor_pedido": 8632735.0,
+   "por_regiao": [
+    {
+     "nome": "N",
+     "linhas": 72,
+     "otif": 0.7361,
+     "atrasadas": 19,
+     "valor_atrasado": 71387.0
+    },
+    {
+     "nome": "NE",
+     "linhas": 198,
+     "otif": 0.7828,
+     "atrasadas": 43,
+     "valor_atrasado": 539083.0
+    },
+    {
+     "nome": "CO",
+     "linhas": 132,
+     "otif": 0.9167,
+     "atrasadas": 11,
+     "valor_atrasado": 17580.0
+    },
+    {
+     "nome": "SE",
+     "linhas": 375,
+     "otif": 0.9653,
+     "atrasadas": 13,
+     "valor_atrasado": 224700.0
+    },
+    {
+     "nome": "S",
+     "linhas": 199,
+     "otif": 1.0,
+     "atrasadas": 0,
+     "valor_atrasado": 0.0
+    }
+   ],
+   "por_cd": [
+    {
+     "nome": "CD-PE",
+     "linhas": 228,
+     "otif": 0.75,
+     "atrasadas": 57,
+     "valor_atrasado": 562891.0
+    },
+    {
+     "nome": "CD-GO",
+     "linhas": 226,
+     "otif": 0.9292,
+     "atrasadas": 16,
+     "valor_atrasado": 66611.0
+    },
+    {
+     "nome": "CD-SP",
+     "linhas": 272,
+     "otif": 0.9596,
+     "atrasadas": 11,
+     "valor_atrasado": 200148.0
+    },
+    {
+     "nome": "CD-PR",
+     "linhas": 250,
+     "otif": 0.992,
+     "atrasadas": 2,
+     "valor_atrasado": 23100.0
+    }
+   ],
+   "por_segmento": [
+    {
+     "nome": "KA",
+     "linhas": 164,
+     "otif": 0.8659,
+     "atrasadas": 22,
+     "valor_atrasado": 446700.0
+    },
+    {
+     "nome": "VAR",
+     "linhas": 294,
+     "otif": 0.8878,
+     "atrasadas": 33,
+     "valor_atrasado": 193224.0
+    },
+    {
+     "nome": "DIS",
+     "linhas": 137,
+     "otif": 0.927,
+     "atrasadas": 10,
+     "valor_atrasado": 182400.0
+    },
+    {
+     "nome": "ECM",
+     "linhas": 381,
+     "otif": 0.9449,
+     "atrasadas": 21,
+     "valor_atrasado": 30426.0
+    }
+   ],
+   "transferencias": 1
+  }
+ }
+}

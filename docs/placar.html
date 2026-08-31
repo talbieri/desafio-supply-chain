@@ -1,0 +1,549 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Placar do Baseline</title>
+<meta name="description" content="O resultado que a política atual entrega e que as equipes precisam superar.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
+<link rel="stylesheet" href="./assets/site.css">
+</head>
+<body>
+<nav class="sitenav">
+  <div class="sitenav-in">
+    <a class="marca" href="./index.html">Desafio&nbsp;Supply&nbsp;Chain</a>
+    <span class="sep"></span>
+    <a href="./index.html">Início</a>
+    <a href="./dados.html">Dados</a>
+    <a href="./placar.html" class="ativo">Placar</a>
+    <a href="./regras.html">Regras</a>
+    <a href="./conceitos.html">Conceitos</a>
+  </div>
+</nav>
+
+<header class="masthead">
+  <div class="shell">
+    <p class="kicker">Placar · pacote v1.0.0 · avaliação oficial</p>
+    <h1>O resultado a ser <em>batido</em></h1>
+    <p class="standfirst">
+      Isto é o que a política atual da operação entrega hoje, medido pelo avaliador oficial
+      contra o gabarito. Todo ponto que a sua equipe marca é ganho medido contra estes números.
+    </p>
+    <div class="facts">
+      <div class="fact"><b>R$ 491.736</b><span>Custo · janela pública</span></div>
+      <div class="fact"><b>R$ 463.201</b><span>Custo · janela privada</span></div>
+      <div class="fact"><b>4 de 8</b><span>KPIs abaixo da meta</span></div>
+      <div class="fact"><b>R$ 95.562</b><span>Multa de Key Account</span></div>
+    </div>
+  </div>
+</header>
+
+<main class="shell">
+
+  <section>
+    <p class="tag">Leitura rápida</p>
+    <h2>Onde estão os pontos</h2>
+    <div class="col">
+      <p class="lead">
+        O baseline não é ruim em tudo — ele entrega 100% de fill rate e fica dentro do custo
+        logístico alvo. Ele falha em três lugares específicos, e é lá que a disputa acontece.
+      </p>
+    </div>
+    <div class="grid">
+      <div class="cell">
+        <span class="code">Alvo 1 · R$ 95.562</span>
+        <h4>A multa de Key Account</h4>
+        <p>O OTIF de KA está em 86,7%
+        e a multa de 3% dispara abaixo de 95%. É o segundo maior item de custo, e nem o baseline
+        nem o protótipo de exemplo encostam nele.</p>
+      </div>
+      <div class="cell">
+        <span class="code">Alvo 2 · R$ 305.083</span>
+        <h4>O frete de distribuição</h4>
+        <p>Com 4,7%
+        de ocupação, a operação paga frete mínimo de R$ 180 em quase todo embarque. Consolidar o
+        que já está disponível no mesmo dia corta ~17% sem atrasar ninguém.</p>
+      </div>
+      <div class="cell">
+        <span class="code">Alvo 3 · prazo</span>
+        <h4>O buffer de tamanho único</h4>
+        <p>O baseline promete lead time + 2 dias para toda região. Sudeste atrasa 9% das vezes,
+        Nordeste 18% até 4 dias. O buffer cobre um e não cobre o outro — e o OTIF mostra
+        exatamente isso.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <p class="tag">Indicadores</p>
+    <h2>Cada KPI contra a sua meta</h2>
+    <div class="col">
+      <p>A marca vertical em cada barra é a meta da rubrica. As duas janelas aparecem sempre
+      juntas: uma solução que só vai bem na pública é sinal de alerta.</p>
+    </div>
+    <div class="legenda">
+      <span><span class="chip serie-1"></span> Janela pública</span>
+      <span><span class="chip serie-2"></span> Janela privada</span>
+      <span><span class="chip-meta"></span> Meta da rubrica</span>
+    </div>
+    <div class="kpis">
+        <div class="kpi">
+          <div class="kpi-topo">
+            <h3>OTIF</h3>
+            <span class="pill alerta">abaixo da meta</span>
+          </div>
+          <p class="kpi-nota">contra a data que o cliente pediu</p>
+          <div class="trilho" style="--meta:95.0%">
+            <div class="barra serie-1" style="width:93.5%"><span class="sr">janela pública</span></div>
+            <div class="marca-meta" title="meta 95,0%"></div>
+          </div>
+          <div class="valores"><span class="chip serie-1"></span>pública
+            <b>93,5%</b></div>
+          <div class="trilho" style="--meta:95.0%">
+            <div class="barra serie-2" style="width:91.2%"><span class="sr">janela privada</span></div>
+            <div class="marca-meta" title="meta 95,0%"></div>
+          </div>
+          <div class="valores"><span class="chip serie-2"></span>privada
+            <b>91,2%</b>
+            <span class="meta-txt">meta 95,0%</span></div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-topo">
+            <h3>OTIF Key Account</h3>
+            <span class="pill alerta">abaixo da meta</span>
+          </div>
+          <p class="kpi-nota">abaixo de 95% dispara multa de 3%</p>
+          <div class="trilho" style="--meta:98.0%">
+            <div class="barra serie-1" style="width:86.7%"><span class="sr">janela pública</span></div>
+            <div class="marca-meta" title="meta 98,0%"></div>
+          </div>
+          <div class="valores"><span class="chip serie-1"></span>pública
+            <b>86,7%</b></div>
+          <div class="trilho" style="--meta:98.0%">
+            <div class="barra serie-2" style="width:86.6%"><span class="sr">janela privada</span></div>
+            <div class="marca-meta" title="meta 98,0%"></div>
+          </div>
+          <div class="valores"><span class="chip serie-2"></span>privada
+            <b>86,6%</b>
+            <span class="meta-txt">meta 98,0%</span></div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-topo">
+            <h3>Promise Reliability</h3>
+            <span class="pill alerta">abaixo da meta</span>
+          </div>
+          <p class="kpi-nota">contra a data que você prometeu</p>
+          <div class="trilho" style="--meta:96.0%">
+            <div class="barra serie-1" style="width:94.8%"><span class="sr">janela pública</span></div>
+            <div class="marca-meta" title="meta 96,0%"></div>
+          </div>
+          <div class="valores"><span class="chip serie-1"></span>pública
+            <b>94,8%</b></div>
+          <div class="trilho" style="--meta:96.0%">
+            <div class="barra serie-2" style="width:94.7%"><span class="sr">janela privada</span></div>
+            <div class="marca-meta" title="meta 96,0%"></div>
+          </div>
+          <div class="valores"><span class="chip serie-2"></span>privada
+            <b>94,7%</b>
+            <span class="meta-txt">meta 96,0%</span></div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-topo">
+            <h3>In Full</h3>
+            <span class="pill bom">atinge</span>
+          </div>
+          <p class="kpi-nota">linhas entregues completas</p>
+          <div class="trilho" style="--meta:97.0%">
+            <div class="barra serie-1" style="width:100.0%"><span class="sr">janela pública</span></div>
+            <div class="marca-meta" title="meta 97,0%"></div>
+          </div>
+          <div class="valores"><span class="chip serie-1"></span>pública
+            <b>100,0%</b></div>
+          <div class="trilho" style="--meta:97.0%">
+            <div class="barra serie-2" style="width:100.0%"><span class="sr">janela privada</span></div>
+            <div class="marca-meta" title="meta 97,0%"></div>
+          </div>
+          <div class="valores"><span class="chip serie-2"></span>privada
+            <b>100,0%</b>
+            <span class="meta-txt">meta 97,0%</span></div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-topo">
+            <h3>Fill Rate (valor)</h3>
+            <span class="pill bom">atinge</span>
+          </div>
+          <p class="kpi-nota">piso de 85% por segmento</p>
+          <div class="trilho" style="--meta:96.0%">
+            <div class="barra serie-1" style="width:100.0%"><span class="sr">janela pública</span></div>
+            <div class="marca-meta" title="meta 96,0%"></div>
+          </div>
+          <div class="valores"><span class="chip serie-1"></span>pública
+            <b>100,0%</b></div>
+          <div class="trilho" style="--meta:96.0%">
+            <div class="barra serie-2" style="width:100.0%"><span class="sr">janela privada</span></div>
+            <div class="marca-meta" title="meta 96,0%"></div>
+          </div>
+          <div class="valores"><span class="chip serie-2"></span>privada
+            <b>100,0%</b>
+            <span class="meta-txt">meta 96,0%</span></div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-topo">
+            <h3>Aderência ao CD primário</h3>
+            <span class="pill bom">atinge</span>
+          </div>
+          <p class="kpi-nota">quanto sai do CD natural</p>
+          <div class="trilho" style="--meta:85.0%">
+            <div class="barra serie-1" style="width:90.2%"><span class="sr">janela pública</span></div>
+            <div class="marca-meta" title="meta 85,0%"></div>
+          </div>
+          <div class="valores"><span class="chip serie-1"></span>pública
+            <b>90,2%</b></div>
+          <div class="trilho" style="--meta:85.0%">
+            <div class="barra serie-2" style="width:86.0%"><span class="sr">janela privada</span></div>
+            <div class="marca-meta" title="meta 85,0%"></div>
+          </div>
+          <div class="valores"><span class="chip serie-2"></span>privada
+            <b>86,0%</b>
+            <span class="meta-txt">meta 85,0%</span></div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-topo">
+            <h3>Ocupação do veículo</h3>
+            <span class="pill alerta">abaixo da meta</span>
+          </div>
+          <p class="kpi-nota">peso ou volume, o que estourar antes</p>
+          <div class="trilho" style="--meta:80.0%">
+            <div class="barra serie-1" style="width:4.7%"><span class="sr">janela pública</span></div>
+            <div class="marca-meta" title="meta 80,0%"></div>
+          </div>
+          <div class="valores"><span class="chip serie-1"></span>pública
+            <b>4,7%</b></div>
+          <div class="trilho" style="--meta:80.0%">
+            <div class="barra serie-2" style="width:4.6%"><span class="sr">janela privada</span></div>
+            <div class="marca-meta" title="meta 80,0%"></div>
+          </div>
+          <div class="valores"><span class="chip serie-2"></span>privada
+            <b>4,6%</b>
+            <span class="meta-txt">meta 80,0%</span></div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-topo">
+            <h3>Custo logístico / receita</h3>
+            <span class="pill bom">atinge</span>
+          </div>
+          <p class="kpi-nota">quanto da receita vira custo</p>
+          <div class="trilho" style="--meta:56.7%">
+            <div class="barra serie-1" style="width:41.9%"><span class="sr">janela pública</span></div>
+            <div class="marca-meta" title="meta 8,5%"></div>
+          </div>
+          <div class="valores"><span class="chip serie-1"></span>pública
+            <b>6,3%</b></div>
+          <div class="trilho" style="--meta:56.7%">
+            <div class="barra serie-2" style="width:35.8%"><span class="sr">janela privada</span></div>
+            <div class="marca-meta" title="meta 8,5%"></div>
+          </div>
+          <div class="valores"><span class="chip serie-2"></span>privada
+            <b>5,4%</b>
+            <span class="meta-txt">meta 8,5%</span></div>
+        </div></div>
+  </section>
+
+  <section>
+    <p class="tag">Custo</p>
+    <h2>Para onde o dinheiro vai</h2>
+    <div class="col">
+      <p>Barra superior é a janela pública, inferior a privada. As duas na mesma escala, para
+      a comparação ser visual e não aritmética.</p>
+    </div>
+    <div class="scroll">
+      <table class="tabela-corte">
+        <thead><tr><th>Componente</th><th>Pública (cima) e privada (baixo)</th>
+        <th class="num">Pública</th><th class="num">Privada</th></tr></thead>
+        <tbody>
+        <tr>
+          <th scope="row">Frete de distribuição</th>
+          <td class="cel-barra">
+            <div class="trilho baixo"><div class="barra serie-1" style="width:95.6%"><span class="sr">Frete de distribuição</span></div></div>
+            <div class="trilho baixo"><div class="barra serie-2" style="width:100.0%"><span class="sr">Frete de distribuição</span></div></div>
+          </td>
+          <td class="num">R$ 305.083</td>
+          <td class="num">R$ 319.146</td>
+        </tr>
+        <tr>
+          <th scope="row">Multa de Key Account</th>
+          <td class="cel-barra">
+            <div class="trilho baixo"><div class="barra serie-1" style="width:29.9%"><span class="sr">Multa de Key Account</span></div></div>
+            <div class="trilho baixo"><div class="barra serie-2" style="width:33.2%"><span class="sr">Multa de Key Account</span></div></div>
+          </td>
+          <td class="num">R$ 95.562</td>
+          <td class="num">R$ 105.966</td>
+        </tr>
+        <tr>
+          <th scope="row">Frete de transferência</th>
+          <td class="cel-barra">
+            <div class="trilho baixo"><div class="barra serie-1" style="width:16.4%"><span class="sr">Frete de transferência</span></div></div>
+            <div class="trilho baixo"><div class="barra serie-2" style="width:3.6%"><span class="sr">Frete de transferência</span></div></div>
+          </td>
+          <td class="num">R$ 52.216</td>
+          <td class="num">R$ 11.552</td>
+        </tr>
+        <tr>
+          <th scope="row">Armazenagem</th>
+          <td class="cel-barra">
+            <div class="trilho baixo"><div class="barra serie-1" style="width:10.4%"><span class="sr">Armazenagem</span></div></div>
+            <div class="trilho baixo"><div class="barra serie-2" style="width:6.4%"><span class="sr">Armazenagem</span></div></div>
+          </td>
+          <td class="num">R$ 33.256</td>
+          <td class="num">R$ 20.582</td>
+        </tr>
+        <tr>
+          <th scope="row">Reentrega</th>
+          <td class="cel-barra">
+            <div class="trilho baixo"><div class="barra serie-1" style="width:1.1%"><span class="sr">Reentrega</span></div></div>
+            <div class="trilho baixo"><div class="barra serie-2" style="width:1.2%"><span class="sr">Reentrega</span></div></div>
+          </td>
+          <td class="num">R$ 3.384</td>
+          <td class="num">R$ 3.734</td>
+        </tr>
+        <tr>
+          <th scope="row">Movimentação</th>
+          <td class="cel-barra">
+            <div class="trilho baixo"><div class="barra serie-1" style="width:0.7%"><span class="sr">Movimentação</span></div></div>
+            <div class="trilho baixo"><div class="barra serie-2" style="width:0.7%"><span class="sr">Movimentação</span></div></div>
+          </td>
+          <td class="num">R$ 2.234</td>
+          <td class="num">R$ 2.222</td>
+        </tr></tbody>
+      </table>
+    </div>
+    <div class="note">
+      <p><b>Custo de falta zerado nas duas janelas.</b> O baseline nunca recusa um pedido: quando
+      falta estoque, ele promete uma data mais tarde. Isso protege o fill rate e transfere o
+      problema para o OTIF — que é onde ele perde.</p>
+    </div>
+  </section>
+
+  <section>
+    <p class="tag">Diagnóstico</p>
+    <h2>Onde o OTIF se perde</h2>
+    <div class="col">
+      <p class="lead">
+        As 60 linhas atrasadas da janela pública
+        não estão espalhadas. Elas se concentram, e a concentração diz o que consertar.
+      </p>
+    </div>
+    
+    <h3>Por CD de origem</h3>
+    <p class="col">CD-PE e CD-GO servem as rotas mais longas e mais variáveis. É de lá que sai quase todo atraso.</p>
+    <div class="scroll">
+      <table class="tabela-corte">
+        <thead><tr><th>origem</th><th>OTIF na janela pública</th>
+        <th class="num">OTIF</th><th class="num">Atrasadas</th>
+        <th class="num">Valor atrasado</th></tr></thead>
+        <tbody>
+        <tr>
+          <th scope="row">CD-PE</th>
+          <td class="cel-barra">
+            <div class="trilho baixo" style="--meta:95%">
+              <div class="barra serie-1" style="width:83.3%"><span class="sr">CD-PE</span></div>
+              <div class="marca-meta"></div>
+            </div>
+          </td>
+          <td class="num"><b>83,3%</b></td>
+          <td class="num">32 de 192</td>
+          <td class="num alerta-txt">R$ 276.801</td>
+        </tr>
+        <tr>
+          <th scope="row">CD-GO</th>
+          <td class="cel-barra">
+            <div class="trilho baixo" style="--meta:95%">
+              <div class="barra serie-1" style="width:90.0%"><span class="sr">CD-GO</span></div>
+              <div class="marca-meta"></div>
+            </div>
+          </td>
+          <td class="num"><b>90,0%</b></td>
+          <td class="num">21 de 209</td>
+          <td class="num alerta-txt">R$ 323.063</td>
+        </tr>
+        <tr>
+          <th scope="row">CD-SP</th>
+          <td class="cel-barra">
+            <div class="trilho baixo" style="--meta:95%">
+              <div class="barra serie-1" style="width:98.2%"><span class="sr">CD-SP</span></div>
+              <div class="marca-meta"></div>
+            </div>
+          </td>
+          <td class="num"><b>98,2%</b></td>
+          <td class="num">6 de 334</td>
+          <td class="num bom-txt">R$ 69.600</td>
+        </tr>
+        <tr>
+          <th scope="row">CD-PR</th>
+          <td class="cel-barra">
+            <div class="trilho baixo" style="--meta:95%">
+              <div class="barra serie-1" style="width:99.5%"><span class="sr">CD-PR</span></div>
+              <div class="marca-meta"></div>
+            </div>
+          </td>
+          <td class="num"><b>99,5%</b></td>
+          <td class="num">1 de 184</td>
+          <td class="num bom-txt">R$ 2.100</td>
+        </tr></tbody>
+      </table>
+    </div>
+    
+    <h3>Por região de entrega</h3>
+    <p class="col">Nordeste e Centro-Oeste têm a maior probabilidade de atraso — e recebem o mesmo buffer de 2 dias que o Sudeste.</p>
+    <div class="scroll">
+      <table class="tabela-corte">
+        <thead><tr><th>entrega</th><th>OTIF na janela pública</th>
+        <th class="num">OTIF</th><th class="num">Atrasadas</th>
+        <th class="num">Valor atrasado</th></tr></thead>
+        <tbody>
+        <tr>
+          <th scope="row">NE</th>
+          <td class="cel-barra">
+            <div class="trilho baixo" style="--meta:95%">
+              <div class="barra serie-1" style="width:85.2%"><span class="sr">NE</span></div>
+              <div class="marca-meta"></div>
+            </div>
+          </td>
+          <td class="num"><b>85,2%</b></td>
+          <td class="num">27 de 182</td>
+          <td class="num alerta-txt">R$ 270.441</td>
+        </tr>
+        <tr>
+          <th scope="row">CO</th>
+          <td class="cel-barra">
+            <div class="trilho baixo" style="--meta:95%">
+              <div class="barra serie-1" style="width:86.0%"><span class="sr">CO</span></div>
+              <div class="marca-meta"></div>
+            </div>
+          </td>
+          <td class="num"><b>86,0%</b></td>
+          <td class="num">17 de 121</td>
+          <td class="num alerta-txt">R$ 201.947</td>
+        </tr>
+        <tr>
+          <th scope="row">N</th>
+          <td class="cel-barra">
+            <div class="trilho baixo" style="--meta:95%">
+              <div class="barra serie-1" style="width:87.3%"><span class="sr">N</span></div>
+              <div class="marca-meta"></div>
+            </div>
+          </td>
+          <td class="num"><b>87,3%</b></td>
+          <td class="num">8 de 63</td>
+          <td class="num alerta-txt">R$ 19.476</td>
+        </tr>
+        <tr>
+          <th scope="row">SE</th>
+          <td class="cel-barra">
+            <div class="trilho baixo" style="--meta:95%">
+              <div class="barra serie-1" style="width:98.2%"><span class="sr">SE</span></div>
+              <div class="marca-meta"></div>
+            </div>
+          </td>
+          <td class="num"><b>98,2%</b></td>
+          <td class="num">7 de 386</td>
+          <td class="num bom-txt">R$ 166.200</td>
+        </tr>
+        <tr>
+          <th scope="row">S</th>
+          <td class="cel-barra">
+            <div class="trilho baixo" style="--meta:95%">
+              <div class="barra serie-1" style="width:99.4%"><span class="sr">S</span></div>
+              <div class="marca-meta"></div>
+            </div>
+          </td>
+          <td class="num"><b>99,4%</b></td>
+          <td class="num">1 de 167</td>
+          <td class="num bom-txt">R$ 13.500</td>
+        </tr></tbody>
+      </table>
+    </div>
+    
+    <h3>Por segmento de cliente</h3>
+    <p class="col">Key Account tem poucas linhas atrasadas, mas elas carregam o maior valor — e disparam a multa contratual.</p>
+    <div class="scroll">
+      <table class="tabela-corte">
+        <thead><tr><th>cliente</th><th>OTIF na janela pública</th>
+        <th class="num">OTIF</th><th class="num">Atrasadas</th>
+        <th class="num">Valor atrasado</th></tr></thead>
+        <tbody>
+        <tr>
+          <th scope="row">KA</th>
+          <td class="cel-barra">
+            <div class="trilho baixo" style="--meta:95%">
+              <div class="barra serie-1" style="width:86.7%"><span class="sr">KA</span></div>
+              <div class="marca-meta"></div>
+            </div>
+          </td>
+          <td class="num"><b>86,7%</b></td>
+          <td class="num">20 de 150</td>
+          <td class="num alerta-txt">R$ 486.900</td>
+        </tr>
+        <tr>
+          <th scope="row">VAR</th>
+          <td class="cel-barra">
+            <div class="trilho baixo" style="--meta:95%">
+              <div class="barra serie-1" style="width:89.9%"><span class="sr">VAR</span></div>
+              <div class="marca-meta"></div>
+            </div>
+          </td>
+          <td class="num"><b>89,9%</b></td>
+          <td class="num">29 de 288</td>
+          <td class="num alerta-txt">R$ 133.088</td>
+        </tr>
+        <tr>
+          <th scope="row">DIS</th>
+          <td class="cel-barra">
+            <div class="trilho baixo" style="--meta:95%">
+              <div class="barra serie-1" style="width:96.9%"><span class="sr">DIS</span></div>
+              <div class="marca-meta"></div>
+            </div>
+          </td>
+          <td class="num"><b>96,9%</b></td>
+          <td class="num">4 de 129</td>
+          <td class="num bom-txt">R$ 47.100</td>
+        </tr>
+        <tr>
+          <th scope="row">ECM</th>
+          <td class="cel-barra">
+            <div class="trilho baixo" style="--meta:95%">
+              <div class="barra serie-1" style="width:98.0%"><span class="sr">ECM</span></div>
+              <div class="marca-meta"></div>
+            </div>
+          </td>
+          <td class="num"><b>98,0%</b></td>
+          <td class="num">7 de 352</td>
+          <td class="num bom-txt">R$ 4.476</td>
+        </tr></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <p class="tag">Como reproduzir</p>
+    <h2>Rode você mesmo</h2>
+    <pre><span class="c"># gera a resposta do baseline nas duas janelas</span>
+python desafio/ferramentas/baseline_atual.py --janela public
+python desafio/ferramentas/baseline_atual.py --janela private
+
+<span class="c"># avalia</span>
+python desafio/ferramentas/avaliar.py --resposta desafio/respostas/baseline/public
+python desafio/ferramentas/avaliar.py --resposta desafio/respostas/baseline/private --janela private</pre>
+    <div class="callout">
+      <p><b>Os números desta página são do modo OFICIAL</b>, calculado contra o gabarito lacrado.
+      Na sua máquina o avaliador roda em modo TREINO e sorteia o trânsito da distribuição
+      histórica — espere alguns pontos de diferença, para cima ou para baixo.</p>
+    </div>
+  </section>
+
+</main>
+<footer class="shell">Desafio Supply Chain · pacote de dados v1.0.0 · gerado em 31/08/2026<br>Dados sintéticos determinísticos (seed 42). Nenhum dado real de cliente foi usado.<br>Páginas geradas por <code>desafio/gerador/gerar_site.py</code>.</footer>
+</body>
+</html>
