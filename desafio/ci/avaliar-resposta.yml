@@ -29,6 +29,13 @@ jobs:
       - name: Conferir a integridade dos dados
         run: python desafio/ferramentas/conferir_dados.py
 
+      - name: Gerar o baseline de referência
+        # O score é normalizado contra o baseline. Sem ele, o avaliador devolve
+        # as métricas mas não a nota — foi o que a primeira execução mostrou.
+        run: |
+          python desafio/ferramentas/baseline_atual.py --janela public
+          python desafio/ferramentas/baseline_atual.py --janela private
+
       - name: Avaliar as respostas
         id: nota
         continue-on-error: true
