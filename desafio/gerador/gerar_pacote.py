@@ -7,6 +7,7 @@ Monta o pacote inteiro do desafio, na ordem certa.
   4. empacota o .zip        distribuível
   5. confere que o gabarito não vazou para o pacote
   6. monta o site em docs/  pronto para o GitHub Pages
+  7. confere os diagramas  procura texto sobreposto nos SVGs
 
 Determinístico: mesma seed, mesmos checksums. Se dois builds divergirem,
 alguma coisa no gerador deixou de ser reprodutível — investigue antes de publicar.
@@ -147,6 +148,21 @@ def main():
 
     # o site publicado é montado por último, já com o pacote final
     rodar("gerar_site.py")
+
+    # SVG não avisa quando um rótulo invade o vizinho: o erro só aparece no
+    # navegador, e só se alguém olhar. Por isso o conferidor roda em todo build.
+    print("\n─── conferir_diagramas.py")
+    r = subprocess.run([sys.executable,
+                        os.path.join("desafio", "gerador", "conferir_diagramas.py")],
+                       capture_output=True, text=True, encoding="utf-8", errors="replace")
+    saida = r.stdout.strip().splitlines()
+    print("    " + (saida[-1] if saida else "sem saída"))
+    if r.returncode != 0:
+        for linha in saida:
+            if " · " in linha:
+                print("    " + linha.strip())
+        print("    Corrija antes de publicar: há texto sobreposto nos diagramas.")
+
     print("\n─── site em docs/ — publique com GitHub Pages (branch main, pasta /docs)")
 
 
