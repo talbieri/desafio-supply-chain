@@ -1,9 +1,12 @@
 """
 Consolida o resultado de todas as equipes em um ranking.
 
-Roda a avaliação OFICIAL de cada pasta em respostas/ e ordena. Só funciona na
-máquina de quem tem o gabarito — o que é o ponto: a nota que vale sai daqui,
-não do robô do pull request, que trabalha em modo treino.
+Roda a avaliação de cada pasta em respostas/ e ordena.
+
+Com o gabarito presente, sai em modo OFICIAL — é a nota que vale, e só a máquina
+dos organizadores consegue. Sem ele, sai em modo TREINO: é o leaderboard de
+acompanhamento que o robô publica a cada envio, com o trânsito sorteado da
+distribuição histórica.
 
 O ranking final é calculado na JANELA PRIVADA. A pública entra na tabela como
 referência, para dar para ver quem otimizou no leaderboard e não generalizou.
@@ -125,24 +128,31 @@ def main():
     ap = argparse.ArgumentParser(description="Consolida o ranking das equipes")
     ap.add_argument("--publicar", action="store_true",
                     help="grava docs/dados/ranking.json para o site")
+    ap.add_argument("--exigir-oficial", action="store_true",
+                    help="falha se o gabarito não estiver presente")
     args = ap.parse_args()
 
     oficial = os.path.exists(os.path.join(PRIVADO, "realized_transit.csv"))
-    if not oficial:
+    if not oficial and args.exigir_oficial:
         print("Gabarito ausente — o ranking oficial só sai na máquina dos organizadores.")
         print(f"Esperado em: {PRIVADO}")
         sys.exit(2)
+    modo = "oficial" if oficial else "treino"
+    if not oficial:
+        print("Gabarito ausente: ranking em MODO TREINO.")
+        print("É o leaderboard de acompanhamento. A nota que vale sai no encerramento,")
+        print("com o gabarito, na máquina dos organizadores.")
 
     linhas = coletar()
     if not linhas:
-        print("Nenhuma equipe em respostas/. Nada a ranquear.")
-        return 0
-
-    tabela(linhas)
+        print("Nenhuma equipe em respostas/ ainda.")
+    else:
+        tabela(linhas)
+    print(f"  modo: {modo.upper()}")
 
     if args.publicar:
         saida = {"gerado_em": datetime.now(timezone.utc).isoformat(timespec="seconds"),
-                 "modo": "oficial", "equipes": linhas}
+                 "modo": modo, "equipes": linhas}
         os.makedirs(os.path.dirname(DESTINO), exist_ok=True)
         with open(DESTINO, "w", encoding="utf-8", newline="\n") as f:
             json.dump(saida, f, ensure_ascii=False, indent=1)

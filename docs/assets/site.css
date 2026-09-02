@@ -196,6 +196,10 @@ figcaption b { color:var(--ink-2); font-weight:600; }
 .testador-estado.erro { color:var(--alerta); }
 .testador-estado code { font-size:12px; }
 
+
+.pos { font-family:var(--display); font-weight:600; color:var(--accent); font-size:15px; }
+.destaque-num { font-family:var(--display); font-weight:600; color:var(--ink); font-size:15.5px; }
+.motivo { font-family:var(--mono); font-size:11.5px; color:var(--ink-3); margin-left:8px; }
 .sha { font-family:var(--mono); font-size:11px; color:var(--ink-3); }
 
 /* ---------- gráficos do placar ----------

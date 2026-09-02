@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ranking das Equipes</title>
+<meta name="description" content="Como as equipes estão no desafio, atualizado a cada envio.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="./assets/site.css">
+</head>
+<body>
+<nav class="sitenav">
+  <div class="sitenav-in">
+    <a class="marca" href="./index.html">Desafio&nbsp;Supply&nbsp;Chain</a>
+    <span class="sep"></span>
+    <a href="./index.html">Início</a>
+    <a href="./dados.html">Dados</a>
+    <a href="./placar.html">Placar</a>
+    <a href="./ranking.html" class="ativo">Ranking</a>
+    <a href="./regras.html">Regras</a>
+    <a href="./conceitos.html">Conceitos</a>
+  </div>
+</nav>
+
+<header class="masthead">
+  <div class="shell">
+    <p class="kicker">Ranking · modo oficial ·
+      atualizado em 2026-09-02 12:27</p>
+    <h1>Como as equipes <em>estão</em></h1>
+    <p class="standfirst">
+      Atualiza sozinho a cada envio aprovado. A ordem é pela janela privada — a mesma
+      que decide o resultado final.
+    </p>
+    <div class="facts">
+      <div class="fact"><b>0</b><span>Equipes na disputa</span></div>
+      <div class="fact"><b>—</b><span>Melhor score</span></div>
+      <div class="fact"><b>0</b><span>Respostas reprovadas</span></div>
+      <div class="fact"><b>90</b><span>Pontos automáticos</span></div>
+    </div>
+  </div>
+</header>
+
+<main class="shell">
+
+  <section>
+    <p class="tag">Classificação</p>
+    <h2>Pela janela privada</h2>
+    <div class="col">
+      <p>A coluna <b>pública</b> fica ao lado de propósito: quem pontua muito mais nela do que
+      na privada ajustou parâmetro no leaderboard em vez de resolver o problema.</p>
+    </div>
+    
+    <div class="callout">
+      <p><b>Nenhuma equipe enviou ainda.</b> A primeira resposta aprovada aparece aqui
+      automaticamente — e quem chegar primeiro fica em primeiro até alguém tirar.</p>
+    </div>
+    
+    <div class="callout">
+      <p><b>Ranking OFICIAL</b>, calculado contra o gabarito. É este que vale.</p>
+    </div>
+  </section>
+
+  <section>
+    <p class="tag">Como entrar</p>
+    <h2>Enviar é abrir um pull request</h2>
+    <div class="col">
+      <p>Coloque a sua resposta em <code>respostas/&lt;sua-equipe&gt;/</code>, com as pastas
+      <code>public/</code> e <code>private/</code>, e abra o pull request. O robô avalia,
+      comenta a nota no próprio PR, e quando o envio é aprovado esta página se atualiza sozinha.</p>
+    </div>
+    <pre>git checkout -b resposta/minha-equipe
+python minha_solucao.py --janela public  --saida respostas/minha-equipe
+python minha_solucao.py --janela private --saida respostas/minha-equipe
+git add respostas/minha-equipe &amp;&amp; git commit -m "resposta: minha-equipe"
+gh pr create --title "Resposta · minha-equipe"</pre>
+    <div class="callout">
+      <p>Quer conferir a nota antes de enviar? <a href="./placar.html#testar">Solte o arquivo
+      na página do placar</a> — o avaliador roda no seu navegador e devolve o mesmo número.</p>
+    </div>
+  </section>
+
+</main>
+<footer class="shell">Desafio Supply Chain · pacote de dados v1.0.0 · gerado em 02/09/2026<br>Dados sintéticos determinísticos (seed 42). Nenhum dado real de cliente foi usado.<br>Páginas geradas por <code>desafio/gerador/gerar_site.py</code>.</footer>
+</body>
+</html>

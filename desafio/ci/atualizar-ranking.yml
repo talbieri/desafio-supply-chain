@@ -1,0 +1,66 @@
+name: Atualizar ranking
+
+# Dispara quando uma resposta entra na main — ou seja, quando um pull request
+# de equipe é aprovado e mesclado. Recalcula o ranking, regenera o site e
+# commita de volta, para a página refletir o envio sem ninguém rodar nada.
+#
+# Não entra em laço: o commit do robô mexe em docs/, e o gatilho só olha
+# respostas/.
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'respostas/**'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: ranking
+  cancel-in-progress: false
+
+jobs:
+  ranking:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Baixar o repositório
+        uses: actions/checkout@v4
+
+      - name: Preparar o Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Gerar o baseline de referência
+        # o score é normalizado contra o baseline
+        run: |
+          python desafio/ferramentas/baseline_atual.py --janela public
+          python desafio/ferramentas/baseline_atual.py --janela private
+
+      - name: Recalcular o ranking
+        # sem gabarito aqui, então sai em modo TREINO — é o leaderboard de
+        # acompanhamento. A nota oficial sai no encerramento, na máquina dos
+        # organizadores.
+        run: python desafio/gerador/gerar_ranking.py --publicar
+
+      - name: Regenerar o site
+        run: python desafio/gerador/gerar_site.py
+
+      - name: Conferir o que vai ao ar
+        run: |
+          python desafio/gerador/conferir_diagramas.py
+          python desafio/gerador/conferir_contraste.py
+
+      - name: Publicar
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/dados/ranking.json docs/ranking.html docs/index.html \
+                  docs/placar.html docs/dados.html docs/regras.html docs/conceitos.html
+          if git diff --cached --quiet; then
+            echo "ranking sem mudança — nada a publicar"
+          else
+            git commit -m "chore: atualiza o ranking após novo envio [skip ci]"
+            git push
+          fi

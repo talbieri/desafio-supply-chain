@@ -29,6 +29,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import parametros as P  # noqa: E402
 from gerar_dicionario import TABELAS  # noqa: E402
 import placar_html  # noqa: E402
+import ranking_html  # noqa: E402
 
 try:
     sys.stdout.reconfigure(encoding="utf-8")
@@ -59,6 +60,7 @@ NAV = """<nav class="sitenav">
     <a href="./index.html"{a0}>Início</a>
     <a href="./dados.html"{a1}>Dados</a>
     <a href="./placar.html"{a4}>Placar</a>
+    <a href="./ranking.html"{a5}>Ranking</a>
     <a href="./regras.html"{a2}>Regras</a>
     <a href="./conceitos.html"{a3}>Conceitos</a>
   </div>
@@ -89,11 +91,11 @@ ESTILO_NAV = """
 
 
 def nav(ativo):
-    marcas = ["", "", "", "", ""]
+    marcas = ["", "", "", "", "", ""]
     if ativo is not None:
         marcas[ativo] = ' class="ativo"'
     return NAV.format(a0=marcas[0], a1=marcas[1], a2=marcas[2], a3=marcas[3],
-                      a4=marcas[4])
+                      a4=marcas[4], a5=marcas[5])
 
 
 def sha256(caminho):
@@ -333,6 +335,10 @@ figcaption b { color:var(--ink-2); font-weight:600; }
 .testador-estado.erro { color:var(--alerta); }
 .testador-estado code { font-size:12px; }
 
+
+.pos { font-family:var(--display); font-weight:600; color:var(--accent); font-size:15px; }
+.destaque-num { font-family:var(--display); font-weight:600; color:var(--ink); font-size:15.5px; }
+.motivo { font-family:var(--mono); font-size:11.5px; color:var(--ink-3); margin-left:8px; }
 .sha { font-family:var(--mono); font-size:11px; color:var(--ink-3); }
 
 /* ---------- gráficos do placar ----------
@@ -1074,6 +1080,11 @@ def main():
         f.write(pagina_inicial())
     with open(os.path.join(SITE, "dados.html"), "w", encoding="utf-8") as f:
         f.write(pagina_dados())
+
+    caminho = ranking_html.gerar(RAIZ, CABECA, nav(5), rodape())
+    print("  ranking.html       "
+          + ("gerado a partir de dados/ranking.json" if caminho
+             else "pulado — nenhuma equipe enviou ainda"))
 
     caminho = placar_html.gerar(RAIZ, CABECA, nav(4), rodape())
     if caminho:
