@@ -1,11 +1,17 @@
 name: Avaliar resposta
 
-# Roda quando alguém abre ou atualiza um pull request que mexe em respostas/.
-# O avaliador não encontra o gabarito neste repositório, então trabalha em modo
-# TREINO: sorteia o trânsito da distribuição histórica com semente fixa. Os
-# gates são os mesmos do modo oficial — reprovar aqui é reprovar lá.
+# pull_request_target, e não pull_request, por um motivo concreto: um pull
+# request vindo de FORK recebe token somente-leitura, e o robô levava 403 ao
+# tentar comentar a nota. Com pull_request_target o job roda no contexto do
+# repositório base e consegue escrever.
+#
+# Isso exige cuidado, porque o token tem permissão de escrita:
+#   - os scripts vêm do checkout da BASE (confiáveis, são os nossos)
+#   - do fork vem SÓ a pasta respostas/, e só como dado
+#   - nada do fork é executado — o avaliador apenas LÊ os CSVs
+# A solução enviada pode conter um solucao.py; ele nunca é executado aqui.
 on:
-  pull_request:
+  pull_request_target:
     paths:
       - 'respostas/**'
   workflow_dispatch:
@@ -18,8 +24,17 @@ jobs:
   avaliar:
     runs-on: ubuntu-latest
     steps:
-      - name: Baixar o repositório
+      - name: Baixar o repositório base (scripts confiáveis)
         uses: actions/checkout@v4
+
+      - name: Trazer só as respostas do pull request
+        # apenas dados. Nenhum código do fork entra no PATH de execução.
+        run: |
+          git fetch --no-tags --depth=1 origin \
+            "+refs/pull/${{ github.event.pull_request.number }}/head:refs/remotes/pr"
+          rm -rf respostas
+          git checkout refs/remotes/pr -- respostas
+          find respostas -type f -name '*.csv' | head -20
 
       - name: Preparar o Python
         uses: actions/setup-python@v5
@@ -30,8 +45,7 @@ jobs:
         run: python desafio/ferramentas/conferir_dados.py
 
       - name: Gerar o baseline de referência
-        # O score é normalizado contra o baseline. Sem ele, o avaliador devolve
-        # as métricas mas não a nota — foi o que a primeira execução mostrou.
+        # o score é normalizado contra o baseline
         run: |
           python desafio/ferramentas/baseline_atual.py --janela public
           python desafio/ferramentas/baseline_atual.py --janela private
@@ -39,16 +53,14 @@ jobs:
       - name: Avaliar as respostas
         id: nota
         continue-on-error: true
-        run: |
-          python desafio/ferramentas/avaliar_pr.py --saida nota.md
-          echo "arquivo=nota.md" >> "$GITHUB_OUTPUT"
+        run: python desafio/ferramentas/avaliar_pr.py --saida nota.md
 
       - name: Publicar no resumo da execução
         if: always()
         run: cat nota.md >> "$GITHUB_STEP_SUMMARY" || echo "sem nota" >> "$GITHUB_STEP_SUMMARY"
 
       - name: Comentar no pull request
-        if: always() && github.event_name == 'pull_request'
+        if: always()
         uses: actions/github-script@v7
         with:
           script: |
@@ -62,7 +74,7 @@ jobs:
             }
             const marca = '<!-- nota-do-desafio -->';
             const { owner, repo } = context.repo;
-            const numero = context.issue.number;
+            const numero = context.payload.pull_request.number;
 
             // atualiza o comentário anterior em vez de empilhar um novo a cada envio
             const anteriores = await github.rest.issues.listComments({
