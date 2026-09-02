@@ -336,6 +336,21 @@ figcaption b { color:var(--ink-2); font-weight:600; }
 .testador-estado code { font-size:12px; }
 
 
+#envio { margin-top:30px; padding-top:26px; border-top:1px solid var(--line); }
+#envio h3 { margin:0 0 8px; font-size:19px; font-weight:600; }
+.envio-linha { display:flex; flex-wrap:wrap; gap:12px; align-items:flex-end; margin:0 0 8px; }
+.campo-equipe { display:flex; flex-direction:column; gap:5px; flex:1 1 240px; }
+.campo-equipe input {
+  font-family:var(--mono); font-size:14px; color:var(--ink);
+  background:var(--surface-2); border:1px solid var(--line);
+  border-radius:var(--r-md); padding:12px 14px; outline:none;
+}
+.campo-equipe input:focus { border-color:var(--accent); }
+.campo-equipe input::placeholder { color:var(--ink-3); }
+.envio-dica { font-family:var(--mono); font-size:11.5px; color:var(--ink-3); margin:0 0 16px; }
+.envio-dica.erro { color:var(--alerta); }
+.envio-dica.ok { color:var(--bom); }
+
 .pos { font-family:var(--display); font-weight:600; color:var(--accent); font-size:15px; }
 .destaque-num { font-family:var(--display); font-weight:600; color:var(--ink); font-size:15.5px; }
 .motivo { font-family:var(--mono); font-size:11.5px; color:var(--ink-3); margin-left:8px; }

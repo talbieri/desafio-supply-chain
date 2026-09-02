@@ -566,6 +566,25 @@
         Escolha o <code>resposta_promessa.csv</code> para começar.
       </p>
       <div id="resultado"></div>
+
+      <div id="envio" hidden>
+        <h3>Gostou do número? Envie.</h3>
+        <div class="col">
+          <p>Escreva o nome da equipe e os comandos aparecem prontos, já com o nome no lugar
+          certo. É o mesmo envio que entra no <a href="./ranking.html">ranking</a>.</p>
+        </div>
+        <div class="envio-linha">
+          <label class="campo-equipe">
+            <span class="rotulo">Nome da equipe</span>
+            <input type="text" id="nome-equipe" placeholder="torre-de-controle"
+                   autocomplete="off" spellcheck="false" maxlength="40">
+          </label>
+          <button class="btn sec" id="btn-copiar" type="button">Copiar os comandos</button>
+          <button class="btn sec" id="btn-baixar" type="button">Baixar a pasta pronta</button>
+        </div>
+        <p class="envio-dica" id="envio-dica">Minúsculas e hífens. É como a equipe aparece no ranking.</p>
+        <pre id="comandos"><span class="c"># escreva o nome da equipe acima</span></pre>
+      </div>
     </div>
 
     <div class="note">

@@ -66,3 +66,33 @@ def avaliar_entrada(janela):
                            "ocupacao_media_veiculo", "custo_total")},
              "avisos": res.avisos[:6]}
     return json.dumps(saida, ensure_ascii=False, default=str)
+
+
+def montar_envio(equipe, janela):
+    """
+    Empacota o que está em /entrada na estrutura que o repositório espera:
+
+        respostas/<equipe>/<janela>/resposta_*.csv
+
+    Devolve os bytes do zip. Quem prefere a linha de comando não precisa disto —
+    é para quem gerou a resposta fora do repositório e não quer montar pasta na
+    mão. O zipfile vem da biblioteca padrão, que o Pyodide já traz.
+    """
+    import io
+    import zipfile
+
+    buffer = io.BytesIO()
+    with zipfile.ZipFile(buffer, "w", zipfile.ZIP_DEFLATED) as z:
+        for nome in ("resposta_promessa.csv", "resposta_rebalanceamento.csv",
+                     "resposta_previsao.csv"):
+            caminho = f"/entrada/{nome}"
+            if os.path.exists(caminho):
+                with open(caminho, encoding="utf-8") as f:
+                    z.writestr(f"respostas/{equipe}/{janela}/{nome}", f.read())
+        instrucoes = "\n".join([
+            "Descompacte na raiz do repositorio, confira a nota com",
+            f"  python desafio/ferramentas/avaliar_pr.py --equipe {equipe}",
+            "e abra o pull request.",
+        ]) + "\n"
+        z.writestr(f"respostas/{equipe}/LEIA-ME.txt", instrucoes)
+    return buffer.getvalue()

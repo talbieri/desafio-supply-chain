@@ -166,6 +166,101 @@
       'Diferença: <b>' + reais(b.custo_total - m.custo_total) + '</b>.</p>';
   }
 
+
+  // ---------------------------------------------------------------- envio
+  // A página não tem servidor: ela não abre o pull request por você. O que ela
+  // faz é tirar a fricção de montar os comandos — você escreve o nome da equipe
+  // e sai tudo pronto, já com o nome no lugar certo.
+
+  var janelaAvaliada = 'public';
+
+  function limparNome(bruto) {
+    return bruto.toLowerCase()
+      .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-+|-+$/g, '')
+      .slice(0, 40);
+  }
+
+  function comandos(eq) {
+    var envio = 'git ' + 'push -u origin resposta/' + eq;
+    return '<span class="c"># 1. crie a sua branch</span>\n' +
+      'git checkout -b resposta/' + eq + '\n\n' +
+      '<span class="c"># 2. gere a resposta nas duas janelas</span>\n' +
+      'python minha_solucao.py --janela public  --saida respostas/' + eq + '\n' +
+      'python minha_solucao.py --janela private --saida respostas/' + eq + '\n\n' +
+      '<span class="c"># 3. confira a nota antes de enviar</span>\n' +
+      'python desafio/ferramentas/avaliar_pr.py --equipe ' + eq + '\n\n' +
+      '<span class="c"># 4. envie</span>\n' +
+      'git add respostas/' + eq + '\n' +
+      'git commit -m "resposta: ' + eq + '"\n' +
+      envio + '\n' +
+      'gh pr create --title "Resposta \u00b7 ' + eq + '"';
+  }
+
+  function textoPuro(eq) {
+    return comandos(eq).replace(/<[^>]*>/g, '');
+  }
+
+  function atualizarEnvio() {
+    var campo = el('nome-equipe');
+    if (!campo) return;
+    var bruto = campo.value;
+    var eq = limparNome(bruto);
+    var dica = el('envio-dica');
+    var pre = el('comandos');
+    el('btn-copiar').disabled = !eq;
+    el('btn-baixar').disabled = !eq;
+    if (!eq) {
+      pre.innerHTML = '<span class="c"># escreva o nome da equipe acima</span>';
+      dica.textContent = 'Minúsculas e hífens. É como a equipe aparece no ranking.';
+      dica.className = 'envio-dica';
+      return;
+    }
+    pre.innerHTML = comandos(eq);
+    dica.textContent = (eq !== bruto)
+      ? 'Vai entrar como "' + eq + '" — minúsculas, sem acento, com hífens.'
+      : 'A equipe aparece no ranking como "' + eq + '".';
+    dica.className = 'envio-dica ok';
+  }
+
+  async function copiar() {
+    var eq = limparNome(el('nome-equipe').value);
+    if (!eq) return;
+    var b = el('btn-copiar');
+    try {
+      await navigator.clipboard.writeText(textoPuro(eq));
+      b.textContent = 'Copiado';
+    } catch (e) {
+      b.textContent = 'Selecione e copie à mão';
+    }
+    setTimeout(function () { b.textContent = 'Copiar os comandos'; }, 2200);
+  }
+
+  async function baixar() {
+    var eq = limparNome(el('nome-equipe').value);
+    if (!eq || !pyodide) return;
+    var b = el('btn-baixar');
+    b.disabled = true;
+    try {
+      pyodide.globals.set('_eq', eq);
+      pyodide.globals.set('_jn', janelaAvaliada);
+      var bytes = pyodide.runPython('motor.montar_envio(_eq, _jn)').toJs();
+      var url = URL.createObjectURL(new Blob([bytes], { type: 'application/zip' }));
+      var a = document.createElement('a');
+      a.href = url;
+      a.download = 'respostas-' + eq + '-' + janelaAvaliada + '.zip';
+      document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(function () { URL.revokeObjectURL(url); }, 4000);
+      b.textContent = 'Baixado';
+    } catch (e) {
+      b.textContent = 'Falhou: ' + (e && e.message ? e.message.slice(0, 36) : e);
+    }
+    setTimeout(function () {
+      b.textContent = 'Baixar a pasta pronta'; b.disabled = false;
+    }, 2400);
+  }
+
   async function avaliar() {
     var arq = el('arq-promessa').files[0];
     if (!arq) { estado('Escolha o <code>resposta_promessa.csv</code> primeiro.', true); return; }
@@ -186,10 +281,15 @@
       }
 
       var janela = document.querySelector('input[name="janela"]:checked').value;
+      janelaAvaliada = janela;
       py.globals.set('_janela', janela);
       var bruto = py.runPython('motor.avaliar_entrada(_janela)');
       var dados = JSON.parse(bruto);
       render(dados);
+      // o convite para enviar só aparece depois de uma resposta válida:
+      // não faz sentido convidar a enviar o que reprovou nos gates
+      el('envio').hidden = !dados.valida;
+      if (dados.valida) atualizarEnvio();
       estado(dados.valida
         ? 'Pronto. Esta é a nota do <b>modo treino</b> — a oficial sai no encerramento.'
         : 'A resposta não passou nos gates. Os motivos estão abaixo.', !dados.valida);
@@ -215,6 +315,10 @@
       });
     });
     el('btn-avaliar').addEventListener('click', avaliar);
+    el('nome-equipe').addEventListener('input', atualizarEnvio);
+    el('btn-copiar').addEventListener('click', copiar);
+    el('btn-baixar').addEventListener('click', baixar);
+    atualizarEnvio();
   }
 
   document.addEventListener('DOMContentLoaded', ligar);
