@@ -1,5 +1,43 @@
 {
- "gerado_em": "2026-09-02T12:27:19+00:00",
- "modo": "oficial",
- "equipes": []
+ "gerado_em": "2026-09-02T18:43:28+00:00",
+ "modo": "treino",
+ "equipes": [
+  {
+   "equipe": "equipe-2rm",
+   "enviado_em": "2026-09-02T18:43:27.642636+00:00",
+   "publica": {
+    "valida": true,
+    "score": 66.74,
+    "promise_reliability": 0.998911860718172,
+    "otif": 0.9423286180631121,
+    "otif_ka": 0.86,
+    "fill_rate": 1.0,
+    "custo_total": 385346.11536,
+    "componentes": {
+     "promise_reliability": 25.0,
+     "otif": 0.66,
+     "fill_rate": 0.0,
+     "custo": 21.09,
+     "preditiva": 20.0
+    }
+   },
+   "privada": {
+    "valida": true,
+    "score": 58.19,
+    "promise_reliability": 0.9836065573770492,
+    "otif": 0.9057377049180327,
+    "otif_ka": 0.8658536585365854,
+    "fill_rate": 1.0,
+    "custo_total": 391505.0235666666,
+    "componentes": {
+     "promise_reliability": 21.96,
+     "otif": 0.63,
+     "fill_rate": 0.0,
+     "custo": 15.6,
+     "preditiva": 20.0
+    }
+   },
+   "posicao": 1
+  }
+ ]
 }
