@@ -45,6 +45,7 @@ desafio/
 │   ├── exemplo_prototipo.py     protótipo comentado — a receita dos 5 passos
 │   └── avaliar.py               o avaliador oficial
 ├── gerador/                     como os dados foram construídos (seed 42)
+│   └── gerar_ranking.py         ranking oficial de todas as equipes
 └── privado/                     GABARITO — fora do git, fora do site
 
 docs/                            o site publicado (GitHub Pages)
@@ -66,6 +67,17 @@ Ele confere duas coisas ao final e falha se alguma quebrar:
 - **Determinismo** — mesma seed, mesmos checksums. Se dois builds divergirem, algo no gerador
   deixou de ser reprodutível.
 - **Vazamento de gabarito** — nenhum arquivo de `desafio/privado/` pode entrar no `.zip`.
+
+---
+
+## Ver o resultado das equipes
+
+O robô do pull request comenta a nota em modo treino. O resultado oficial,
+consolidado e ordenado, sai com um comando — e só na máquina que tem o gabarito:
+
+```bash
+python desafio/gerador/gerar_ranking.py
+```
 
 ---
 

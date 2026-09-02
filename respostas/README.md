@@ -80,3 +80,37 @@ falha — igual ao ranking final, que não pontua resposta inválida.
 - [ ] `avaliar_pr.py --equipe <sua-equipe>` roda limpo na sua máquina
 - [ ] O código da solução está no PR, ou o link para ele está na descrição (vale 10 pontos de júri)
 - [ ] Você mexeu só na sua pasta
+
+---
+
+## Para os organizadores
+
+O robô do pull request devolve a nota em **modo treino** — o gabarito não está no
+repositório. A nota que vale sai na máquina de quem tem o gabarito:
+
+```bash
+# ranking consolidado de todas as equipes, em modo oficial
+python desafio/gerador/gerar_ranking.py
+```
+
+```
+#   equipe                   score     OTIF  OTIF KA         custo    pública
+------------------------------------------------------------------------------
+1º  torre-de-controle        58.40    94.1%    96.2%    R$ 331.204       61.2
+2º  otif-ou-nada             47.15    92.8%    88.0%    R$ 358.911       44.9
+—   equipe-x              REPROVADA   [BR-205] fill rate do segmento ECM = 71.2%
+```
+
+O ranking sai pela **janela privada**. A coluna `pública` fica ao lado de
+propósito: quem vai muito melhor na pública do que na privada otimizou o
+leaderboard em vez de resolver o problema.
+
+Desempate, na ordem da rubrica: maior Promise Reliability, menor custo total,
+envio mais antigo.
+
+Para gravar o resultado em `docs/dados/ranking.json` e publicá-lo no site:
+
+```bash
+python desafio/gerador/gerar_ranking.py --publicar
+python desafio/gerador/gerar_site.py
+```
