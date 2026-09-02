@@ -8,6 +8,7 @@ Monta o pacote inteiro do desafio, na ordem certa.
   5. confere que o gabarito não vazou para o pacote
   6. monta o site em docs/  pronto para o GitHub Pages
   7. confere os diagramas  procura texto sobreposto nos SVGs
+  8. confere o contraste   mede cada par texto/fundo contra o piso WCAG
 
 Determinístico: mesma seed, mesmos checksums. Se dois builds divergirem,
 alguma coisa no gerador deixou de ser reprodutível — investigue antes de publicar.
@@ -166,6 +167,20 @@ def main():
             if " · " in linha:
                 print("    " + linha.strip())
         print("    Corrija antes de publicar: há texto sobreposto nos diagramas.")
+
+    # O design system da Apllos é dark-only. Trocar tokens sem medir é como se
+    # pinta texto preto em fundo preto: ninguém percebe até alguém abrir a página.
+    print("\n─── conferir_contraste.py")
+    r = subprocess.run([sys.executable,
+                        os.path.join("desafio", "gerador", "conferir_contraste.py")],
+                       capture_output=True, text=True, encoding="utf-8", errors="replace")
+    saida = r.stdout.strip().splitlines()
+    print("    " + (saida[-1] if saida else "sem saída"))
+    if r.returncode != 0:
+        for linha in saida:
+            if "!!" in linha:
+                print("    " + linha.strip())
+        print("    Corrija antes de publicar: há texto abaixo do piso de contraste.")
 
     print("\n─── site em docs/ — publique com GitHub Pages (branch main, pasta /docs)")
 

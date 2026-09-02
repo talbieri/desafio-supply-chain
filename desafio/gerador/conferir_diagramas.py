@@ -29,7 +29,9 @@ except (AttributeError, OSError):
     pass
 
 # largura média por caractere, em unidades do viewBox
-LARGURA = {"svg-small": 6.35, "svg-num": 6.6, "svg-label": 7.5, "": 8.0}
+# Calibrado contra a medição real do navegador (getBBox), com folga de 5%:
+# a estimativa anterior deixava passar um estouro de 9px na figura dos fluxos.
+LARGURA = {"svg-small": 6.7, "svg-num": 6.95, "svg-label": 7.9, "": 8.4}
 ALTURA = {"svg-small": 11, "svg-num": 11, "svg-label": 14, "": 16}
 
 

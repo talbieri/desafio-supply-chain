@@ -140,35 +140,73 @@ CSS = """/* Desafio Supply Chain — folha compartilhada das páginas do site.
    âmbar de sinalização sobre neutros levemente esverdeados. */
 
 :root {
-  --ground:#E9EDEB; --surface:#FDFEFD; --surface-2:#DFE5E2;
-  --line:#C6CFCB; --line-soft:#D8DFDC;
-  --ink:#101715; --ink-2:#3D4B47; --ink-3:#66756F;
-  --accent:#0D5B60; --accent-2:#E3EDED;
-  --signal:#A8480D; --signal-2:#F6E6DA; --moss:#3D6B3E;
-  --shadow:0 1px 2px rgba(16,23,21,.05), 0 8px 24px -16px rgba(16,23,21,.28);
-  --display:"Archivo","Helvetica Neue",Arial,sans-serif;
-  --body:"Source Serif 4",Georgia,"Times New Roman",serif;
-  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
-  --measure:68ch; --wide:1140px;
-}
+  /* ============================================================
+     Design system Apllos — namespace web (o padrão da marca).
+     Fonte: apllos-design-system/build/css/tokens.css
 
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --ground:#0D1412; --surface:#151E1B; --surface-2:#1D2825;
-    --line:#2C3B37; --line-soft:#23302C;
-    --ink:#E7EDEA; --ink-2:#B3C1BC; --ink-3:#82918C;
-    --accent:#52B7BC; --accent-2:#18302F;
-    --signal:#DE8B4A; --signal-2:#33251A; --moss:#7FAE7A;
-    --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 28px -18px rgba(0,0,0,.8);
-  }
-}
-:root[data-theme="dark"] {
-  --ground:#0D1412; --surface:#151E1B; --surface-2:#1D2825;
-  --line:#2C3B37; --line-soft:#23302C;
-  --ink:#E7EDEA; --ink-2:#B3C1BC; --ink-3:#82918C;
-  --accent:#52B7BC; --accent-2:#18302F;
-  --signal:#DE8B4A; --signal-2:#33251A; --moss:#7FAE7A;
-  --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 28px -18px rgba(0,0,0,.8);
+     Dark-only de propósito. O design system não tem tema claro, e
+     manter dois temas aqui seria a via rápida para texto branco em
+     fundo branco. Sem alternância, o problema não existe.
+
+     Contraste de cada par medido em conferir_contraste.py.
+     ============================================================ */
+
+  /* superfícies — color.web.background.* */
+  --ground:      #121212;   /* base */
+  --surface:     #1a1a1a;   /* surface */
+  --surface-2:   #242424;   /* raised */
+
+  /* bordas — color.web.border.* */
+  --line:        rgba(255,255,255,.10);
+  --line-soft:   rgba(255,255,255,.05);
+  --line-forte:  rgba(255,255,255,.32);
+
+  /* texto — color.web.text.* · 18.7 / 8.9 / 7.2 contra o fundo */
+  --ink:         #ffffff;
+  --ink-2:       rgba(255,255,255,.70);
+  --ink-3:       #a0a0a0;
+
+  /* acento violeta — texto usa o tom link (7.0:1); preenchimento usa o vivid */
+  --accent:        #c97dff;   /* violet.tint — links, olho de seção, destaques */
+  --accent-forte:  #AA39F9;   /* violet.vivid escurecido: o vivid original (#b655fa)
+                                 deixa o branco em 3,70:1, abaixo do piso de 4,5.
+                                 Este degrau dá 4,50:1 e mantém o violeta da marca. */
+  --accent-base:   #a259ff;   /* violet.base — bordas de card */
+  --accent-2:      rgba(162,89,255,.14);
+  --accent-mist:   #c9b3d9;   /* violet.mist — números de estatística */
+
+  /* sinal — amarelo institucional Pantone 116, 12.3:1 sobre o fundo */
+  --signal:      #FFCB00;
+  --signal-2:    rgba(255,203,0,.09);
+
+  /* status — degraus clareados dos institucionais, para passarem no escuro
+     Pantone 347 #398A35 -> #47AB42 (5.9:1) · Pantone 185 #ED1C2B -> #F25C67 (5.4:1) */
+  --bom:         #47AB42;
+  --alerta:      #F25C67;
+
+  /* séries de gráfico — validadas no validador da skill dataviz:
+     banda L 0.48–0.67, croma >= .10, ΔE 31.7 (deutan) e 32.0 (visão normal) */
+  --serie-1:     #9B6DFF;
+  --serie-2:     #BE8620;
+  --trilho:      #2E2E2E;
+
+  /* sombras — shadow.* */
+  --shadow:      0 2px 10px rgba(0,0,0,.30);
+  --shadow-alto: 0 10px 20px rgba(0,0,0,.40);
+  --glow:        0 8px 32px rgba(139,77,184,.45);
+  --gradiente:   linear-gradient(90deg,#c9b3d9,#b655fa);
+
+  /* tipografia — Inter, do design system. O mono é acréscimo nosso:
+     o design system não define família monoespaçada. */
+  --display: Inter, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --body:    Inter, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --mono:    "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  /* raios — radius.* */
+  --r-sm: 6px; --r-md: 8px; --r-lg: 12px; --r-xl: 20px; --r-pill: 999px;
+
+  --measure: 68ch;
+  --wide: 1236px;   /* layout.content-max */
 }
 
 * { box-sizing:border-box; }
@@ -183,10 +221,10 @@ body {
 /* nav do site */
 .sitenav { background:var(--ink); }
 .sitenav-in { max-width:var(--wide); margin:0 auto; padding:0 28px; display:flex; align-items:center; gap:4px; flex-wrap:wrap; }
-.sitenav a { display:block; padding:12px; text-decoration:none; font-family:var(--mono); font-size:11.5px; letter-spacing:.1em; text-transform:uppercase; color:#9fb3ae; }
-.sitenav a:hover, .sitenav a:focus-visible { color:#fff; }
-.sitenav a.ativo { color:#fff; box-shadow:inset 0 -2px 0 var(--accent); }
-.sitenav .marca { font-family:var(--display); font-weight:700; font-size:14px; letter-spacing:-.01em; text-transform:none; color:#fff; padding-left:0; }
+.sitenav a { display:block; padding:12px; text-decoration:none; font-family:var(--mono); font-size:11.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-3); }
+.sitenav a:hover, .sitenav a:focus-visible { color:var(--ink); }
+.sitenav a.ativo { color:var(--ink); box-shadow:inset 0 -2px 0 var(--accent); }
+.sitenav .marca { font-family:var(--display); font-weight:700; font-size:14px; letter-spacing:-.01em; text-transform:none; color:var(--ink); padding-left:0; }
 .sitenav .sep { flex:1; }
 
 /* cabeçalho */
@@ -287,7 +325,10 @@ figcaption b { color:var(--ink-2); font-weight:600; }
 .campo-janela { display:flex; flex-direction:column; gap:5px; font-family:var(--mono); font-size:12.5px; color:var(--ink-2); }
 .campo-janela label { display:inline-flex; align-items:center; gap:6px; cursor:pointer; }
 .testador .btn { align-self:end; }
-.testador .btn:disabled { background:var(--surface-2); color:var(--ink-3); cursor:not-allowed; }
+.testador .btn:disabled { background:var(--surface-2); color:var(--ink-3);
+  cursor:not-allowed; box-shadow:none; border-color:var(--line);
+  transform:none; filter:none; }
+.testador .btn:disabled:hover { filter:none; transform:none; }
 .testador-estado { font-family:var(--mono); font-size:12.5px; color:var(--ink-3); margin:18px 0 0; }
 .testador-estado.erro { color:var(--alerta); }
 .testador-estado code { font-size:12px; }
@@ -295,28 +336,10 @@ figcaption b { color:var(--ink-2); font-weight:600; }
 .sha { font-family:var(--mono); font-size:11px; color:var(--ink-3); }
 
 /* ---------- gráficos do placar ----------
-   Paleta validada com o validador da skill dataviz nos dois modos:
-   claro  #00889E / #B85C00  ΔE 17.9 (protan) · 24.3 (visão normal)
-   escuro #1E9DB4 / #D07E3A  dentro da banda L 0.48–0.67
-   Toda barra traz o valor escrito ao lado e todo status vem com rótulo:
-   a cor nunca é a única portadora de informação. */
-:root {
-  --serie-1:#00889E; --serie-2:#B85C00;
-  --bom:#1F7A3D; --alerta:#B3480C;
-  --trilho:#DFE5E2;
-}
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --serie-1:#1E9DB4; --serie-2:#D07E3A;
-    --bom:#5CA36F; --alerta:#DE8B4A;
-    --trilho:#22302C;
-  }
-}
-:root[data-theme="dark"] {
-  --serie-1:#1E9DB4; --serie-2:#D07E3A;
-  --bom:#5CA36F; --alerta:#DE8B4A;
-  --trilho:#22302C;
-}
+   As cores das séries, do trilho e dos status vivem no bloco de tokens do topo,
+   junto com todo o resto do design system. Antes ficavam aqui num :root próprio
+   com tema claro e escuro — que sobrevivia à repaginação e repintava as barras
+   com a paleta antiga, deixando o trilho claro sobre o fundo escuro. */
 
 .sr { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; }
 
@@ -356,6 +379,57 @@ figcaption b { color:var(--ink-2); font-weight:600; }
 
 @media (max-width:720px) { .tabela-corte td.cel-barra { min-width:120px; } }
 
+
+/* ---------- voz do design system Apllos ---------- */
+body { font-family: var(--body); font-weight: 400; }
+h1, h2, h3, .fact b, .kpi h3 { font-family: var(--display); }
+h1 { font-weight: 200; letter-spacing: -.045em; }
+h2 { font-weight: 300; letter-spacing: -.02em; }
+h1 em, .destaque-gradiente {
+  font-style: normal;
+  background: var(--gradiente);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.kicker, .tag { color: var(--accent); font-weight: 600; letter-spacing: .12em; }
+.standfirst, .lead { font-weight: 300; }
+
+.facts, .promessa, .grid, .kpis, .passos { border-radius: var(--r-lg); overflow: hidden; }
+.card, .cell, .fact, .kpi, .conceito, .campo, .passo, .promessa div { background: var(--surface); }
+.conceito, .testador, .scroll, .figure .frame, pre {
+  border-radius: var(--r-lg);
+}
+.fact b { font-weight: 600; color: var(--accent-mist); }
+.cell .code, .conceito .n { color: var(--accent); }
+
+.btn {
+  border-radius: var(--r-pill);
+  background: var(--accent-forte); color: #fff;
+  font-family: var(--display); font-weight: 600;
+  box-shadow: var(--glow);
+  padding: 13px 30px; border: 1px solid transparent;
+}
+.btn:hover { filter: brightness(1.08); transform: translateY(-1px); }
+.btn.sec { background: transparent; color: var(--accent); border-color: var(--line-forte); box-shadow: none; }
+.btn.sec:hover { border-color: var(--accent); }
+
+.pill { border-radius: var(--r-pill); border-width: 1px; }
+.note { border-left-color: var(--signal); background: var(--signal-2); border-radius: 0 var(--r-md) var(--r-md) 0; }
+.callout { background: var(--accent-2); border-color: var(--line); border-radius: var(--r-md); }
+.campo.armadilha { background: var(--signal-2); }
+.campo.armadilha b { color: var(--signal); }
+tr.destaque td { background: var(--accent-2); }
+tr.destaque:hover td { background: var(--accent-2); }
+tbody tr:hover td { background: rgba(255,255,255,.04); }
+code { background: var(--surface-2); border-radius: var(--r-sm); color: var(--accent-mist); }
+.barra { border-radius: 0 var(--r-sm) var(--r-sm) 0; }
+.marca-meta { background: var(--ink); }
+.sitenav { background: #000; border-bottom: 1px solid var(--line); }
+.sitenav a { color: var(--ink-3); }
+.sitenav a:hover, .sitenav a:focus-visible { color: var(--ink); }
+.sitenav a.ativo { color: var(--ink); box-shadow: inset 0 -2px 0 var(--accent-forte); }
+.sitenav .marca { color: var(--ink); }
+nav.rail { background: var(--ground); }
+.masthead { background: var(--surface); }
 
 footer { padding:34px 0 60px; font-family:var(--mono); font-size:11.5px; line-height:1.8; color:var(--ink-3); border-top:1px solid var(--line); }
 footer a { color:var(--accent); }

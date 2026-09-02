@@ -29,7 +29,7 @@
 <p class="standfirst">21 arquivos, 4,6&nbsp;MB descompactados. CSV UTF-8, separador vírgula, decimal ponto. Sem cadastro, sem login, sem pedir acesso a ninguém.</p>
 <div class="baixar">
 <a class="btn" href="./dados/desafio-supply-chain-v1.0.0.zip" download>Baixar tudo: dados + ferramentas (.zip)</a>
-<span class="meta">733 KB · sha256 4930d506ea925b1d…</span>
+<span class="meta">737 KB · sha256 d7a53c24fdd40ad7…</span>
 <a class="btn sec" href="./dados/v1.0.0/data_dictionary.md">Dicionário de dados</a>
 </div></div></header>
 <main class="shell">
@@ -71,8 +71,8 @@ cd desafio/dados/v1.0.0 &amp;&amp; sha256sum -c CHECKSUMS.txt</pre><div class="n
 </tbody></table></div></section>
 <section><p class="tag">Documentação</p><h2>Documentação</h2>
 <div class="scroll"><table><thead><tr><th>Arquivo</th><th>O que tem</th><th class='num'>Linhas</th><th class='num'>Tamanho</th><th class='num'>Baixar</th></tr></thead><tbody>
-<tr><td><code>data_dictionary.md</code><br><span class='sha'>sha256 f6d33021213117a6…</span></td><td>—</td><td class='num'>—</td><td class='num'>17 KB</td><td class='num'><a href='./dados/v1.0.0/data_dictionary.md' download>baixar</a></td></tr>
-<tr><td><code>CHECKSUMS.txt</code><br><span class='sha'>sha256 e73c382503f2ede8…</span></td><td>—</td><td class='num'>—</td><td class='num'>2 KB</td><td class='num'><a href='./dados/v1.0.0/CHECKSUMS.txt' download>baixar</a></td></tr>
+<tr><td><code>data_dictionary.md</code><br><span class='sha'>sha256 1f62e36262057480…</span></td><td>—</td><td class='num'>—</td><td class='num'>17 KB</td><td class='num'><a href='./dados/v1.0.0/data_dictionary.md' download>baixar</a></td></tr>
+<tr><td><code>CHECKSUMS.txt</code><br><span class='sha'>sha256 69edb5d28bdf07b0…</span></td><td>—</td><td class='num'>—</td><td class='num'>2 KB</td><td class='num'><a href='./dados/v1.0.0/CHECKSUMS.txt' download>baixar</a></td></tr>
 </tbody></table></div></section>
 <section><p class="tag">O que você devolve</p><h2>Formato de resposta</h2><div class="col"><p>Três arquivos. Só o primeiro é obrigatório — e ele precisa cobrir <b>todas</b> as linhas da janela.</p></div><pre><b>resposta_promessa.csv</b>   <span class='c'>obrigatório</span>
 order_line_id,dc_id,promised_date,qty_committed,shipment_group
@@ -86,5 +86,5 @@ TRF-00001,CD-PE,CD-SP,P3,12,2026-09-15
 dc_id,region,ship_date,transit_q50,transit_q90
 CD-SP,SE,2026-09-01,2,4</pre><div class="note"><p><b>O <code>shipment_group</code> não é formalidade.</b> Linhas com o mesmo grupo viajam juntas e dividem um frete — e o grupo só parte quando a última delas tem estoque. É a sua alavanca de composição de carga.</p></div></section>
 </main>
-<footer class="shell">Desafio Supply Chain · pacote de dados v1.0.0 · gerado em 31/08/2026<br>Dados sintéticos determinísticos (seed 42). Nenhum dado real de cliente foi usado.<br>Páginas geradas por <code>desafio/gerador/gerar_site.py</code>.</footer>
+<footer class="shell">Desafio Supply Chain · pacote de dados v1.0.0 · gerado em 02/09/2026<br>Dados sintéticos determinísticos (seed 42). Nenhum dado real de cliente foi usado.<br>Páginas geradas por <code>desafio/gerador/gerar_site.py</code>.</footer>
 </body></html>
